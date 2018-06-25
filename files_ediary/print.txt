@@ -1,0 +1,4 @@
+print 语句默认在输出内容末尾后加一个换行符，而在语句后加一个逗号就可以避免这个行为。
+print 通常是输出到sys.stdout
+print 语句重定向使用方法
+print>>filename,args
