@@ -1,0 +1,78 @@
+teleweb服务器	sl_hz_hran@10.92.32.26  	lin@321
+			sl_hz_swd2@10.92.32.26 	We54321
+
+11 服务器		swd3@10.92.35.11		asdf
+
+14服务器		swd3@10.92.35.14		qwer
+
+12服务器		swd3@10.92.35.12		qwer
+
+35服务器		int@10.92.35.35		hztcl5
+
+22服务器		user@10.92.35.22		int@0322 		vncserver :1
+
+31服务器 		zhaoshie@10.92.35.31		tcl@123
+
+teleweb刷机	wshen				wshen321
+
+24服务器		int@10.92.35.24		admin@123
+
+black-109		int@10.92.35.109		admin#123
+black-106 	int@10.92.35.106		admin#123
+black-107 	int@10.92.35.107		admin#123
+
+邮箱		hudson.admin.hz			Hzsw#123
+
+weideng@tcl.com	mobile@123 
+susheng.ye.hz@tcl.com		yss5421789
+
+ftp://wei.deng@tcl.com@mft.mediatek.com/Inbox/SDM/	weideng@tcl.com	tcl@12345
+
+Clid 
+Login: chenxd_a  password: Aa123456
+
+Bigbrother
+G账号
+Login: chenxd_g  password:chenxd_g123
+
+C账号已经有了:chenxd_a
+
+
+10.92.35.91	xiaodan.cheng	123456
+Ftp账号已经添加，邮箱前缀，默认密码：123456		
+
+
+tcl00905632 888888
+
+
+后续主软件ECR的提交, 可以通用帐号: sl_shezhao  mobile#0605
+
+http://plm.tclcom.com/Windchill/
+
+
+
+eservice
+
+http://eService.mediatek.com
+YUANPENG_LIU_TCL : mobile123
+
+上海直接开放Teleweb上0_Huizhou目录的读写权限给惠州，请使用以下server访问：
+地址：172.24.116.53
+用户名：webmtd
+密码：jrd@2014 (可以自行修改密码)
+这个是上海teleweb上的帐号和密码
+http://10.92.35.99:8080/jenkins/view/Others/job/SYNC/release/  这个是版本同步到上海的jenkins job
+
+高通
+xiaodan.cheng@tcl.com
+cxd@6235Ac
+
+
+        ftp:157.122.116.176
+         ID:wt001
+         Pwd:ubuntu@123
+
+WT FTP:
+地址10.92.60.101
+帐号：wt001           密码ubuntu@123
+

@@ -1,0 +1,24 @@
+一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动，则需要找到/usr/share/applications这个目录，其中存放的全部是dash中的启动器，将你需要的程序xxx添加其中即可。具体操作步骤为：
+命令行操作内容：
+
+cd /usr/share/applications
+sudo gedit xxx.desktop
+
+打开需要编辑的文本内容为：
+
+[Desktop Entry]
+Version=1.0
+Name=xxx
+Exec=/home/username/xxx.sh（这个是启动程序需要执行的文件路径名）
+Terminal=false
+Icon=/home/username/xxx.png（这个是图标）
+Type=Application
+Categories=Development
+
+这样就可以在dash中看到xxx的启动器图标了，也可以直接将其添加锁定到launcher
+
+Name:就是名称了
+Comment：相当于注释
+Exec：可执行文件的路径
+Icon：图标路径，Sublime Text默认是带了各种型号的图标的
+其他几个设置主要就是类别等，如果你将这个配置文件放到/usr/share/applications文件夹下，你就可以通过Ubuntu的软件管理在 相应的类别下找到软件了。把上面文件保存，比如sublime.desktop（一定要以desktop结尾），并确保给与可执行权限，然后双击就可以打 开Sublime Text了，同时启动器上的图标也可以固定了。
