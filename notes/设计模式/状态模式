@@ -1,0 +1,95 @@
+
+
+
+
+abstract class state
+{
+	public abstract void Handle(Context context);
+}
+class ConcretStateA:state
+{
+	public override void Handle(Context context)
+	{
+		context.state = new concretStateB();
+	}
+}
+class ConcretStateB:state
+{
+	public override void Handle(Context context)
+	{
+		context.state = new concretStateA();
+	}
+}
+class Context
+{
+	private State state
+	public Context(State state)
+	{
+		this.state = state
+	}
+	public State state
+	{
+		get
+		{	
+			return state;
+		}
+		set
+		{
+			state = value;
+			Console.Writeline("当前状态" + state.GetType().Naeme());
+		}
+	
+		
+	}
+	public void Request（）
+	{
+		state.Handle(this);
+	}
+}
+static void main(string[] args)
+{
+	Context c = new Context( new ConcretStateA());
+	c.Request();
+	c.Request();
+	c.Request();
+	c.Request();
+	Console.Read();
+}
+
+###########################################################################################################################################################################################
+#!/usr/bin/python
+
+#
+#test state designed
+#
+class Context:
+    #self.state = State()
+    def __init__(self,state):
+        self.state = state
+    def __set__(self,state):
+        self.state = state
+    def __get__(self):
+        return self.state
+    def Request(self):
+        return self.state.Handler(self)
+class State:
+    def Handler(self,context):
+        print "father access"
+class ConcreteStateA(State):
+    def Handler(self,context):
+        print "in State A"
+        context.state = ConcreteStateB()
+class ConcreteStateB(State):
+    def Handler(self,context):
+        print "in  State B"
+        context.state = ConcreteStateA()
+
+if __name__ == "__main__":
+    c = Context(ConcreteStateA())
+    c.Request()
+    c.Request()
+    c.Request()
+    c.Request()
+    print "end"  
+
+########################################################################################################################################################################################
