@@ -1,0 +1,18 @@
+For example: 
+	./PatchMangage.py . MergeOnePatch 14 build yes
+	./PatchMangage.py . PatchMail 14
+	./ModemPatchManage.py . MergeOnePatch 2 build yes
+
+
+	./PatchMangage.py -operation MergeOnePatch 
+
+	./mail.py -project shine-lite-cn -patchowner 'xiaodan.cheng@tcl.com' -ALPS 62 -MOLY 27 -SIXTH 16
+	/local/int_jenkins/mtk_patch/ModemPatchManage.py -project 'pixi4-4-tf' -patchtype 'critical' -patchnum 15 -operation 'MergePatch'
+	/local/int_jenkins/mtk_patch/ModemPatchManage.py -project 'elsa6' -patchtype 'critical' -patchnum 43 -operation 'MergePatchToDriveOnly'
+	/local/int_jenkins/mtk_patch/PatchMangage.py -project 'mickey6' -patchtype 'critical' -patchnum 76 -operation 'MergePatch' 2>&1 | tee /local/release/modem.log
+	/local/int_jenkins/mtk_patch/PatchMangage.py -project 'mickey6t' -patchtype 'critical' -patchnum 72 -operation 'MergePatchToDriveOnly'  2>&1 | tee /local/release/patchmangagage_log.txt
+	/local/int_jenkins/mtk_patch/PatchMangage.py -project 'elsa6p' -operation 'build' 
+	/local/int_jenkins/mtk_patch/PatchMangage.py -project 'elsa6p' -operation 'DriveOnlybuild'
+	/local/int_jenkins/mtk_patch/SixthPatchManage.py -project 'mickey6t' -patchtype 'critical' -patchnum 3 -operation 'MergePatch' 2>&1 | tee /local/release/modem.log
+	git remote -v | grep fetch | awk '{print $2}' | sed 's/git@10.92.32.10:\///g' | sed 's/\// /g'
+

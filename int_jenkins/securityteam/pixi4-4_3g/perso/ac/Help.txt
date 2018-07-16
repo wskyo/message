@@ -1,0 +1,39 @@
+Begin General
+maincode:
+./ac.sh maincode -config config_pixi3_5.xml -clean all -sync current_version -modify -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -clean all -sync current_version -modify -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -clean all -sync current_version -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -clean all -sync current_version -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -clean all -modify -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -clean all -modify -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -clean all -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -clean all -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -clean out -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -clean out -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -build -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -build -sign
+./ac.sh maincode -config config_pixi3_5.xml -build -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -build
+./ac.sh maincode -config config_pixi3_5.xml -sign -teleweb yx_test
+./ac.sh maincode -config config_pixi3_5.xml -sign
+./ac.sh maincode -config config_pixi3_5.xml -teleweb yx_test
+
+perso:
+./ac.sh perso -config config_pixi3_5.xml -clean all -sync current_version -modify -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -clean all -sync current_version -modify -build -sign
+./ac.sh perso -config config_pixi3_5.xml -clean all -sync current_version -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -clean all -sync current_version -build -sign
+./ac.sh perso -config config_pixi3_5.xml -clean all -modify -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -clean all -modify -build -sign
+./ac.sh perso -config config_pixi3_5.xml -clean all -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -clean all -build -sign
+./ac.sh perso -config config_pixi3_5.xml -clean out -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -clean out -build -sign
+./ac.sh perso -config config_pixi3_5.xml -build -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -build -sign
+./ac.sh perso -config config_pixi3_5.xml -build -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -build
+./ac.sh perso -config config_pixi3_5.xml -sign -teleweb yx_test
+./ac.sh perso -config config_pixi3_5.xml -sign
+./ac.sh perso -config config_pixi3_5.xml -teleweb yx_test
+End General

@@ -1,0 +1,127 @@
+#!/bin/bash -xe
+#exit 0
+
+BUILD_PROJECT_NAME=$1
+TAGAPPNAME=$2
+tag_addver=$3
+ishomo=$4
+#tag_addver=${addversion}
+
+function sync_code()
+{
+   /local/tools/repo/repo forall -c "git reset --hard HEAD && git clean -df"
+   /local/tools/repo/repo sync -j4
+   rm -rf out
+   source build/envsetup.sh
+}
+
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/
+#bin_path=out/target/product/${BUILD_PROJECT_NAME}
+
+if [ ${BUILD_PROJECT_NAME} = "simba6l" ] || [ ${BUILD_PROJECT_NAME} = "buzz6e" ] ||  [ ${BUILD_PROJECT_NAME} = "simba6l-buzz6e" ]  ; then
+   bin_path=out/target/product/buzz6e
+   DEPENDGIT='ContactsCommon TctFrameworks PhoneCommon Dialer Contacts'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/vendor/jrdcom/apps/$itemgit
+   done
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   lunch full_buzz6e-user
+
+elif [ ${BUILD_PROJECT_NAME} = "mickey6t" ] ;then
+   bin_path=out/target/product/mickey6t_gmo
+   DEPENDGIT='ContactsCommon TctFrameworks PhoneCommon Dialer Contacts'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/vendor/jrdcom/apps/$itemgit
+   done
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   lunch full_mickey6t_gmo-user
+
+
+elif [ ${projectname} = "elsa6p" ] ; then
+   bin_path=out/target/product/elsa6p   
+   DEPENDGIT='ContactsCommon TctFrameworks PhoneCommon Dialer Contacts'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/vendor/jrdcom/apps/$itemgit
+   done
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   lunch full_elsa6p-user
+elif [ ${projectname} = "A5A-INFINI" ] ; then
+   DEPENDGIT='ScreenShot'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+   done
+   
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   bin_path=out/target/product/a5a_infini
+   lunch full_a5a_infini-user
+elif [ ${projectname} = "A3A" ] ; then
+   DEPENDGIT='ScreenShot'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+   done
+   
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   bin_path=out/target/product/k39tv1_bsp
+   lunch full_k39tv1_bsp-user
+elif [ ${projectname} = "U5A-PLUS-4G" ] ; then
+   DEPENDGIT='ScreenShot'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+   done
+   
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   bin_path=out/target/product/u5a_plus_4g_odm
+   lunch full_u5a_plus_4g_odm-user
+elif [ ${projectname} = "A5X" ] ; then
+   DEPENDGIT='ScreenShot'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+   done
+   
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   bin_path=out/target/product/k62v1_32_bsp
+   lunch full_k62v1_32_bsp-user
+
+else
+
+   DEPENDGIT='ContactsCommon TctFrameworks PhoneCommon InCallUI Mms TctDialer TctContactsProvider TctContacts'
+   for itemgit in ${DEPENDGIT[@]} 
+   do
+       rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+   done
+   
+   echo "start sync $BUILD_PROJECT_NAME code "
+   sync_code
+   
+   bin_path=out/target/product/jhz6737m_35_b_m0
+   lunch full_jhz6737m_35_b_m0-user 
+fi
+
+make -j4 2>&1 |tee android.log
+
+
+if [ -e $bin_path/system.img ] && [ -e $bin_path/boot.img ]
+then 
+	echo "make img files successfully"
+        cp -r /local/build/genericapp/java_lib/* /local/build/genericapp/$BUILD_PROJECT_NAME/out/target/common/obj/JAVA_LIBRARIES/
+else 
+	echo "make img files failed"
+ 	exit 1
+fi
+
+
+

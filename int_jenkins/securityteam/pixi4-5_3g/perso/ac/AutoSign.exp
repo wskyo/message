@@ -1,0 +1,37 @@
+#!/usr/bin/expect -f
+
+set sign_place [lindex $argv 0]
+set perso_user [lindex $argv 1]
+set perso_pwd [lindex $argv 2]
+set mmi_user [lindex $argv 3]
+set mmi_pwd [lindex $argv 4]
+set product_name [lindex $argv 5]
+set keyword [lindex $argv 6]
+set device [lindex $argv 7]
+set logname [lindex $argv 8]
+
+spawn ssh $perso_user@10.92.35.82
+
+expect {
+"yes/no)? " {
+send "yes\r"
+expect "*assword:"
+send "$perso_pwd\r"
+}
+"*assword:" {
+send "$perso_pwd\r"
+}
+}
+set timeout 20
+expect "*:~$*"
+
+send "cd /local/sign_apk \r"
+send "./sign_apk.sh $device $mmi_user $mmi_pwd $sign_place $product_name $keyword $logname \r"
+
+set timeout 600
+expect "*:~$*"
+send "\r"
+send "exit \r"
+expect eof
+
+

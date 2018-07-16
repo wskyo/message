@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EDGSCG_CONFIG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="D:\FangFei\LCPI\EDG_SCG\DOC\EDG_SCG_config_file.xsd">
+  <!-- This data change with product -->
+  <PRODUCT_NAME>pixi4_35</PRODUCT_NAME>
+  <INT_PRODUCT_NAME>pixi4-35_3g</INT_PRODUCT_NAME> 
+ 
+  <LUNCH_COMMAND>lunch full_pixi4_35-user</LUNCH_COMMAND>
+  <MAKE_COMMAND>./makePerso.sh full_pixi4_35-user</MAKE_COMMAND>   
+  <!--<MAKE_COMMAND>make MEMTYPE=4G_512M</MAKE_COMMAND>-->   
+  <!-- <CHOOSE_COMBO_PARA>choosecomboPara</CHOOSE_COMBO_PARA> -->
+  <!--  
+  <COMPILE_MAINCODE>1</COMPILE_MAINCODE>   
+  <COMPILE_PERSO>0</COMPILE_PERSO> 
+  <IS_SIGN_RELEASE_KEY>0</IS_SIGN_RELEASE_KEY>
+  <ONLY_SIGN_KEY_NOT_COMPILE>0</ONLY_SIGN_KEY_NOT_COMPILE>
+  <WAIT_FOR_MODIFY>1</WAIT_FOR_MODIFY>
+  <IS_SYNC_THE_VIEW>1</IS_SYNC_THE_VIEW>
+  <IS_CLEAN_THE_VIEW>1</IS_CLEAN_THE_VIEW>
+  <CLEAN_THE_OUT_DIR_ONLY>0</CLEAN_THE_OUT_DIR_ONLY>  
+  <SOFT_VERSION>latest</SOFT_VERSION>-->
+  <COMBINE_SYSTEM_CUSTPACK>1</COMBINE_SYSTEM_CUSTPACK> 
+  <MANIFEST_PATH>odm_manifest</MANIFEST_PATH> 
+  
+  <WIMDATA_VOB_NAME>mtk6572_wimdata_ng</WIMDATA_VOB_NAME> 
+  <PROCEDURES_PATH>mtk6572_wimdata_ng/wprocedures/pixi4_35</PROCEDURES_PATH>
+  <CUSTORES_PATH>mtk6572_wimdata_ng/wcustores/pixi4_35</CUSTORES_PATH>  
+
+  <!-- Pls update your ip address in this tag when failed to get the ip automatically.-->  
+  <!-- <MMI_HOST_IP>10.92.34.11</MMI_HOST_IP> -->  
+  
+  <BOOT_LOGO_PATH>cu_hvga/</BOOT_LOGO_PATH> 
+  <!-- <CUSTO_ZIP_PATH_AND_NAME>/local/zz_2015-09-16_17-09.zip</CUSTO_ZIP_PATH_AND_NAME> -->  
+   
+  <CODE_SECU_FILE_PATH>vendor/mediatek/proprietary/custom/pixi4_35/secro/AC_REGION</CODE_SECU_FILE_PATH>
+  <SECU_CONF_VER>41</SECU_CONF_VER>
+  
+  <MMI_USER_NAME>user</MMI_USER_NAME>
+  <MMI_PASSWORD>Aa123456</MMI_PASSWORD>
+  
+	<INT_BRANCH_NAME>pixi4-35-v1.0-dint</INT_BRANCH_NAME>  
+</EDGSCG_CONFIG>
+

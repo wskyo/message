@@ -1,0 +1,314 @@
+#!/usr/bin/python
+#coding=utf-8
+
+import os
+import re
+import sys
+import getpass
+from commands import *
+import commands
+from time import *
+import pexpect
+import smtplib
+import MySQLdb
+from email.header import Header
+from email.MIMEText import MIMEText
+sys.path.append('/local/int_jenkins/lib')
+sys.path.append('/local/int_jenkins/mtk_patch/lib')
+import xlrd
+import string
+from CheckFile import *
+from dotProjectDb import *
+from checkPatchInfor import *
+from Config import *
+
+class PatchMerge(Merge):
+	def __init__(self,conf):
+		basedir = conf.getConf('basedir','base dir','/local')
+		self.proj = conf.getConf('project','project name','')
+		self.patchowner = conf.getConf('patchowner','patch owner','')
+		self.repopath = '/local/tools/repo/repo'
+		print 'change dir ==================>%s\n' % basedir
+		os.chdir(basedir)
+		self.__baseDir = os.getcwd()		
+		self.debug = False
+		self.__pushCodeToGit = True
+		
+		wb = xlrd.open_workbook('/local/int_jenkins/mtk_patch/jb3-mp-import.xls')
+		mtkSheet = wb.sheet_by_name(u'MTKInfo')
+		print "project name",self.proj
+		for row in xrange(0,mtkSheet.nrows):
+			#print "project of ALPS",self.proj,ap_st.cell(row,0).value.strip()
+			if mtkSheet.cell(row,0).value.strip() == self.proj:
+				ap_row = row
+		
+		if not ap_row:
+			print "Cannot find project in the ALPS SHEET OF THE Excel!"
+			sys.exit(1)
+		
+		self.__branch = mtkSheet.cell(ap_row, 1).value.strip()
+		self.__project = mtkSheet.cell(ap_row, 2).value.strip()
+		self.mtkproj = mtkSheet.cell(ap_row, 2).value.strip()
+		self.mtkrelease = mtkSheet.cell(ap_row, 3).value.strip()
+		self.__DriveOnlyBranch = mtkSheet.cell(ap_row, 11).value.strip().split(',')
+		self.__TelewebDirName = mtkSheet.cell(ap_row, 12).value.strip().split(',')
+		self.dept = mtkSheet.cell(ap_row, 13).value.strip()
+		self.manifestdir = mtkSheet.cell(ap_row, 14).value.strip()
+		self.lunchproj = mtkSheet.cell(ap_row, 15).value.strip()
+		self.platform = mtkSheet.cell(ap_row, 16).value.strip()
+		self.updatePjName = mtkSheet.cell(ap_row, 17).value.strip()
+		self.Code = "/local/mtk_patch_import/" + self.__branch
+		self.__DriveOnlyCode = "/local/mtk_patch_import/"
+		self.mergeDone = "/local/mtk_patch_import/mergeDone"
+		self.__ignorePatch = "/local/mtk_patch_import/ignorePatch"
+		self.ongoingPatch = "/local/mtk_patch_import/TODO"
+		self.__mailDir = "/local/mtk_patch_import/Mail"
+		self.__start = "/local/mtk_patch_import/start"
+		self.branchDict = {}
+		self.checkFileDict = self.getAffectFileDict()
+		self.projectList = self.checkProjectName()
+		self.devCodeBranch = []
+		self.devCodeProjectIDList = []
+		self.importIdDict = {}
+		self.projectid_codeBranch_Dict = {}
+		self.patch_type = ''
+		self.vnum = ''
+		self.pnum = ''
+		self.eservice_ID = ''
+		self.description = ''
+		self.untardir = ''
+		self.untarstr = "%s/P%s"
+		self.spacelimit = 20
+		self.gitlog_format = '%s forall -c \'git log --format=%s\' | grep "%s" | grep "%s"'
+		self.gitlog = self.gitlog_format % (self.repopath, '%s', self.mtkproj,self.mtkrelease)
+		self.build_cmd = 'source build/envsetup.sh && lunch full_%s-eng && make -j24 2>&1 | tee android.log' % self.lunchproj
+		self.get_db_connection()
+		self.devCodeProjectIDList = self.getProjectIDFromImportBranch(self.__branch)
+		print self.devCodeProjectIDList
+		self.devCodeBranch = self.getDevBranchNameFromIProjectID(self.devCodeProjectIDList,self.projectid_codeBranch_Dict)
+		if len(self.__DriveOnlyBranch) == len(self.__TelewebDirName):
+			for item in range(len(self.__DriveOnlyBranch)):
+				self.branchDict[self.__DriveOnlyBranch[item]] = self.__TelewebDirName[item]
+				print "the diff dirveonly branch need upto diff teleweb dir"
+				print self.branchDict
+
+		if not os.path.isdir(self.__start):
+		    	os.system('mkdir -p %s' % self.__start)
+
+		
+		
+	
+	def repo_code(self, codedir, BranchName):
+		print "Now checking the code if exist,"
+		if not os.path.isdir(codedir):
+			os.system('mkdir -p %s' % codedir)
+		print 'change dir ==================>%s\n' % codedir
+		os.chdir(codedir)
+		if os.path.exists(codedir + "/.repo") == False:
+			print "-----------------------------download code start-----------------------------\n"  
+			repoinit = pexpect.spawn('%s init -u git@10.92.32.10:%s/manifest -m %s.xml && %s sync -j8' % (self.repopath,self.manifestdir,BranchName,self.repopath))
+			repoinit.expect('Your\s+Name.*')
+			repoinit.sendline()
+			repoinit.expect('Your\s+Email.*')
+			repoinit.sendline()
+			repoinit.expect('is this.*')
+			repoinit.sendline('yes')
+			repoinit.expect()
+			print "-----------------------------download code end-----------------------------\n"
+	
+	
+    
+	def MergePatch(self,patchtype,patchNo=-1):
+		print "Now start to repo code"
+		self.repo_code(self.Code, self.__branch)
+		print "Please create file(start) on /local/mtk_patch_import directory. If not exist, the script will stop and exit."
+		'''parameter patchNo is 0,1,2,3...'''
+		if int(patchNo) == -1:
+			print "Parameter patchNo(%s) is error." % patchNo
+			return
+		if (os.path.exists("/local/mtk_patch_import/start") == True):
+			print "Now start to get import code from server"
+			self.reset(self.Code)
+			print "patchNo %s" % patchNo
+			patchFilename = self.takePatch(self.Code, patchNo)
+			for pjname  in self.updatePjName.split(","):
+				if pjname:
+					os.system('bash /local/int_jenkins/mtk_patch/lib/updatePjName.sh add %s %s %s'%(self.mtkproj,pjname,self.Code))
+			if 'Nofile' == patchFilename:
+				print "No p%s patch. Please copy the correct patch to TODO directory" % patchNo
+				sys.exit(1)
+
+			self.patch_type,self.vnum,self.pnum,self.eservice_ID = self.getMtkPatchInfor(patchFilename) 
+			self.description = self.getDescriptionFromPatchListFile(self.Code, self.untardir,self.eservice_ID)
+			print "description",self.description	        
+			self.insertAllImportInfoTO_importSheet(self.devCodeProjectIDList,self.__branch,self.patch_type,self.vnum,self.pnum,self.eservice_ID,self.description,patchtype)
+		            
+			comment = 'porting P%s_%s' %(patchNo, patchFilename.replace('(', '_').replace(')', '_'))
+			tagname = 'porting_mtk_patch_%s' % patchFilename.replace('(', '_').replace(')', '_')
+			tagcomment = 'porting mtk patch P%s' % patchNo
+			print "commit comment is %s" % comment
+			print "tagname is %s" % tagname
+			print "tagcomment is %s" % tagcomment
+			if True == self.__pushCodeToGit:
+				print 'start merge.....'
+				os.system('%s forall -c git add -A' % self.repopath)
+				#os.system('%s forall -c git commit -m "%s"; %s forall -c git push jgs HEAD:refs/heads/%s; %s forall -c git tag -a %s -m "%s";%s forall -c git push jgs %s' % (self.repopath,comment,self.repopath,self.__branch,self.repopath,tagname,tagcomment,self.repopath,tagname))
+				os.system('%s forall -c git commit -m "%s"; %s forall -c git push jgs HEAD:refs/heads/%s' % (self.repopath,comment,self.repopath,self.__branch))
+				if int(patchNo) % 10 == 0:
+					os.system('%s forall -c git tag -a %s -m "%s";%s forall -c git push jgs %s' % (self.repopath,tagname,tagcomment,self.repopath,tagname))
+				print 'finish merge....'
+
+
+    	
+	
+	def MergePatchToDriveOnly(self,patchNo=-1):
+		print "Now start to import for each drive only branch"
+		for eachbranch in self.__DriveOnlyBranch:
+			DriveOnlyCode = ''
+			DriveOnlygitDir = []
+			DriveOnlyCode = self.__DriveOnlyCode + eachbranch
+			self.repo_code(DriveOnlyCode, eachbranch)
+		        self.reset(DriveOnlyCode)
+			DriveOnlygitDir = self.getGitNameOfDir(DriveOnlyCode)
+			self.eachDriveOnlyBranchImport(DriveOnlygitDir, DriveOnlyCode,eachbranch, patchNo)
+			DriveOnlyCode = ''
+		#self.movePatchToMergeDone(patchNo)
+
+
+	def getGitNameOfDir(self, repodir):
+		gitDir = []
+		projectFile = repodir + "/.repo/project.list"
+		print "the project list is %s" % projectFile
+		F = getoutput('grep "" "%s"' % projectFile).split('\n')
+		for line in F:
+		    	if line.strip() not in gitDir:
+		    		gitDir.append(line.strip())
+		return gitDir
+
+	def eachDriveOnlyBranchImport(self,DriveOnlygitDir, DriveOnlyCode, eachbranch, patchNo=-1):
+		if int(patchNo) == -1:
+		    	print "Parameter patchNo(%s) is error." % patchNo
+		    	return
+
+		if (os.path.exists("/local/mtk_patch_import/start") == True):
+		    	print "Now start to get drive only code from server"
+		    	self.reset(DriveOnlyCode)
+		    	print "patchNo %s" % patchNo
+		    	patchFilename = self.takePatch(DriveOnlyCode,patchNo,False)
+		    	comment = 'porting P%s_%s for driveonly branch' %(patchNo, patchFilename.replace('(', '_').replace(')', '_'))
+		    	tagname = 'porting_mtk_patch_%s_for_%s' % (patchFilename.replace('(', '_').replace(')', '_'),eachbranch)
+		    	tagcomment = 'porting mtk patch P%s for DOnly' % patchNo
+		    	print "commit comment is %s" % comment
+		    	print "tagname is %s" % tagname
+		    	print "tagcomment is %s" % tagcomment
+		    	if True == self.__pushCodeToGit:
+		        	print 'start merge.....'
+				self.takeImportCommitForDriveOnly(DriveOnlyCode, self.__branch, eachbranch,patchNo,DriveOnlygitDir)
+				#os.system('%s forall -c git push jgs HEAD:refs/heads/%s; %s forall -c git tag -a %s -m "%s";%s forall -c git push jgs %s' % (self.repopath,eachbranch,self.repopath,tagname,tagcomment,self.repopath,tagname))
+				os.system('%s forall -c git push jgs HEAD:refs/heads/%s' % (self.repopath,eachbranch))
+				if int(patchNo) % 10 == 0:
+					os.system('%s forall -c git tag -a %s -m "%s";%s forall -c git push jgs %s' % (self.repopath,tagname,tagcomment,self.repopath,tagname))
+		       		print 'finish merge....'
+	
+	
+                               
+	def rmdatabase(self,codedir,patchNo):
+		print "no need to rm data base"
+
+
+
+	
+
+    	
+
+
+    	
+		
+	def reset(self, codedir):
+		if False == self.debug:
+			print "-----------------------------reset start-----------------------------\n"
+			print 'change dir ==================>%s\n' % codedir
+            		os.chdir(codedir)
+            		sleep(120)
+            		print "reset start... \nClean all, reset to HEAD and repo sync"
+            		os.system('rm -rf ./out')
+            		os.system('%s forall -c "git reset --hard HEAD; git clean -df"' % self.repopath)
+            		os.system('%s sync' % self.repopath)
+            		print "-----------------------------reset done-----------------------------\n"
+
+    	
+
+    	
+	def checkcompile(self,buildstatus,branchname=''):
+		if os.path.exists(r"/local/mtk_patch_import/%s/out/target/product/%s"  % (branchname,self.__project)):
+			print 'change dir ==================>/local/mtk_patch_import/%s/out/target/product/%s\n' % (branchname,self.__project)
+			os.chdir(r'/local/mtk_patch_import/%s/out/target/product/%s'  % (branchname,self.__project))
+			if (os.path.exists('system.img') and os.path.exists('userdata.img') and os.path.exists('recovery.img')):
+				return 'Success'
+			else:
+				return 'Fail'
+		else:
+			return 'Fail'
+	
+    	def justBuild(self):
+        	print "Just to build now"
+        	print "Repo sync latest import code"
+        	self.repo_code(self.Code, self.__branch)
+        	self.reset(self.Code)
+        	if 'Fail' == self._compile(self.Code,self.__branch):
+			print "Build Failed"
+			sys.exit(1)
+
+	def DriveOnlyBranchBuild(self, patchNo):
+		print "Now start to build driveonly branch"
+		print "Repo sync latest driveonly code"
+		for eachbranch in self.__DriveOnlyBranch:
+			DriveOnlyCode = ''
+			DriveOnlyCode = self.__DriveOnlyCode + eachbranch
+			self.repo_code(DriveOnlyCode, eachbranch)
+			self.reset(DriveOnlyCode)
+			if 'Fail' == self._compile(DriveOnlyCode, eachbranch):
+				print "Driveonli branch Build Failed"
+				sys.exit(1)
+			self.uploadBinToTeleweb(DriveOnlyCode, eachbranch, patchNo)
+			DriveOnlyCode = ''
+
+    	def uploadBinToTeleweb(self, DriveOnlyCode, eachbranch, patchNo):
+		print "Now start to upload"
+		print 'change dir ==================>%s\n' % DriveOnlyCode
+		os.chdir(DriveOnlyCode)
+        	if '' == patchNo:
+            		print "patchNo is none"
+            		sys.exit(1)
+		version_num="P%s-%s" % (patchNo, eachbranch)
+		os.system('/local/int_jenkins/sortresult/projects/Driveronly_CopyImg.sh %s %s %s '%(eachbranch, version_num, self.__project))
+		print "begin to upload result to teleweb"
+		driveonly_release_dir = r'/local/release/%s' % eachbranch
+        	if not os.path.isdir(driveonly_release_dir):
+            		os.system('mkdir -p %s' % driveonly_release_dir)
+		print 'change dir ==================>%s\n' % driveonly_release_dir
+		os.chdir(driveonly_release_dir)
+		os.system('scp -r v%s sl_hz_hran@10.92.32.26:/automount/sw_liv/livraison_securise/0_Huizhou/Android_SP/%s/driveonly/' % (version_num,self.branchDict[eachbranch]))
+		print "finish upload"		
+
+if __name__ == "__main__":
+	print "test for argv"
+	print sys.argv
+	conf = Config()
+	conf.addFromArg(sys.argv[1:])
+	patchtype = conf.getConf('patchtype','patch type','')
+	patchnum = conf.getConf('patchnum','patch number',-1)#sys.argv[3]
+	operation = conf.getConf('operation','operation','')
+	pm = PatchMerge(conf)
+	print '====================begin of %s====================\n' % operation
+	if operation == 'MergePatch':
+		pm.MergePatch(patchtype,patchnum)
+	elif operation == 'MergePatchToDriveOnly':  
+		pm.MergePatchToDriveOnly(patchnum)
+	elif operation == 'build':
+		pm.justBuild()
+	elif operation == 'DriveOnlybuild':
+		pm.DriveOnlyBranchBuild(patchnum)
+	else:
+		print "ERROR eccour in operation!"
+	print '====================end of %s====================\n' % operation

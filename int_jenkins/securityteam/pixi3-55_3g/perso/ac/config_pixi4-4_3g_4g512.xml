@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EDGSCG_CONFIG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="D:\FangFei\LCPI\EDG_SCG\DOC\EDG_SCG_config_file.xsd">
+  <!-- This data change with product -->
+  <PRODUCT_NAME>pixi4_4</PRODUCT_NAME>
+  <INT_PRODUCT_NAME>pixi4-4_3g</INT_PRODUCT_NAME> 
+ 
+  <LUNCH_COMMAND>lunch full_pixi4_4-user</LUNCH_COMMAND>   
+  <MAKE_COMMAND>./makePerso.sh full_pixi4_4-user</MAKE_COMMAND>
+  <!-- <CHOOSE_COMBO_PARA>choosecomboPara</CHOOSE_COMBO_PARA> -->
+  <!--  -->
+
+  <COMBINE_SYSTEM_CUSTPACK>1</COMBINE_SYSTEM_CUSTPACK>
+  <WIMDATA_VOB_NAME>mtk6580_wimdata_ng</WIMDATA_VOB_NAME> 
+  <PROCEDURES_PATH>mtk6580_wimdata_ng/wprocedures/pixi4_4</PROCEDURES_PATH>
+  <CUSTORES_PATH>mtk6580_wimdata_ng/wcustores/pixi4_4</CUSTORES_PATH>  
+  
+  <!-- Pls update your ip address in this tag when failed to get the ip automatically.-->  
+  <!-- <MMI_HOST_IP>10.92.34.11</MMI_HOST_IP> -->  
+  
+  <BOOT_LOGO_PATH>cu_wvga/</BOOT_LOGO_PATH> 
+  <!-- <CUSTO_ZIP_PATH_AND_NAME>/local/zz_2015-09-16_17-09.zip</CUSTO_ZIP_PATH_AND_NAME> -->  
+   
+  <CODE_SECU_FILE_PATH>vendor/mediatek/proprietary/custom/pixi4_4/secro/AC_REGION</CODE_SECU_FILE_PATH>
+  <SECU_CONF_VER>41</SECU_CONF_VER>
+  
+  <MMI_USER_NAME>user</MMI_USER_NAME>
+  <MMI_PASSWORD>Aa123456</MMI_PASSWORD>
+  
+	<INT_BRANCH_NAME>pixi4-4-v1.0-dint</INT_BRANCH_NAME>  
+</EDGSCG_CONFIG>
+

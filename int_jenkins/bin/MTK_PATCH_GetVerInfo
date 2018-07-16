@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+from time import *
+import os
+import sys
+import re
+from commands import *
+
+sys.path.append('/local/int_jenkins/lib')
+import xlrd
+import pexpect
+
+Project_xls="/local/int_jenkins/mtk_patch/"+ sys.argv[1] + "/" + sys.argv[1]+ ".xls"
+Sheet = "MTKInfo"
+
+### open xls get parament
+workbookSrc = xlrd.open_workbook(Project_xls)
+workContent = workbookSrc.sheet_by_name(Sheet)
+
+if 0 == workContent.nrows:
+	print "No data in " + Sheet + " of " +  Project_xls
+	exit(1)
+
+### help message
+def HelpInfo():
+	print sys.argv[0] + '-Import-Branch |-Project|-Patch-Format|-Mail-Server|-MailTitle|-DodomainAccount|-Sender|-ToList|-CCList|-SPMList|-DriveOnly]\n'
+	for i in range(workContent.nrows):
+		rowItems = workContent.row_values(i, 0, 10)
+		print rowItems[0].strip() + "\n" + rowItems[1].strip() + "\n" + rowItems[2].strip()
+	exit(0)
+
+
+
+if __name__ == '__main__':
+	if len(sys.argv) < 3:
+		HelpInfo()
+	rowItems = workContent.row_values(1, 0, 12)##read row values from 0 to 18 
+	if (sys.argv[2] == '-Import-Branch'):
+		print rowItems[0].strip()
+	elif sys.argv[2] == '-Project':
+		print rowItems[1].strip()
+	elif sys.argv[2] == '-Patch-Format':
+		print rowItems[2].strip()
+	elif sys.argv[2] == '-Mail-Server':
+		print rowItems[3].strip()
+	elif sys.argv[2] == '-MailTitle':
+		print rowItems[4].strip()
+	elif sys.argv[2] == '-DodomainAccount':
+		print rowItems[5].strip()
+	elif sys.argv[2] == '-Sender':
+		print rowItems[6].strip()
+	elif sys.argv[2] == '-ToList':
+		print rowItems[7].strip()
+	elif sys.argv[2] == '-CCList':
+		print rowItems[8].strip()
+	elif sys.argv[2] == '-SPMList':
+		print rowItems[9].strip()
+	elif sys.argv[2] == '-DriveOnly':
+		print rowItems[10].strip()
+	elif sys.argv[2] == '-TelewebDir':
+		print rowItems[11].strip()
+	elif sys.argv[2] == '-All':
+		for i in range(len(rowItems)):
+			print rowItems[i].strip()
+	else:
+		HelpInfo()
+	exit(0)
+	HelpInfo()

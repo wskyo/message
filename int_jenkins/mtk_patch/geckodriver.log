@@ -1,0 +1,1145 @@
+1498098913931	geckodriver	INFO	Listening on 127.0.0.1:41382
+1498098915020	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1498098920254	Marionette	INFO	Listening on port 51088
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1498098999809	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b1e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d48f70'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d4ed90'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bd1590'
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f867af128a0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f867af128a0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b770'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d529e0'
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8662cf08f0'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670bdecf0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f866ff08000'
+
+(firefox:17856): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f866ff08000'
+1498101631424	geckodriver	INFO	Listening on 127.0.0.1:52092
+1498101632466	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1498101635412	Marionette	INFO	Listening on port 35182
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+[Child 18195] WARNING: pipe error (3): Connection reset by peer: file /home/worker/workspace/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f865fd1b190'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://marionette/content/error.js, line 200: Error: No such content frame; perhaps the listener was not registered?
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f8670f37940'
+
+(firefox:17856): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8670d8f4f0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1498119465213	geckodriver	INFO	Listening on 127.0.0.1:46301
+1498119466334	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1498119471691	Marionette	INFO	Listening on port 52137
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc93ad42990'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1498119551122	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc942f558a0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc93abc1b70'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc93abb5990'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc942f55990'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc941ec2f20'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a49d8f0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95a6180a0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc95c998d90'
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1498120238744	geckodriver	INFO	Listening on 127.0.0.1:47187
+1498120239784	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1498120242495	Marionette	INFO	Listening on port 33536
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1498120274297	geckodriver	INFO	Listening on 127.0.0.1:57953
+1498120275358	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1498120278066	Marionette	INFO	Listening on port 50464
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc960728f70'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc96072a0a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc96072a0a0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019ca0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019d40'
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc938b0ac00'
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019c00'
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019e80'
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+JavaScript error: resource://gre/modules/LoginManagerContent.jsm, line 1618: Error: createFromField requires a password or username field in a document
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc938b0ade0'
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019d40'
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc969019f70'
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc938b0fa80'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc93ebeca30'
+*************************
+A coding exception was thrown in a Promise resolution callback.
+See https://developer.mozilla.org/Mozilla/JavaScript_code_modules/Promise.jsm/Promise
+
+Full message: TypeError: this.conn is null
+Full stack: onListTabs/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/server/actors/root.js:281:9
+process@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:917:23
+walkerLoop@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:801:7
+scheduleWalkerLoop/<@resource://gre/modules/Promise.jsm -> resource://gre/modules/Promise-backend.js:737:11
+
+*************************
+console.error: 
+  Message: Error: connectionClosed: 'listTabs' active request packet to 'root' can't be sent as the connection just closed.
+  Stack:
+    _getRoot/</<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/client/framework/target.js:294:18
+DebuggerClient.requester/</<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:283:9
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+emitOnObject@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/event/core.js:112:9
+emit@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/event/core.js:89:38
+emit@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1322:29
+reject@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1145:7
+purgeRequests/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1166:47
+purgeRequests@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1166:5
+onClosed@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1100:5
+close@chrome://marionette/content/server.js -> resource://devtools/shared/transport/transport.js:668:11
+close@chrome://marionette/content/server.js -> resource://devtools/shared/transport/transport.js:664:9
+close@chrome://marionette/content/server.js -> resource://devtools/shared/transport/transport.js:664:9
+cleanup@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:371:7
+detachClients@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:395:9
+DebuggerClient.requester/</<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:283:9
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+emitOnObject@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/event/core.js:112:9
+emit@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/event/core.js:89:38
+emit@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1322:29
+emitReply@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1021:29
+callFunctionWithAsyncStack@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/platform/chrome/stack.js:69:12
+onPacket@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/client/main.js:1023:9
+send/<@chrome://marionette/content/server.js -> resource://devtools/shared/transport/transport.js:570:13
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+exports.makeInfallible/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/ThreadSafeDevToolsUtils.js:101:14
+
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc95e5f0d40'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc93e66cd90'
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/client/sourceeditor/editor.js, line 1346: TypeError: cm is undefined
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/client/sourceeditor/editor.js, line 1346: TypeError: cm is undefined
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/client/sourceeditor/editor.js, line 1346: TypeError: cm is undefined
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc969019d90'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc969019d90'
+JavaScript warning: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/client/shared/demangle.js, line 0: Successfully compiled asm.js code (total compilation time 53ms; unable to cache asm.js in synchronous scripts; try loading asm.js via <script async> or createElement('script'))
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc9288371e0'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc969019f20'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+console.error: 
+  stylesheets actor: fetch failed for https://10.92.63.254/swl_login-5.0.0-4163414724(eng).css, using system principal instead.
+console.error: 
+  Won't load source editor as the style sheet has already been removed from Style Editor.
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc92ad9c850'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc9286090f0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc928f97c50'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc928609050'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc928d64d90'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc93ec70140'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc928639e30'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fc92de14a80'
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc92de3a2d0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19515): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fc92ad62c00'
+JavaScript error: https://10.92.63.254/loginStatusTop(eng).html, line 22: Error: Permission denied to access property "statusWinOpen"
+JavaScript error: https://10.92.63.254/loginStatus.js, line 309: Error: Permission denied to access property "cloneLoginStatusWin"
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/layout/utils.js, line 36: NS_NOINTERFACE: 
+JavaScript error: resource://gre/modules/commonjs/toolkit/loader.js -> resource://devtools/shared/layout/utils.js, line 36: NS_NOINTERFACE: 
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+console.error: 
+  Protocol error (noSuchActor): No such actor for ID: server1.conn1.child1/memoryActor12
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: https://10.92.63.254/loginStatus.js, line 145: NS_ERROR_NOT_INITIALIZED: 
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1498122853157	geckodriver	INFO	Listening on 127.0.0.1:59731
+1498122854223	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1498122856950	Marionette	INFO	Listening on port 59512
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffac5fce230'
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffabd84e050'
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffabd850400'
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffabd850400'
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffac1d0d400'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7ffabd84e280'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20148): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7ffabd84e1e0'
+1498122901916	geckodriver	INFO	Listening on 127.0.0.1:57085
+1498122902983	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1498122905779	Marionette	INFO	Listening on port 56834
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20275): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fd4b66d4000'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: resource://gre/components/captivedetect.js, line 348: ReferenceError: gSysMsgr is not defined
+JavaScript error: resource://gre/components/captivedetect.js, line 348: ReferenceError: gSysMsgr is not defined
+JavaScript error: resource://gre/components/captivedetect.js, line 348: ReferenceError: gSysMsgr is not defined
+JavaScript error: resource://gre/components/captivedetect.js, line 348: ReferenceError: gSysMsgr is not defined
+JavaScript error: resource://gre/components/captivedetect.js, line 348: ReferenceError: gSysMsgr is not defined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1499395679176	geckodriver	INFO	Listening on 127.0.0.1:34910
+1499395680245	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499395684954	Marionette	INFO	Listening on port 48516
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19758): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f3456e7b590'
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1499395766885	geckodriver	INFO	Listening on 127.0.0.1:35724
+1499395767927	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499395771213	Marionette	INFO	Listening on port 59245
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19890): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f931dbc8990'
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript error: chrome://pippki/content/exceptionDialog.js, line 32: Error: 2147500034
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19890): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9321805b70'
+
+(firefox:19890): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f93245e21e0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:19890): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9323a09940'
+1499395823403	geckodriver	INFO	Listening on 127.0.0.1:52113
+1499395824455	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1499395827516	Marionette	INFO	Listening on port 49007
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1499395876533	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499395877581	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1499395887214	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+1499395889190	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1499395975013	geckodriver	INFO	Listening on 127.0.0.1:40440
+1499395976057	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499395978929	Marionette	INFO	Listening on port 42651
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20159): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fa6ac1170f0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20159): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fa66c1d0ca0'
+
+(firefox:20159): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7fa66abb1d90'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20159): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fa66c1d0f70'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499396039659	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20159): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fa66ffbe2d0'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1499399777442	geckodriver	INFO	Listening on 127.0.0.1:50795
+1499399778491	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499399781412	Marionette	INFO	Listening on port 47398
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20401): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f629a52c590'
+1499399861127	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20401): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f629deb6b70'
+
+(firefox:20401): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f629ef90320'
+
+(firefox:20401): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f629c516770'
+1499400089887	geckodriver	INFO	Listening on 127.0.0.1:43151
+1499400090928	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499400093811	Marionette	INFO	Listening on port 36096
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f852930fb70'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f851165f1e0'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f850efad5e0'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8520e50680'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f8520e50680'
+1499400173508	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f850bf54190'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f850edbcca0'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f851165f190'
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f851165f280'
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f850edbce30'
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f8515582c00'
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): Gtk-CRITICAL **: gtk_clipboard_set_with_data: assertion `targets != NULL' failed
+
+(firefox:20558): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `load_complete' is invalid for instance `0x7f850a8dd850'
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1499652535520	geckodriver	INFO	Listening on 127.0.0.1:54851
+1499652536572	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1499652540881	Marionette	INFO	Listening on port 56079
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499652620524	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1499654547396	geckodriver	INFO	Listening on 127.0.0.1:38148
+1499654548446	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499654551306	Marionette	INFO	Listening on port 45775
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499654579047	geckodriver	INFO	Listening on 127.0.0.1:56469
+1499654580099	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499654583764	Marionette	INFO	Listening on port 53286
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:3988): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fe11e6a9140'
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:3988): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fe11e6ab0a0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:3988): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fe11e6b0de0'
+
+(firefox:3988): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7fe11e6b0d90'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499654631010	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: timeout
+1499654632398	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+1499654639920	geckodriver	INFO	Listening on 127.0.0.1:47433
+1499654640968	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1499654643744	Marionette	INFO	Listening on port 50859
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+1499654683694	addons.productaddons	WARN	Failed downloading XML, status: 0, reason: error
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499654686834	addons.productaddons	WARN	Failed downloading via XHR, status: 0, reason: error
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+
+(firefox:3866): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9cd0fa1450'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:3866): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9cd0fa1680'
+
+(firefox:3866): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9cd4d044a0'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:3866): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f9cd4d04a80'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499676026676	geckodriver	INFO	Listening on 127.0.0.1:51491
+1499676027719	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+1499676030378	Marionette	INFO	Listening on port 39110
+
+(firefox:6756): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f1040a51c00'
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+1499676161252	geckodriver	INFO	Listening on 127.0.0.1:34721
+1499676162297	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499676165158	Marionette	INFO	Listening on port 41264
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+1499676176289	geckodriver	INFO	Listening on 127.0.0.1:38393
+1499676177333	geckodriver::marionette	INFO	Starting browser /opt/firefox/firefox with args ["-marionette"]
+JavaScript error: resource://gre/modules/XPCOMUtils.jsm, line 230: TypeError: Cc[aContract] is undefined
+1499676180189	Marionette	INFO	Listening on port 38626
+JavaScript warning: http://10.92.63.254/jquery-5.0.0-3031828635(eng).js, line 2436: unreachable code after return statement
+
+(firefox:7005): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.4/./gobject/gsignal.c:3397: signal name `selection_changed' is invalid for instance `0x7f0457d93190'
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+JavaScript warning: https://sso.mediatek.com/eai/addtional/js/jquery-1.9.1.min.js, line 1: Using //@ to indicate sourceMappingURL pragmas is deprecated. Use //# instead
+[Child 7065] WARNING: pipe error (3): Connection reset by peer: file /home/worker/workspace/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined
+JavaScript error: chrome://browser/content/browser-captivePortal.js, line 249: TypeError: tab.linkedBrowser.currentURI is undefined

@@ -1,0 +1,5 @@
+For example: 
+	./PatchMangage.py . MergeOnePatch 14 build yes
+	./PatchMangage.py . PatchMail 14
+	./ModemPatchManage.py . MergeOnePatch 2 build yes
+

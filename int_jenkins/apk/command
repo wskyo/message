@@ -1,0 +1,9 @@
+for test:
+/local/int_jenkins/bin/apk -user hudson.admin# -appname OTBackup -version 1.9.0129.0 -baseversion 1.9.0128.0 -test yes
+
+for delivery email:
+/local/int_jenkins/bin/apk -user hudson.admin# -test no -apkname OTBackup@JrdLauncher@JrdFileManager@JrdWifiTransfer@JrdSoundRecord
+
+
+
+

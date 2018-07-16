@@ -1,0 +1,4 @@
+将git_list.txt 文件放到main.py同一级目录
+python main.py git_list.txt gitweb路径（一般为平台名，例如mtk6739） branch名
+例如：python main.py git_list.txt mtk6739 mtk6739-n-v1.0-import
+运行脚本之后会在当前目录生成mtk6739-n-v1.0-import.xml,再手动check一下。

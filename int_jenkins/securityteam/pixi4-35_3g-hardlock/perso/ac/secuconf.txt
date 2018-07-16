@@ -1,0 +1,62 @@
+;Conf version
+41
+;bin version
+X2B0A000BV00
+;LOCKN
+free
+;LOCKNS
+free
+;LOCKSP
+free
+;LOCKC
+free
+;LOCKSIM
+free
+;Number CNTFAILURELOCKN
+10
+;Number CNTFAILURELOCKNS
+10
+;Number CNTFAILURELOCKSP
+10
+;Number CNTFAILURELOCKC
+10
+;Number CNTFAILURELOCKSIM
+10
+;MCC export
+0
+;FREE SIM
+0
+;SPECIALSIM
+0
+;MEXICOLOCK
+0
+;OPERATORSPECIALSIMLOCK
+0
+;Reserved 5
+0
+;Reserved 6
+0
+;Reserved 7
+0
+;Reserved 8
+0
+;Reserved 9
+0
+;Reserved 10
+0
+;Reserved 11
+0
+;Reserved 12
+0
+;Reserved 13
+0
+;Reserved 14
+0
+;Reserved 15
+0
+;data config
+N_00000
+NS_0000000
+SIM_000000000000000
+SP_0000000
+C_000000000

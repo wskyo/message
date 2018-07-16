@@ -1,0 +1,38 @@
+/local/code/int_jenkins
+apk
+/local/int_jenkins
+Start running "/local/int_jenkins/apk/main.py -user hudson.admin# -test no -apkname OnetouchBooster" ...
+HEAD is now at 51e97be ###%%%comment:add the isdm def_is_support_data_monitor_server to plf
+Already up-to-date.
+[32;1m==========================[0m
+[34;1m[INFO]2016-01-14 19:19:06 Connect to alm[0m
+[32;1m==========================[0m
+START!
+The lastversion is v5.0.4.2.0108.0
+The current version is v5.0.4.2.0109.0
+['5.0.4.2.0109.0', '5.0.4.2.0108.0']
+nrows 7, ncols 12
+init conf from xls
+docmd:/local/code/int_jenkins$ mkdir /tmp/temp29Q9EaSuperSpam/image
+docmd:/local/code/int_jenkins$ mkdir /tmp/temp29Q9EaSuperSpam/attach
+Config:
+    apkname => OnetouchBooster
+    test => no
+    configfile => 
+    tempdir => /tmp/temp29Q9EaSuperSpam
+    user => hudson.admin#
+    showkey => yes
+    ask => 0
+
+Current dir: /local/code/int_jenkins
+
+chdir: /local/code/int_jenkins => /local/build/genericapp/
+docmd:/local/build/genericapp$ cp /local/int_jenkins/misc/SuperSpamReleaseMailFootLogoOneTouch.jpg /tmp/temp29Q9EaSuperSpam/image/ReleaseMailLogo.jpg
+['5.0.4.2.0109.0', '5.0.4.2.0108.0']
+chdir: /local/build/genericapp => /local/build/genericapp/
+the current and base version is ['5.0.4.2.0109.0', '5.0.4.2.0108.0']
+The key is OnetouchBooster
+chdir: /local/build/genericapp => OnetouchBooster
+chdir: /local/build/genericapp/OnetouchBooster => /
+docmd:/$ rm -rf /tmp/temp29Q9EaSuperSpam
+finish!

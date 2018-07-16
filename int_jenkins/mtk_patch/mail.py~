@@ -1,0 +1,516 @@
+#!/usr/bin/python
+#
+#for send MTK patch mail
+#
+import sys
+import MySQLdb
+sys.path.append('/local/int_jenkins/lib')
+sys.path.append('/local/int_jenkins/mtk_patch/lib')
+from checkPatchInfor import *
+from dotProjectDb import *
+from CheckFile import *
+import xlrd
+from Config import *
+import smtplib
+from email.header import Header
+from email.MIMEText import MIMEText
+import time
+
+class patchmail(checkPatchInfor,dotProjectDb,CheckFile):
+	
+	def __init__(self,conf):
+		self.proj = conf.getConf("project","project name")
+		self.patchNo = []
+		self.str_patchNo = ''
+		
+		self.patchtype = conf.getConf("patchtype","List of patch type",['ALPS','MOLY','SIXTH'])
+		self.__mailDir = conf.getConf("mailDir","mail dir","/local/mtk_patch_import/Mail")
+		self.__ongoingPatch = conf.getConf("ongoingPatch","on going patch","/local/mtk_patch_import/TODO")
+		self.sendmail = conf.getConf("sendmail","send mail",True)
+		self.patch_type = ''
+		self.vnum = ''
+		self.pnum = ''
+		self.eservice_ID = ''
+		self.repopath = '/local/tools/repo/repo'
+		self.__mailServer = u'mail.tcl.com'
+		self.__mailSender = u'xiaodan.cheng@tcl.com'
+		self.__mailAccount = u'xiaodan.cheng'
+		#self.__mailccList = u'xiaodan.cheng@tcl.com'
+		
+		self.patchowner = unicode(conf.getConf("patchowner","patch owner"))
+		#self.sharefoldname = self.proj
+		self.importIdDict = {"ALPS":{},"MOLY":{},"SIXTH":{}}
+		wb = xlrd.open_workbook('/local/int_jenkins/mtk_patch/jb3-mp-import.xls')
+		ap_st = wb.sheet_by_name(u'MTKInfo')
+		mp_st = wb.sheet_by_name(u'ModemInfo')
+		ap_row = ''
+		mp_row = ''
+		print "project name",self.proj
+		for row in xrange(0,ap_st.nrows):
+			#print "project of ALPS",self.proj,ap_st.cell(row,0).value.strip()
+			if ap_st.cell(row,0).value.strip() == self.proj:
+				ap_row = row
+		for row in xrange(0,mp_st.nrows):
+			#print "project of MOLY",self.proj,mp_st.cell(row,0).value.strip()
+			if mp_st.cell(row,0).value.strip() == self.proj:
+				mp_row = row
+		if not ap_row:
+			print "Cannot find project in the ALPS SHEET OF THE Excel!"
+			sys.exit(1)
+		if not mp_row:
+			print "Cannot find project in the MOLY OF THE Excel!"
+			sys.exit(1)
+		self.__branch = ap_st.cell(ap_row,1).value.strip()
+		self.platform = ap_st.cell(ap_row,16).value.strip()
+		self.dept = ap_st.cell(ap_row,13).value.strip()
+		self.__SPMList = ap_st.cell(ap_row,10).value.strip().split(',')
+		
+		self.__CodeDir = conf.getConf("CodeDir","code dir","/local/mtk_patch_import/"+self.__branch)
+		self.__mtkproj = ['','','']
+		self.__mtkrelease = ['','','']
+		#ALPS
+		self.__mtkproj[0] = ap_st.cell(ap_row,2).value.strip().split(',')[0]
+		self.__mtkrelease[0] = ap_st.cell(ap_row,3).value.strip()
+		#MOLY
+		self.__mtkproj[1] = mp_st.cell(mp_row,2).value.strip()
+		self.__mtkrelease[1] = mp_st.cell(mp_row,3).value.strip()
+		#SIXTH
+		self.__mtkproj[2] = mp_st.cell(mp_row,2).value.strip()
+		self.__mtkrelease[2] = mp_st.cell(mp_row,4).value.strip()
+		self.__mailToList = ap_st.cell(ap_row,8).value.strip().split(',')
+		self.__mailccList = ap_st.cell(ap_row,9).value.strip().split(',')
+		self.sharefoldname = ap_st.cell(ap_row,18).value.strip()
+		if not self.sharefoldname:
+			self.sharefoldname = self.proj
+		alps_no = conf.getConf("ALPS","Patch number of ALPS",-1)
+		moly_no = conf.getConf("MOLY","Patch number of MOLY",-1)
+		sixth_no = conf.getConf("SIXTH","Patch number of SIXTH",-1)
+		self.patchNo.append(alps_no)
+		self.patchNo.append(moly_no)
+		self.patchNo.append(sixth_no)
+		title=''
+		if alps_no != -1:
+			self.str_patchNo = self.str_patchNo  + "_ALPS" + str(alps_no)
+			title = title +"[ALPS][" + self.__mtkproj[0] + ']['  + self.__mtkrelease[0] + '][P' + alps_no + ']'
+		if moly_no != -1:
+			self.str_patchNo = self.str_patchNo  + "_MOLY" + str(moly_no)
+			title = title +"[MOLY][" + self.__mtkproj[1] + ']['  + self.__mtkrelease[1] + '][P' + moly_no + ']'
+		if sixth_no != -1:
+			self.str_patchNo = self.str_patchNo  + "_SIXTH" + str(sixth_no)
+			title = title +"[SIXTH][" + self.__mtkproj[2] + ']['  + self.__mtkrelease[2] + '][P' + sixth_no + ']'
+		self.__mailTitle = '[MTK Patch merge][%s]%s' % (self.proj,title)
+		self.__Code = conf.getConf("codeDir","code dir","/local/mtk_patch_import/" + self.__branch)
+		self.gitlog_format = '%s forall -c \'git log --format=%s\' | grep "%s" | grep "%s" | grep "P%s_" | sort '
+		
+		self.get_db_connection()
+		self.checkFileDict = self.getAffectFileDict()
+		self.projectList = self.checkProjectName()
+		self.devCodeProjectIDList = self.getProjectIDFromImportBranch(self.__branch)
+		self.projectid_codeBranch_Dict = {}
+		self.devCodeBranch = self.getDevBranchNameFromIProjectID(self.devCodeProjectIDList,self.projectid_codeBranch_Dict)
+		self.SPMIDList = self.getContactIDList(self.devCodeProjectIDList)
+		print "self.SPMIDList",self.SPMIDList,type(self.SPMIDList)
+		self.SPMEmailList = self.getSpmEmailList(self.SPMIDList)
+		#print "SPMEmailList",self.SPMEmailList
+		#self.SPMEmailList = ['xiaodan.cheng@tcl.com','908762503@qq.com']
+		print "========start========"
+		print "agv:"
+		print "project name",self.proj
+		print "patchNo",self.patchNo
+		print "mtk project",self.__mtkproj
+		print "mtk MR release vesion",self.__mtkrelease
+		print "patchowner",self.patchowner
+		print "SPMEmailList",self.SPMEmailList
+		print "mailccList",self.__mailccList
+		print "========end========"
+	def getEmailHead(self,owner,mailBody,bugInfo):
+		mailBody.append('<p align=\'Left\'><b>Dear %s,</b></p>' % owner)
+		__bugInfor = ''
+		comment = ''
+		print "bugInfo",bugInfo
+		for str_type in self.patchtype:
+			#print "======str_type========",str_type
+			
+			if bugInfo[str_type].has_key('patchID') and bugInfo[str_type]['patchID'] == str_type:
+				__bugInfor = __bugInfor + bugInfo[str_type]['bugID'] + ' '
+				comment = comment + bugInfo[str_type]['comment'] + '#'
+		mailBody.append('<p align=\'Left\'>%s Platform %s Patch %s<br/></p>' %(self.platform,self.proj,__bugInfor))
+		mailBody.append('<p align=\'Left\'><b>Please help to merge patch to below branch:</b><br/></p>')
+		for eachCodeBranchName in self.devCodeBranch:		
+		    	mailBody.append('<p align=\'Left\'><b><font color="#FF0000">%s</font></b></p>' % eachCodeBranchName)
+		mailBody.append('<p align=\'Left\'><font color="#FF0000">Please kindly give a feedback in 24h.</b></font><br/><br/></p>')
+		mailBody.append('<p align=\'Left\'><font color="#FF0000">The comment same as:</b></font><br/></p>' )
+		for comment_str in comment.split('#'):
+			if comment_str:
+				mailBody.append('<p align=\'Left\'><font color="#FF0000">    %s</b></font><br/></p>' % comment_str)	
+		mailBody.append('<p align=\'Left\'>Patch Link in import branch:</p>')
+
+	def getEmailTail(self,mailBody):
+		a = u"\\\\10.92.32.12\\RDhzKM\\SWD-Share\\INT\\MTKPatch\\%s" % self.sharefoldname
+		mailBody.append('<p align=\'Left\'><b>You can also find this patch%s in:<font color="#FF0000">%s</font></b></p>' % (self.str_patchNo.replace('_',' '), a))
+		mailBody.append('<p align=\'Left\'><b>After you complete to merge the %s %s patch %s,</b></p>' % (self.platform,self.proj,self.str_patchNo.replace('_',' ')))
+		mailBody.append('<p align=\'Left\'><b>please make sure the related issues of this MTK Patch you merged are fixed, and</b></p>')
+		mailBody.append('<p align=\'Left\'><font color="#FF0000"><b>please send a remind email to us!!!</b></font></p>')
+
+	def makePatchMail(self):
+		mailBody = []
+		comment_list = []
+		file_link = {"ALPS":{},"MOLY":{},"SIXTH":{}}
+		patchfile_list = []
+		self.getCommentLink(comment_list,file_link,patchfile_list)
+		assert len(comment_list) == 3,"========something wrong happened========\n"
+		filenum = self.getpatchfilenumbers(patchfile_list)
+		if not comment_list[0] and not comment_list[1] and not comment_list[2]:
+			print "Parameter patchNo(%s) is error." % self.patchNo
+			return
+		bugInfo = self.__getBugzillaInfo( comment_list )
+		
+		dearName = self.patchowner.split('@')[0]
+		self.getEmailHead(dearName,mailBody,bugInfo)
+		itemnum = self.getEmailContent(mailBody,self.str_patchNo,file_link)
+		assert filenum <= itemnum,"file number must be smaller than item number."
+		self.getEmailTail(mailBody)
+		mailtitle = '%s Patch merge' %(self.__mailTitle)                           
+		#print 'self.importIdDict',self.importIdDict
+		#print 'self.projectid_codeBranch_Dict',self.projectid_codeBranch_Dict	
+		#for projectID1 in self.importIdDict.keys():
+			#for projectID2 in self.projectid_codeBranch_Dict.keys():
+				#if projectID1 == projectID2:
+					#pass
+					#self.insertImportId_And_DevBranch_To_dotp_mtk_merge(self.importIdDict[projectID1],self.projectid_codeBranch_Dict[projectID2],self.patchowner)			             
+		#os.system('python /local/int_jenkins/mtk_patch/lib/insertdbToWr.py %s %s %s %s' % (self.__branch,self.vnum,self.pnum,self.eservice_ID) )
+		#os.system('python /local/int_jenkins/mtk_patch/lib/insertInforToManpower.py %s %s %s %s %s' % (self.__branch,self.vnum,self.pnum,self.eservice_ID,'yan.xiong') )			             
+		self.__sendMail(self.str_patchNo, mailtitle, mailBody, [bugInfo['assigned']])
+	def getpatchfilenumbers(self,patchfile_list=[]):
+		file_sum = 0
+		file_list = []
+		if patchfile_list[0]:
+			tmpfiles = getoutput("tar %s/'%s' | sed 's/\// /g' | awk '{print $2}'"%(self.__ongoingPatch,patchfile_list[0])).split('\n')
+			for tmpfile in tmpfiles:
+				if not tmpfile:
+					continue
+				if tmpfile not in file_list:
+					file_list.append(tmpfile)
+			file_sum = file_sum + len(file_list)
+		if patchfile_list[1]:
+			file_sum = file_sum + 1
+		if patchfile_list[2]:
+			file_sum = file_sum + 1
+		return file_sum
+
+	def getCommentLink(self,comment_list=[],file_link={"ALPS":{},"MOLY":{},"SIXTH":{}},patchfile_list=[]):
+		'''parameter patchNo is 0,1,2,3...'''
+		numtotype = {0:"ALPS",1:"MOLY",2:"SIXTH"}
+		for i in xrange(0,len(self.patchNo)):
+			if int(self.patchNo[i]) == -1:
+				comment_list.append('')
+				patchfile_list.append('')
+			    	continue
+			if not os.path.isdir(self.__mailDir):
+			    	os.system('mkdir -p %s' % self.__mailDir)
+			print '========ongoingPatch,mtkproject,mtkrelease,patchNo========',self.__ongoingPatch, self.__mtkproj[i],self.__mtkrelease[i], self.patchNo[i]
+			patchFilename = getoutput("ls %s | grep '%s' | grep '%s' | grep P%s\).tar.gz" % (self.__ongoingPatch, self.__mtkproj[i],self.__mtkrelease[i], self.patchNo[i]))
+			print '========patchFilename========',patchFilename
+			patchfile_list.append(patchFilename)
+			self.patch_type,self.vnum,self.pnum,self.eservice_ID = self.getMtkPatchInfor(patchFilename)
+			print "========patch_type,vnum,pnum,eservice_ID========\n"
+			print self.patch_type,self.vnum,self.pnum,self.eservice_ID
+			print "========"
+			print 'change dir ==================>%s\n' % self.__CodeDir 
+			os.chdir(self.__CodeDir)
+			#porting P27_ALPS02813031_For_jhz6755_66_cn_m_alps-mp-m0.mp7-V1_P27_.tar.gz^^^^^^1fe186680fcb8b6332079ba88ad00fdf860daec3^^^^^^/home/swd3/project/shine-plus
+			#porting MOLY00217132_eServiceID_For_JHZ6755_66_CN_M_LWCTG__MOLY.LR11.W1539.MD.MP.V9.P14_.tar.gz^^^^^^0ea7fdd0657309505949f686c31226373ff31f7b^^^^^^/home/swd3/project/shine-plus
+			#porting SIXTH00014477_ALPS02988853_For_JHZ6755_66_CN_M_C2K__SIXTH.CBP.MD.MP3.V8_P5_.tar.gz^^^^^^40f305e4143c228647cab09c4f126d0616d23c70^^^^^^/home/swd3/project/shine-plus
+			#porting P27_ALPS02813031_For_jhz6755_66_cn_m_alps-mp-m0.mp7-V1_P27_.tar.gz^^^^^^88c9d5fd6d39ee3af2646da57bd219b750688664^^^^^^/home/swd3/project/shine-plus
+			print self.gitlog_format % (self.repopath, '%s^^^^^^%H^^^^^^$PWD', self.__mtkproj[i],self.__mtkrelease[i], self.patchNo[i])
+			patchList = getoutput(self.gitlog_format % (self.repopath, '%s^^^^^^%H^^^^^^$PWD', self.__mtkproj[i],self.__mtkrelease[i], self.patchNo[i])).split('\n')
+			
+			for item in xrange(len(patchList)):
+			    	itemInfo = patchList[item].split('^^^^^^')
+			    	if 3 != len(itemInfo):
+					print "patchList have problems. patchList = %s" % patchList
+					print "The pacth has no modification"
+					sys.exit(1)
+			comment_list.append( patchList[0].split('^^^^^^')[0] )
+			print "========patchList=======",patchList
+			for item in xrange(len(patchList)):
+				itemInfo = patchList[item].split('^^^^^^')
+				gitName = itemInfo[2].split(self.__branch)[1]
+				match = re.match("^/(.*)",gitName)
+				gitName = match.group(1)
+				gitLink = itemInfo[1]
+				file_link[numtotype[i]][gitName] = gitLink
+			for (gitName,link) in file_link[numtotype[i]].items():
+				gitNamefilder = gitName
+				if gitName == "kernel-3.18":
+					gitName = 'kernel'
+				if gitName.find("modem")!=-1:
+					if gitName.find("SIXTH")!=-1:
+						gitName = "modem/C2K"
+					if gitName.find("MOLY")!=-1:
+						gitName = "modem"
+				gitLink = 'http://10.92.32.10/%s/gitweb-%s/?p=%s.git;a=commit;h=%s' % (self.dept,self.platform,gitName, link)
+				print "========"
+				print "importIdDict",self.importIdDict
+				print "devCodeProjectIDList",self.devCodeProjectIDList
+				print "branch",self.__branch
+				print "patch_type",self.patch_type
+				print "vnum",self.vnum
+				print "pnum",self.pnum
+				print "eservice_ID",self.eservice_ID
+				print "gitLink",gitLink
+				print "gitNamefilder",gitNamefilder
+				print "========"
+				self.insertImportCommitInfoTO_dotp_mtk_commit(self.importIdDict,self.devCodeProjectIDList,self.__branch,self.patch_type,self.vnum,self.pnum,self.eservice_ID,link,gitLink,gitNamefilder)
+			print 'self.importIdDict',self.importIdDict
+			print 'self.projectid_codeBranch_Dict',self.projectid_codeBranch_Dict	
+			for projectID1 in self.importIdDict[self.patch_type].keys():
+				for projectID2 in self.projectid_codeBranch_Dict.keys():
+					if projectID1 == projectID2:
+						#pass
+						self.insertImportId_And_DevBranch_To_dotp_mtk_merge(self.importIdDict[self.patch_type][projectID1],self.projectid_codeBranch_Dict[projectID2],self.patchowner)			             
+			os.system('python /local/int_jenkins/mtk_patch/lib/insertdbToWr.py %s %s %s %s' % (self.__branch,self.vnum,self.pnum,self.eservice_ID) )
+			os.system('python /local/int_jenkins/mtk_patch/lib/insertInforToManpower.py %s %s %s %s %s' % (self.__branch,self.vnum,self.pnum,self.eservice_ID,'yan.xiong'))
+			#time.sleep(60)
+	
+	def insertImportCommitInfoTO_dotp_mtk_commit(self,importIdDict,devCodeProjectIDList,importBranchName,patch_type,vnum,pnum,eservice_ID,commit_id,import_patch_link,git_name):
+		for eachProjectID in devCodeProjectIDList:			
+			import_id = self.getImportIDAfterInsert(eachProjectID,importBranchName,vnum,pnum,patch_type,eservice_ID)
+			print "the import id is %s" % import_id
+			if eachProjectID not in importIdDict[patch_type].keys():
+				importIdDict[patch_type][eachProjectID] = import_id 
+			self.insertImportCommitIDInfo(import_id,commit_id,import_patch_link,git_name)
+		return importIdDict	
+
+	def getEmailContent(self,mailBody,str_patchNo,file_link):
+		item = 0
+		for str_type in self.patchtype:
+			for (gitName,link) in file_link[str_type].items():
+			    	gitNamefilder = gitName
+			    	if gitName == "kernel-3.18":
+					gitName = 'kernel'
+				if gitName.find("modem")!=-1:
+					if gitName.find("SIXTH")!=-1:
+						gitName = "modem/C2K"
+					if gitName.find("MOLY")!=-1:
+						gitName = "modem"
+			    	gitLink = 'http://10.92.32.10/%s/gitweb-%s/?p=%s.git;a=commit;h=%s' % (self.dept,self.platform,gitName, link)
+			    	#self.insertImportCommitInfoTO_dotp_mtk_commit(self.importIdDict,self.devCodeProjectIDList,self.__branch,self.patch_type,self.vnum,self.pnum,self.eservice_ID,link,gitLink,gitNamefilder)
+				item = item + 1
+			    	mailBody.append('<p align=\'Left\'>%s) %s<br/></p><p align=\'Left\'><a href="%s">%s</a></p>' % (item,gitName,gitLink,gitLink))
+			    	gitnameDir = self.__CodeDir + "/"+ gitNamefilder
+			    	for keyname in self.checkFileDict.keys():
+					filename = self.checkFileDict[keyname]['filename']
+					if self.checkFileDict[keyname]['gitname'] == gitName:
+						if True == self.getFileLibNvram(gitnameDir,filename):
+							mailBody.append('<p align=\'Left\'><font color="#FF0000"><b>Note: The file of %s has been changed in patch %s.</font></b></p>' % (filename,str_patchNo.replace('_',' ')))
+							mailBody.append('<p align=\'Left\'><font color="#FF0000"><b>Please contact System team to check whether to merge this modification to project code</font></b></p>')
+							mailBody.append('<br/>')  
+			    	projectnamestr = '' 
+			    	for projectname in self.projectList:
+					if True == self.getFileLibNvram(gitnameDir,projectname):
+						projectnamestr = projectname + ',' + projectnamestr
+						projectnamestr = projectnamestr.strip(',')
+			    	if projectnamestr:
+			    		project_str = 'Please merge the files' + projectnamestr + 'to project by the link'
+			    		mailBody.append('<p align=\'Left\'><b><font color=green>%s:%s</font></b></p>' % (gitName,project_str))		
+			    	if gitName == "vendor":
+					sofilename = "libnvram.so"
+					if 'sochanged' == self.getFileLibNvram(gitnameDir,sofilename):
+						mailBody.append('<p align=\'Left\'><font color="#FF0000">Note: The file of libnvram.os has been changed.Please check the link</font></p>')	          
+			    	if gitNamefilder == 'build':
+					platform_security_value = self.checkBuildCore(gitnameDir)
+					if platform_security_value:
+						mailBody.append('<p align=\'Left\'><b><font color=green>Note: The file of build/core/version_defaults.mk has been changed.Please check the modification from the above link.</font></b></p>')
+						mailBody.append('<p align=\'Left\'><b><font color=green>The current value of %s </font></b></p>' % platform_security_value)
+		return item	
+
+	def getPatchLink(self, mailBody, patchNo=-1):
+		for eachbranch in self.__DriveOnlyBranch:
+			DriveOnlyCode = ''
+			DriveOnlyCode = self.__DriveOnlyCode + eachbranch
+			print 'change dir ==================>%s\n' % DriveOnlyCode
+			os.chdir(DriveOnlyCode)
+			patchList = getoutput(self.gitlog_format % (self.repopath, '%s^^^^^^%H^^^^^^$PWD', self.__patchname_ap,self.__MPRelease_ap, patchNo)).split('\n')
+			for item in range(len(patchList)):
+		    		itemInfo = patchList[item].split('^^^^^^')
+		    		if 3 != len(itemInfo):
+		        		print "patchList have problems. patchList = %s" % patchList
+					print "The pacth has no modification"
+		        		sys.exit(1) 
+		
+		    	mailBody.append('<p align=\'Left\'>Patch Link in driveonly import branch %s:</p>' % eachbranch)
+		    	for item in range(len(patchList)):
+		        	itemInfo = patchList[item].split('^^^^^^')
+		        	gitName = itemInfo[2].split(eachbranch)[1]
+		        	match = re.match("^/(.*)",gitName)
+		        	gitName = match.group(1)
+		        	if gitName == "kernel-3.18":
+		            		gitName = 'kernel'				
+		        	gitLink = 'http://10.92.32.10/%s/gitweb-%s/?p=%s.git;a=commit;h=%s' % (self.dept,self.platform,gitName, itemInfo[1])
+		        	mailBody.append('<p align=\'Left\'>%s) %s</p><p align=\'Left\'><a href="%s">%s</a></p>' % (item+1,gitName,gitLink,gitLink))
+		return mailBody
+
+	def __getBugzillaInfo(self, comment_list=['','',''],result={'ALPS':{},'MOLY':{},'SIXTH':{}}):
+		#porting P36_ALPS03057833_For_jhz6755_66_cn_m_alps-mp-m0.mp7-V1_P36_.tar.gz
+		#porting MOLY00217132_eServiceID_For_JHZ6755_66_CN_M_LWCTG__MOLY.LR11.W1539.MD.MP.V9.P14_.tar.gz
+		#porting SIXTH00015434_ALPS03057833_For_JHZ6755_66_CN_M_C2K__SIXTH.CBP.MD.MP3.V8_P6_.tar.gz
+		reciever = 'renzhi.yang.hz@tcl.com'
+		if reciever.endswith('.com'):
+			result['assigned'] = reciever
+			result['assigned'] = result['assigned'].encode('gb2312')
+		for comment in comment_list:
+			if not comment:
+				continue
+				
+			match =re.match(r'porting (P\d+_+)?ALPS(\d+)_.+', comment)
+			if match:
+			    	while True:
+					InputString = "Summary:"              
+					if len(InputString) > 0:
+				    		result['ALPS']['shortDesc'] = InputString
+				    		break
+					else:
+				    		continue
+			    	result['ALPS']['bugID'] = 'ALPS'+match.group(2)
+			    	result['ALPS']['comment'] = comment
+			    	result['ALPS']['patchID'] = 'ALPS'
+			    	#return result
+			match =re.match(r'porting (P\d+_+)?MOLY(\d+)_.+', comment)
+			if match:
+			    	while True:
+					InputString = "Summary:"              
+					if len(InputString) > 0:
+				    		result['MOLY']['shortDesc'] = InputString
+				    		break
+					else:
+				    		continue
+			    	result['MOLY']['bugID'] = 'MOLY'+match.group(2)
+			    	result['MOLY']['comment'] = comment
+			    	result['MOLY']['patchID'] = 'MOLY'
+			    	#return result
+			match =re.match(r'porting (P\d+_+)?SIXTH(\d+)_.+', comment)
+			if match:
+			    	while True:
+					InputString = "Summary:"              
+					if len(InputString) > 0:
+				    		result['SIXTH']['shortDesc'] = InputString
+				    		break
+					else:
+				    		continue
+			    	result['SIXTH']['bugID'] = 'SIXTH'+match.group(2)
+			    	result['SIXTH']['comment'] = comment
+			    	result['SIXTH']['patchID'] = 'SIXTH'
+			    	#return result
+			#match =re.match(r'porting P\d+_.+?(\d+)_.+', comment)
+			#if match:
+				#while True:
+					#InputString = "Summary:"              
+					#if len(InputString) > 0:
+				    		#result['JRD']['shortDesc'] = InputString
+				    		#break
+					#else:
+				    		#continue
+				#result['JRD']['bugID'] = 'JRD' + match.group(1)
+				#result['JRD']['comment'] = comment
+				#result['JRD']['bugLink'] = "https://alm.tclcom.com:7003/im/issues?selection=%s" % match.group(1)
+				#result['JRD']['patchID'] = 'JRD'
+		return result
+
+
+	def makeDriveOnlyPatchMail(self,patchNo=-1):
+		'''parameter patchNo is 0,1,2,3...'''
+		if int(patchNo) == -1:
+			print "Parameter patchNo(%s) is error." % patchNo
+			return
+		if not os.path.isdir(self.__mailDir):
+			os.system('mkdir -p %s' % self.__mailDir)
+		mailBody = []
+		dearName = 'Integrators'
+		mailBody.append('<p align=\'Left\'><b>Dear %s,</b></p>' % dearName)
+		allDriveOnlyBranch = ','.join(self.__DriveOnlyBranch)
+		mailBody.append('<p align=\'Left\'>MTK Patch <b><font color="#FF0000">P%s</font></b> has been merged to driveonly branch(%s)<br/></p>' % (patchNo, allDriveOnlyBranch))
+		mailBody.append('<p align=\'Left\'>You can check the merge result.</b></p>')
+		mailBody = self.getPatchLink(mailBody,patchNo)
+		a = u"\\\\10.92.32.12\\RDhzKM\\SWD-Share\\INT\\MTKPatch\\%s"%self.sharefoldname
+		mailBody.append('<p align=\'Left\'><b>You can find this patch (P%s) in:<font color="#FF0000">%s</font></b></p>' % (patchNo, a))
+		mailBody.append('<p align=\'Left\'><b>please check the modification.</b></p>') 
+		mailtitle = '%s P%s Patch import to driveonly branch' %(self.__mailTitle, patchNo)
+		self.__sendMail(patchNo, mailtitle, mailBody, '')
+
+
+    	def checkDriveOnlyBuildResult(self,patchNo=-1):
+		'''parameter patchNo is 0,1,2,3...'''
+		if int(patchNo) == -1:
+		    	print "Parameter patchNo(%s) is error." % patchNo
+		    	return
+		if not os.path.isdir(self.__mailDir):
+		    	os.system('mkdir -p %s' % self.__mailDir)
+		mailBody = []
+		dearName = 'Integrators'
+		mailBody.append('<p align=\'Left\'><b>Dear %s,</b></p>' % dearName)
+		allDriveOnlyBranch = ','.join(self.__DriveOnlyBranch)
+		mailBody.append('<p align=\'Left\'>MTK Patch <b><font color="#FF0000">P%s</font></b> has been merged to driveonly branch(%s)<br/></p>' % (patchNo, allDriveOnlyBranch))
+		mailBody.append('<p align=\'Left\'>It has been built and been uploaded to teleweb.</b></p>')
+		mailBody.append('<p align=\'Left\'>Build eng version, mtk project: %s.</b></p>' % self.__project )
+		for eachbranch in self.__DriveOnlyBranch:
+			DriveOnlyCode = ''
+			DriveOnlyCode = self.__DriveOnlyCode + eachbranch
+			mailBody.append('<p align=\'Left\'>You can find %s bins at teleweb:<b><font color="#FF0000">%s/driveonly/P%s_%s</font></b></p>' % (self.branchDict[eachbranch],self.branchDict[eachbranch], patchNo,eachbranch))
+		mailBody = self.getPatchLink(mailBody,patchNo)
+		mailtitle = '%s P%s Patch driveonly branch build done' %(self.__mailTitle, patchNo)
+		self.__sendMail(patchNo, mailtitle, mailBody, '')
+
+
+
+	def __sendMail(self,str_patchNo, mailtitle, mailBody=[], to=[]):
+		'''parameter toList: the PR owner(assigned) or interface or leader'''
+		print "========begin of send mail========"
+		smtpServer = smtplib.SMTP(self.__mailServer)
+		reload(sys)
+		sys.setdefaultencoding('gbk')	
+		msg = MIMEText(''.join(mailBody), 'html','utf-16')
+		msg.set_charset('gb2312')   
+		msg['From'] = self.__mailSender
+		msg['Subject'] = mailtitle
+		#msg['Subject'] = '%s P%s Patch Merge' %(self.__mailTitle, patchNo)
+		domainAccount = self.__mailAccount
+		domainPassword = "cxd@6235"
+		smtpServer.login(self.__mailAccount, domainPassword)
+		sendTo = "all"
+		tolist = []
+		if sendTo == "self":
+		    	msg['To'] = self.__mailSender
+		    	tolist.append(self.__mailSender)
+		elif sendTo == "all":
+		    	if self.sendmail == True:		
+		    		msg['To'] = ','.join(self.SPMEmailList) + ',' + self.patchowner
+		    		msg['Cc'] = ','.join(self.__mailToList ) + ',' + ','.join(self.__mailccList)
+				tolist = self.__mailToList + self.__mailccList + self.__SPMList + self.SPMEmailList + [ self.patchowner ]
+				
+		    		#smtpServer.sendmail(self.__mailSender, list(set(self.__mailToList + self.__mailccList + self.__SPMList + self.SPMEmailList + self.patchowner)), msg.as_string())
+		    	else:
+		    		msg['To'] = ','.join(self.__mailToList)
+		    		msg['Cc'] = ','.join(self.__mailccList + self.__SPMList )
+				tolist = self.__mailToList + self.__mailccList + self.__SPMList
+				#smtpServer.sendmail(self.__mailSender, list(set(self.__mailToList + self.__mailccList + self.__SPMList)), msg.as_string())
+		else:
+		    	print "Send Mail to (%s) Error: %s" % (sendTo, msg.as_string())
+		print "sender",self.__mailSender
+		print "tolist",tolist
+		print "message",msg.as_string()
+		smtpServer.sendmail(self.__mailSender, tolist , msg.as_string())
+		fp = open(self.__mailDir + "/%s.eml" % str_patchNo, 'wb')
+		fp.write(msg.as_string())
+		fp.close()
+		smtpServer.quit()
+		print "========end of send mail========"
+if __name__ == '__main__':
+	print "========test for argv========"
+	print sys.argv
+	print "========test for argv========"
+	conf = Config()
+	conf.addFromArg(sys.argv[1:])
+	mail = patchmail(conf)
+	mail.makePatchMail()
+

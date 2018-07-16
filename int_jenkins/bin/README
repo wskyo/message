@@ -1,0 +1,12 @@
+#################### bin file #############################
+1. this bin is accept common from user
+
+
+##########################################################
+2.compress emcc file use:make_ext4fs,e.g.:make_ext4fs -s -l 613M -a custpack ./out/target/product/jrdsh75_cu_jb/custpack.img ./out/target/product/jrdsh75_cu_jb/custpack
+3.compress yaff2 file: mkyaffs2image -c 4096 -s 128 out/target/product/jrdhz75_gb2/custpack out/target/product/jrdhz75_gb2/custpack.img
+4.uncompress yaffs 4k use:unyaffs_4k custpack.img;2k use:unyaffs_2k custpack.img
+5.uncompress emcc file unext4/ext4_dump custpack.img #需要将ext4_dump、simg2img和要解压的img放到同一路径下。
+ 
+
+

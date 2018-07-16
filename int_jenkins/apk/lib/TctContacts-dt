@@ -1,0 +1,274 @@
+#!/bin/bash -xe
+#exit 0
+
+#/local/int_jenkins/apk/lib/TctContacts-dt buzz6t4gDT TctContacts-dt no no
+
+BUILD_PROJECT_NAME=$1
+TAGAPPNAME=$2
+tag_addver=$3
+ishomo=$4
+#tag_addver=${addversion}
+
+DEPENDGIT='ContactsCommon TctFrameworks PhoneCommon'
+
+echo "start build $TAGAPPNAME"
+APPNAME=TctContacts
+tmp=0
+GITSERVER=git@10.92.32.10:sdd3/tcl
+BRANCH=tcl-dt-apps-v1.0
+
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/
+rm -rf /local/build/genericapp/$TAGAPPNAME
+#cd /local/build/genericapp/$BUILD_PROJECT_NAME/vendor/jrdcom/apps/
+rm -rf /local/build/genericapp/$APPNAME
+
+rm -rf out/target/common/jrdResAssetsCust/packages/apps/$APPNAME
+rm -rf out/target/common/jrdResAssetsCust/packages/apps/Mms
+rm -rf out/target/product/jhz6737m_35_b_m0/system/priv-app/TctContacts/TctContacts.apk
+rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/TctContacts
+#rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/ContactsCommon
+#rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/TctFrameworks
+
+#cd /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/
+for itemgit in ${DEPENDGIT[@]}  
+do
+    rm -rf out/target/common/jrdResAssetsCust/packages/apps/$itemgit
+    rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+done
+
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/
+
+
+
+echo ${DEPENDGIT}
+VER_NUM=1.0.0.0
+version=''
+baseversion=''
+
+
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/
+echo "begin to get $APPNAME Code"
+if [ ! -d $APPNAME ];then
+    rm -rf $APPNAME
+    git clone git@10.92.32.10:sdd3/tcl/$APPNAME -b $BRANCH
+    cd $APPNAME
+else
+     #echo "tmp modification"
+     cd $APPNAME
+     git clean -df && git reset --hard HEAD
+     git pull
+fi
+echo "end to get $APPNAME Code"
+
+
+echo "--------addver yes or no?----------------------------"
+echo $tag_addver
+if [ ${tag_addver} = "yes" ];then
+    baseversion=`grep  "\sandroid:versionName=*" AndroidManifest.xml | sed 's/\(android:versionName="v\)\(.*\)"\(.*\)/\2/g'`
+    baseversion=`echo $baseversion | sed "s/\s+\(.*\)\s+/\1/"`
+    echo "baseversion is $baseversion"
+    bigversion=`echo $baseversion | sed 's/\(.*\)\.\(.*\)\.\(.*$\)/\2/'`
+    #get zero prex
+    echo $bigversion
+    bzore=`echo $bigversion |sed '/\(0*\).*/ s//\1/'`
+
+    echo $bzore
+    vcode=`echo $bigversion |sed '/0*\(.*\)/ s//\1/' | echo $[ $(tr '\n' '+' ) 1 ]`
+    echo $vcode
+    nextbigversion=$bzore$vcode
+    version=`echo $baseversion | sed "s/\(.*\)\($bigversion\)\(.*$\)/\1$nextbigversion\3/"`
+    echo "current version is $version"
+    echo "export version=${version}" > ${WORKSPACE}-${BUILD_NUMBER}.env
+    echo "export baseversion=${baseversion}" >> ${WORKSPACE}-${BUILD_NUMBER}.env
+
+    VER_NUM=${version}    
+    mv ./AndroidManifest.xml ./AndroidManifest_bak.xml
+    cat ./AndroidManifest_bak.xml | sed 's/android:versionName="v\(.*\)"/android:versionName="v'$VER_NUM'"/g' >./AndroidManifest.xml
+    
+     echo "----update versionCode ------  "
+     egrep -o "\b[[:alnum:]]+\b" AndroidManifest.xml > file.txt
+     cat file.txt |\
+     ( 
+       while read line; 
+       do   
+       if [ $line = "versionCode" ] ; then
+          read cmdout
+           break 
+        fi
+      done
+      mv  AndroidManifest.xml AndroidManifest_bak.xml
+      bzore=`echo $cmdout |sed '/\(0*\).*/ s//\1/'`
+      echo $bzore
+      vcode=`echo $cmdout |sed '/0*\(.*\)/ s//\1/'`
+      vcode=`echo $vcode | echo $[ $(tr '\n' '+' ) 1 ]`
+      echo $vcode
+      echo $bzore$vcode >file.txt
+      #echo $cmdout | echo $[ $(tr '\n' '+' ) 1 ] > file.txt
+
+      while read line;
+      do 
+        cat ./AndroidManifest_bak.xml | sed  's/android:versionCode="\(.*\)"/android:versionCode="'$line'"/g'  > ./AndroidManifest.xml
+      done < file.txt
+     )
+    rm file.txt
+    echo " ----end ------ "
+
+    rm ./AndroidManifest_bak.xml
+
+    echo "tag exists on depend?"
+    /local/int_jenkins/apk/lib/checktagExist.sh INT-$TAGAPPNAME-$VER_NUM-RELEASE
+    echo "end tag exists on depend?"
+    
+    git add AndroidManifest.xml
+    git commit -m "update NameVersion to v$VER_NUM by int-tools"
+    git push origin HEAD:$BRANCH
+    git tag INT-$TAGAPPNAME-$VER_NUM-RELEASE -am "Release $TAGAPPNAME$VER_NUM"
+    git push origin INT-$TAGAPPNAME-$VER_NUM-RELEASE
+elif  [ ${tag_addver} = "force" ];then
+   VER_NUM=${version}
+   git tag -d INT-$TAGAPPNAME-$VER_NUM-RELEASE
+   git tag INT-$TAGAPPNAME-$VER_NUM-RELEASE -am "Release $TAGAPPNAME$VER_NUM"
+   git push origin INT-$TAGAPPNAME-$VER_NUM-RELEASE
+else
+    echo "----get versionName ------  "
+    version=`grep  "\sandroid:versionName=*" AndroidManifest.xml | sed 's/\(android:versionName="v\)\(.*\)"\(.*\)/\2/g'`
+    version=`echo $version | sed "s/\s+\(.*\)\s+/\1/"`
+    echo "current is $version"
+    bigversion=`echo $version | sed 's/\(.*\)\.\(.*\)\.\(.*$\)/\2/'`
+    #get zero prex
+    echo $bigversion
+    bzore=`echo $bigversion |sed '/\(0*\).*/ s//\1/'`
+    echo $bzore
+    vcode=`echo $bigversion |sed '/0*\(.*\)/ s//\1/' | echo $[ $(tr '\n' '-' ) 1 ]`
+    echo $vcode
+    nextbigversion=$bzore$vcode
+    baseversion=`echo $version | sed "s/\(.*\)\($bigversion\)\(.*$\)/\1$nextbigversion\3/"`
+    echo "baseversion version is $baseversion"
+    
+    echo "export version=${version}" > ${WORKSPACE}-${BUILD_NUMBER}.env
+    echo "export baseversion=${baseversion}" >> ${WORKSPACE}-${BUILD_NUMBER}.env
+    VER_NUM=$version
+    #update version
+    
+    
+    
+     echo "----update versionCode ------  "
+     egrep -o "\b[[:alnum:]]+\b" AndroidManifest.xml > file.txt
+     cat file.txt |\
+     ( 
+       while read line; 
+       do   
+       if [ $line = "versionCode" ] ; then
+          read cmdout
+           break 
+        fi
+      done
+      
+      mv AndroidManifest.xml AndroidManifest_bak.xml
+      bzore=`echo $cmdout |sed '/\(0*\).*/ s//\1/'`
+      echo $bzore
+      vcode=`echo $cmdout |sed '/0*\(.*\)/ s//\1/'`
+      vcode=`echo $vcode | echo $[ $(tr '\n' '+' ) 1 ]`
+      echo $vcode
+      echo $bzore$vcode >file.txt
+      #echo $cmdout | echo $[ $(tr '\n' '+' ) 1 ] > file.txt
+
+      while read line;
+      do 
+        cat ./AndroidManifest_bak.xml | sed  's/android:versionCode="\(.*\)"/android:versionCode="'$line'"/g'  > ./AndroidManifest.xml
+      done < file.txt
+     )
+    rm file.txt
+    echo " ----end ------ "
+
+    rm ./AndroidManifest_bak.xml
+
+    echo "tag exists on depend?"
+    /local/int_jenkins/apk/lib/checktagExist.sh INT-$TAGAPPNAME-$VER_NUM-RELEASE
+    echo "end tag exists on depend?"
+    
+    git add AndroidManifest.xml
+    git commit -m "update NameVersion to v$VER_NUM by int-tools"
+    git push origin HEAD:$BRANCH
+    git tag INT-$TAGAPPNAME-$VER_NUM-RELEASE -am "Release $TAGAPPNAME$VER_NUM"
+    git push origin INT-$TAGAPPNAME-$VER_NUM-RELEASE
+fi
+
+
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/
+for itemgit in ${DEPENDGIT[@]}  
+do
+    cd /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/
+    echo 'get code $itemgit '
+    if [ ! -d $itemgit ];then
+        rm -rf $itemgit
+        git clone $GITSERVER/$itemgit -b $BRANCH
+        cd $itemgit
+    else
+         #echo "tmp modification"
+         cd $itemgit
+         git clean -df && git reset --hard HEAD
+         git pull origin $BRANCH
+    fi
+    
+
+    echo "tag exists on depend?"
+    /local/int_jenkins/apk/lib/checktagExist.sh INT-$TAGAPPNAME-$VER_NUM-RELEASE
+    echo "end tag exists on depend?"
+     
+    echo "generate tag"
+    if [ ${tag_addver} = "yes" ];then
+        #echo "jump this step"
+        git tag INT-$TAGAPPNAME-$VER_NUM-RELEASE -am "Release $TAGAPPNAME$VER_NUM"
+        git push origin INT-$TAGAPPNAME-$VER_NUM-RELEASE
+    elif  [ ${tag_addver} = "force" ];then
+       VER_NUM=${version}
+       git tag -d INT-$TAGAPPNAME-$VER_NUM-RELEASE
+       git tag INT-$TAGAPPNAME-$VER_NUM-RELEASE -am "Release $TAGAPPNAME$VER_NUM"
+       #git push origin INT-$TAGAPPNAME-$VER_NUM-RELEASE
+    fi
+done
+
+echo $VER_NUM
+echo "-------build $APPNAME--------"
+cd /local/build/genericapp/$BUILD_PROJECT_NAME/
+source build/envsetup.sh
+lunch full_jhz6737m_35_b_m0-userdebug
+mmma packages/apps/$APPNAME
+#mmm packages/apps/$APPNAME
+cd out/target/product/jhz6737m_35_b_m0/system/priv-app/$APPNAME/
+if [ -e $APPNAME.apk ]
+then 
+	echo "build $APPNAME successfully"
+else 
+	echo "build $APPNAME failed"
+ 	exit 1
+fi
+
+
+mv $APPNAME.apk $TAGAPPNAME\_global\_v$VER_NUM\_signed\_platformkey\_alldpi.apk
+    if [ ${tmp} -eq "1" ];then
+      ssh user@10.92.35.20 "(mkdir -p /var/www/data/genericapp/$TAGAPPNAME/v$VER_NUM/$BUILDTIME)"
+      scp -r ./$TAGAPPNAME\_global\_v$VER_NUM\_signed\_platformkey\_alldpi.apk  user@10.92.35.20:/var/www/data/genericapp/$TAGAPPNAME/v$VER_NUM/$BUILDTIME
+    else
+      ssh user@10.92.35.20 "(mkdir -p /var/www/data/genericapp/$TAGAPPNAME/v$VER_NUM)"
+      scp -r ./$TAGAPPNAME\_global\_v$VER_NUM\_signed\_platformkey\_alldpi.apk user@10.92.35.20:/var/www/data/genericapp/$TAGAPPNAME/v$VER_NUM
+    fi
+
+
+mv /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$APPNAME/ /local/build/genericapp/
+mv /local/build/genericapp/$APPNAME /local/build/genericapp/$TAGAPPNAME
+
+for itemgit in ${DEPENDGIT[@]} 
+do
+    rm -rf /local/build/genericapp/$BUILD_PROJECT_NAME/packages/apps/$itemgit
+done
+
+
+if [ -z ${version} ] || [ -z ${baseversion} ];then
+	echo "get $APPNAME version Name error!!!!"
+ 	exit 1
+fi
+/local/int_jenkins/bin/apk -user hudson.admin# -apkname $TAGAPPNAME -version ${version} -baseversion $baseversion -test no -issssignment no -ishomo $ishomo -isgerrit yes 
+
+

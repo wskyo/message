@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#set -x
+set -e
+
+BACKDIR=$(pwd)
+APPNAME=$(basename -- "$0")
+TOOLSDIR=$(dirname -- $(readlink -f -- "$0"))
+TOOLSDIR=$(echo "$TOOLSDIR" | sed 's/\/bin$//')
+
+echo $BACKDIR
+echo $APPNAME
+echo $TOOLSDIR
+
+
+if [ -z "$PYTHONPATH" ]; then
+	export PYTHONPATH=$TOOLSDIR/$APPNAME:$TOOLSDIR/$APPNAME/lib:$TOOLSDIR/lib
+else
+	export PYTHONPATH=$PYTHONPATH:$TOOLSDIR/$APPNAME:$TOOLSDIR/$APPNAME/lib:$TOOLSDIR/lib
+fi
+
+SYNC="yes"
+IPYTHON="no"
+
+for arg in $*
+do
+	case $arg in
+		-n|-nosync)
+			SYNC="no"
+			;;
+		-s|-ipython)
+			IPYTHON="yes"
+			;;
+		*)
+			ARGSLIST="$ARGSLIST $arg"
+			;;
+	esac
+done
+
+if [ "$IPYTHON" = "yes" ]; then
+	ipython
+	exit 0
+fi
+
+#if [ "$SYNC" = "yes" ]; then
+#	echo "Sync tools_int.git ..."
+#	cd "$TOOLSDIR"
+#	flock "$TOOLSDIR" -c "git pull"
+#	cd "$BACKDIR"
+#	echo -n "Done. "
+#fi
+
+
+PYTHON=/usr/bin/python
+
+#exec $PYTHON -v
+echo "Start running \"$TOOLSDIR/$APPNAME/main.py$ARGSLIST\" ..."
+exec $PYTHON $TOOLSDIR/$APPNAME/main.py$ARGSLIST

@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+
+set upload_directory [lindex $argv 2]
+set user [lindex $argv 0]
+set pwd [lindex $argv 1]
+set product_name [lindex $argv 3]
+
+
+spawn scp -r $upload_directory $user@10.92.32.26:/mfs/teleweb/$product_name/black/
+
+expect {
+"yes/no)? " {
+send "yes\r"
+expect "*assword:"
+send "$pwd\r"
+}
+"*assword:" {
+send "$pwd\r"
+}
+}
+
+set timeout 900
+expect "*:~$*"
+send "\r"
+send "exit \r"
+expect eof
+
+

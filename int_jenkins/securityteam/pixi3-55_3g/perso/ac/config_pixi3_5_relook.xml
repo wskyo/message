@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EDGSCG_CONFIG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="D:\FangFei\LCPI\EDG_SCG\DOC\EDG_SCG_config_file.xsd">
+  <!-- This data change with product -->
+  <PRODUCT_NAME>pixi3_5_relook</PRODUCT_NAME>
+  <INT_PRODUCT_NAME>pixi3-5_3g-relook</INT_PRODUCT_NAME> 
+ 
+  <LUNCH_COMMAND>lunch full_pixi3_5-user</LUNCH_COMMAND>   
+  <!-- <MAKE_COMMAND>make MEMTYPE=4G_512M</MAKE_COMMAND>-->   
+  <!-- <CHOOSE_COMBO_PARA>choosecomboPara</CHOOSE_COMBO_PARA> -->
+  <!--  -->
+  
+  <WIMDATA_VOB_NAME>mtk6580_wimdata_ng</WIMDATA_VOB_NAME> 
+  <PROCEDURES_PATH>mtk6580_wimdata_ng/wprocedures/pixi3_5_relook</PROCEDURES_PATH>
+  <CUSTORES_PATH>mtk6580_wimdata_ng/wcustores/pixi3_5_relook</CUSTORES_PATH>  
+  
+  <!-- Pls update your ip address in this tag when failed to get the ip automatically.-->  
+  <!-- <MMI_HOST_IP>10.92.34.11</MMI_HOST_IP> -->  
+  
+  <BOOT_LOGO_PATH>fwvga/</BOOT_LOGO_PATH> 
+  <!--<CUSTO_ZIP_PATH_AND_NAME>/local/zz_2015-09-16_17-09.zip</CUSTO_ZIP_PATH_AND_NAME>   -->
+   
+  <CODE_SECU_FILE_PATH>vendor/mediatek/proprietary/custom/pixi3_5_relook/secro/AC_REGION</CODE_SECU_FILE_PATH>
+  <SECU_CONF_VER>41</SECU_CONF_VER>
+  
+  <MMI_USER_NAME>user</MMI_USER_NAME>
+  <MMI_PASSWORD>Aa123456</MMI_PASSWORD>
+  
+	<INT_BRANCH_NAME>pixi3-5-v1.0-dint</INT_BRANCH_NAME>  
+</EDGSCG_CONFIG>
+

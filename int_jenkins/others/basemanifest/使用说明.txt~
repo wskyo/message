@@ -1,0 +1,6 @@
+1.将下载最新代码的xml文件放到main.py同一级目录
+2.修改makeConfig.bat文件,指定分支名，发patch的前缀以及使用的xml文件名,如：
+python main.py refs/heads/mt6582-l-pixi3-5-v1.0-tmp MT6582-L-PIXI3-5- mt6582-l-pixi3-5-v1.0-tmp.xml
+3.运行脚本之后会在当前目录生成projectConfig.txt,Copy文件内容即可
+
+也可以直接在脚本目录直接运行：python main.py refs/heads/mt6582-l-pixi3-5-v1.0-tmp MT6582-L-PIXI3-5- mt6582-l-pixi3-5-v1.0-tmp.xml

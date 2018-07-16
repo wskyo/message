@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+
+set source_file [lindex $argv 2]
+set user [lindex $argv 0]
+set pwd [lindex $argv 1]
+set product_name [lindex $argv 3]
+set dest_file [lindex $argv 4]
+
+spawn scp $user@10.92.32.26:/mfs/teleweb/$product_name/$source_file $dest_file
+
+expect {
+"yes/no)? " {
+send "yes\r"
+expect "*assword:"
+send "$pwd\r"
+}
+"*assword:" {
+send "$pwd\r"
+}
+}
+
+set timeout 900
+expect "*:~$*"
+send "\r"
+send "exit \r"
+expect eof
+
+
