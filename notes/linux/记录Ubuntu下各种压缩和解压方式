@@ -59,38 +59,94 @@
 
 tar 压缩成固定大小，解压成压缩包实例：
 
+1.准备文件夹PDF
 user@swd:/home/swd3/cts/cts$ ls
-PDF  无标题文档~
+PDF
 
-
-user@swd:/home/swd3/cts/cts$ tar -zcvf 23_java.tar.gz ./PDF
+2.创建tar包
+tar -zcvf books.tar.gz ./PDF
 
 user@swd:/home/swd3/cts/cts$ ls
 books.tar.gz  PDF  
 
-
- split -b 50m -d -a 1 23_java.tar.gz 23_java.tar.gz
-
- user@swd:/home/swd3/cts/cts$ ls
-23_java.tar.gz  23_java.tar.gz0  PDF  
-
-cat books.tar.gz* >> books.tar.gz
-
+移动原始文件到父目录
+user@swd:/home/swd3/cts/cts$ mv PDF ..
+user@swd:/home/swd3/cts/cts$ ls
+books.tar.gz
+3.解压检查tar包
 tar -zxvf books.tar.gz
 
+user@swd:/home/swd3/cts/cts$ ls
+books.tar.gz  PDF
+user@swd:/home/swd3/cts/cts$ rm -rf PDF/
+user@swd:/home/swd3/cts/cts$ ls
+books.tar.gz
+4.分卷47m固定大小
+split -b 47m -d books.tar.gz ebooks.tar.gz
+查看结果
+ user@swd:/home/swd3/cts/cts$ ls
+books.tar.gz     ebooks.tar.gz07  ebooks.tar.gz15  ebooks.tar.gz23
+ebooks.tar.gz00  ebooks.tar.gz08  ebooks.tar.gz16  ebooks.tar.gz24
+ebooks.tar.gz01  ebooks.tar.gz09  ebooks.tar.gz17  ebooks.tar.gz25
+ebooks.tar.gz02  ebooks.tar.gz10  ebooks.tar.gz18  ebooks.tar.gz26
+ebooks.tar.gz03  ebooks.tar.gz11  ebooks.tar.gz19  ebooks.tar.gz27
+ebooks.tar.gz04  ebooks.tar.gz12  ebooks.tar.gz20  ebooks.tar.gz28
+ebooks.tar.gz05  ebooks.tar.gz13  ebooks.tar.gz21  ebooks.tar.gz29
+ebooks.tar.gz06  ebooks.tar.gz14  ebooks.tar.gz22  ebooks.tar.gz30
 
-tar 压缩成固定大小，解压成压缩包实例：
+5.将分卷合成新tar包
+cat ebooks.tar.gz* >> ebooks.tar.gz
+6.解压tar包检查结果
+tar -zxvf ebooks.tar.gz
+
+user@swd:/home/swd3/cts/cts$ ls
+books.tar.gz     ebooks.tar.gz07  ebooks.tar.gz16  ebooks.tar.gz25
+ebooks.tar.gz    ebooks.tar.gz08  ebooks.tar.gz17  ebooks.tar.gz26
+ebooks.tar.gz00  ebooks.tar.gz09  ebooks.tar.gz18  ebooks.tar.gz27
+ebooks.tar.gz01  ebooks.tar.gz10  ebooks.tar.gz19  ebooks.tar.gz28
+ebooks.tar.gz02  ebooks.tar.gz11  ebooks.tar.gz20  ebooks.tar.gz29
+ebooks.tar.gz03  ebooks.tar.gz12  ebooks.tar.gz21  ebooks.tar.gz30
+ebooks.tar.gz04  ebooks.tar.gz13  ebooks.tar.gz22  PDF
+ebooks.tar.gz05  ebooks.tar.gz14  ebooks.tar.gz23
+ebooks.tar.gz06  ebooks.tar.gz15  ebooks.tar.gz24
+
+
+zip 压缩成固定大小，解压成压缩包实例：
 
  zip books.zip -r ./PDF
 
  user@swd:/home/swd3/cts/cts$ ls
-books.zip  PDF
+books.zip
 
- split -b 47m -d -a 1 books.zip books.zip
+ split -b 47m -d books.zip ebooks.zip
 
  user@swd:/home/swd3/cts/cts$ ls
-books.zip   books.zip1  books.zip3  books.zip5  books.zip7  books.zip9
-books.zip0  books.zip2  books.zip4  books.zip6  books.zip8  PDF
+books.zip     ebooks.zip06  ebooks.zip13  ebooks.zip20  ebooks.zip27
+ebooks.zip00  ebooks.zip07  ebooks.zip14  ebooks.zip21  ebooks.zip28
+ebooks.zip01  ebooks.zip08  ebooks.zip15  ebooks.zip22  ebooks.zip29
+ebooks.zip02  ebooks.zip09  ebooks.zip16  ebooks.zip23  ebooks.zip30
+ebooks.zip03  ebooks.zip10  ebooks.zip17  ebooks.zip24
+ebooks.zip04  ebooks.zip11  ebooks.zip18  ebooks.zip25
+ebooks.zip05  ebooks.zip12  ebooks.zip19  ebooks.zip26
 
-cat books.zip* >> books.zip
+cat ebooks.zip* > ebooks.zip
+
+user@swd:/home/swd3/cts/cts$ ls
+books.zip     ebooks.zip05  ebooks.zip12  ebooks.zip19  ebooks.zip26
+ebooks.zip    ebooks.zip06  ebooks.zip13  ebooks.zip20  ebooks.zip27
+ebooks.zip00  ebooks.zip07  ebooks.zip14  ebooks.zip21  ebooks.zip28
+ebooks.zip01  ebooks.zip08  ebooks.zip15  ebooks.zip22  ebooks.zip29
+ebooks.zip02  ebooks.zip09  ebooks.zip16  ebooks.zip23  ebooks.zip30
+ebooks.zip03  ebooks.zip10  ebooks.zip17  ebooks.zip24
+ebooks.zip04  ebooks.zip11  ebooks.zip18  ebooks.zip25
+
 unzip books.zip
+
+user@swd:/home/swd3/cts/cts$ ls
+books.zip     ebooks.zip05  ebooks.zip12  ebooks.zip19  ebooks.zip26
+ebooks.zip    ebooks.zip06  ebooks.zip13  ebooks.zip20  ebooks.zip27
+ebooks.zip00  ebooks.zip07  ebooks.zip14  ebooks.zip21  ebooks.zip28
+ebooks.zip01  ebooks.zip08  ebooks.zip15  ebooks.zip22  ebooks.zip29
+ebooks.zip02  ebooks.zip09  ebooks.zip16  ebooks.zip23  ebooks.zip30
+ebooks.zip03  ebooks.zip10  ebooks.zip17  ebooks.zip24  PDF
+ebooks.zip04  ebooks.zip11  ebooks.zip18  ebooks.zip25
