@@ -1,0 +1,39 @@
+google所以的case均继承自 AndroidTestCase
+
+AndroidTestCase继承自 TestCase
+
+TestCase 继承自 Assert,需要实现 Test 接口
+
+
+TestCase 类
+
+	1.入口 run() 新建一个result		TestResult run()
+
+		
+
+	2.	void run(TestResult test)	再调用
+
+	
+
+		test.run(this)				将类指针作为参数传给TestResult
+
+	3.	runBare()
+
+		1.	setUp()			TestCase 准备工作
+
+		2.	runTest()		-->		runMethod		--> 	runMethod.invoke(this)
+
+		3.	tearDown()		TestCase 清理工作
+
+
+TestResult 类
+
+	入口 run(TestCase test)
+
+		1. 	startTest()		--> TestListener.startTest()		监听器准备
+
+		2.	runProtected(test,p)		--> test.runBare()		将由TestCase进行测试
+
+
+
+		3.	endTest()		-->	TestListener.endTest()			监听器结束

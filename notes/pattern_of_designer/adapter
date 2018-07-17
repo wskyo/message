@@ -1,0 +1,55 @@
+适配器模式（Adapter) 将一个类的接口转换成客户希望的另外一个接口。适配器模式使得原本不兼容而不能一起工作的那些类可以一起工作
+
+class Target
+{
+	public virtual void Request()
+	{
+		Console.Write("普通请求");
+	}
+}
+class Adaptee
+{
+	public void SpecifiRequest()
+	{
+		Console.Write("特殊请求"）;
+	}
+}
+class Adapter:Adaptee
+{
+	private Adaptee adaptee = new Adaptee();
+	public override void Request()
+	{
+		adaptee.SpecifiRequest();
+	}
+}
+static void main(string [] args)
+{
+	Target target = Target();
+	target.Request();
+	Console.Read();
+}
+
+#######################################################################################################################################################################################
+#!/usr/bin/python
+#
+#apter
+#
+class Target:
+    def Request(self):
+        print "Normal Request"
+class Adaptee:
+    def SpecifiRequest(self):
+        print "SpecifiRequest"
+class Adapter(Target):
+    def __init__(self):
+        self.adapter = Adaptee()
+    def Request(self):
+        self.adapter.SpecifiRequest()
+if __name__ == "__main__":
+    target = Adapter()
+    target.Request()
+
+######################################################################################################################################################################################
+
+
+
