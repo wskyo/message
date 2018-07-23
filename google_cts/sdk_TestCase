@@ -1,0 +1,6 @@
+
+
+类TestCase		继承-->		类 Runable
+
+类 InstrumentationTestCase	-->		类 TestCase
+

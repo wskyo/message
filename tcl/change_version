@@ -1,0 +1,5 @@
+git tag -l | grep 6J2G
+
+git checkout  U5A_PLUS-V6J2G
+
+cp  -f ./version/version.inc ./development/version/include/version.inc
