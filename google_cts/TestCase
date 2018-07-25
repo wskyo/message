@@ -37,3 +37,9 @@ TestResult 类
 
 
 		3.	endTest()		-->	TestListener.endTest()			监听器结束
+
+
+InstrumentationTestCase 类
+
+	继承自TestCase
+	
