@@ -12,6 +12,61 @@
 
 4.	delattr		Delete an named attribute on an object								usage:		delattr(object,name)
 
+Help on built-in function __import__ in module __builtin__:
+
+__import__(...)
+    __import__(name, globals={}, locals={}, fromlist=[], level=-1) -> module
+    
+    Import a module. Because this function is meant for use by the Python
+    interpreter and not for general use it is better to use
+    importlib.import_module() to programmatically import a module.
+    
+    The globals argument is only used to determine the context;
+    they are not modified.  The locals argument is unused.  The fromlist
+    should be a list of names to emulate ``from name import ...'', or an
+    empty list to emulate ``import name''.
+    When importing a module from a package, note that __import__('A.B', ...)
+    returns package A when fromlist is empty, but its submodule B when
+    fromlist is not empty.  Level is used to determine whether to perform 
+    absolute or relative imports.  -1 is the original strategy of attempting
+    both absolute and relative imports, 0 is absolute, a positive number
+    is the number of parent directories to search relative to the current module.
+
+
+    __import__      返回的命名空间里面name里面的一个module,如果只有一个module，不管fromlist参数如何设置，均只返回这个module
+
+                    module是一个object,需要访问里面的class，只能使用hasattr判断是否有这个类或方法，使用getattr获取这个类或方法
+
+import sys
+sys.path.append('/home/swd3/android-sdk-linux/GSIs')
+aosp=__import__('aosp_system')
+>>> dir(aosp)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'commands', 'contextFactory', 'environment', 'flash', 'flashing_unlock', 'operation_state', 'os', 'reboot', 'reboot_bootloader', 'sys', 'time']
+aosp=__import__('aosp_system',fromlist=['flash','flashing_unlock'])
+dir(aosp)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'commands', 'contextFactory', 'environment', 'flash', 'flashing_unlock', 'operation_state', 'os', 'reboot', 'reboot_bootloader', 'sys', 'time']
+img_dir = '/home/swd3/android-sdk-linux/GSIs/8.1_r4_arm_a/system-aosp_arm_a-2018-08-05.img'
+operations = ['reboot_bootloader','flashing_unlock','flash','reboot']
+
+>>> for oper in operations:
+...     if hasattr(aosp,oper):
+...             state=getattr(aosp,oper)
+...             print "state is %s"% state
+... 
+state is <class 'aosp_system.reboot_bootloader'>
+state is <class 'aosp_system.flashing_unlock'>
+state is <class 'aosp_system.flash'>
+state is <class 'aosp_system.reboot'>
+
+>>> for oper in operations:
+...     if hasattr(aosp,oper):
+...             state=getattr(aosp,oper)(img_dir)
+...             print "state is %s"% state
+... 
+state is <aosp_system.reboot_bootloader object at 0x7f63cdcc4810>
+state is <aosp_system.flashing_unlock object at 0x7f63cdcd3050>
+state is <aosp_system.flash object at 0x7f63cdcc4810>
+state is <aosp_system.reboot object at 0x7f63cdcd3050>
 
 说反射之前先介绍一下__import__方法,这个和import导入模块的另一种方式
 
@@ -22,6 +77,7 @@
 
 1. from list.text import commons 
 2. __import__(' list.text.commons',fromlist=True) #如果不加上fromlist=True,只会导入list目录
+
 
 
 
