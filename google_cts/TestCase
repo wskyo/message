@@ -38,6 +38,19 @@ TestResult 类
 
 		3.	endTest()		-->	TestListener.endTest()			监听器结束
 
+MetricTestCase 类
+
+	继承自TestCase
+
+	addTestMetric		将一些键值对放入mMetric
+
+	addTestLog			保存Log信息
+
+
+DeviceTestCase 类
+
+	继承自MetricTestCase
+
 
 InstrumentationTestCase 类
 
