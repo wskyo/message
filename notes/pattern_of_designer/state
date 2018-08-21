@@ -93,3 +93,76 @@ if __name__ == "__main__":
     print "end"  
 
 ########################################################################################################################################################################################
+
+#!/usr/bin/python
+#
+#new code of pattern of state
+#
+import os,sys
+sys.path.append(os.getcwd())
+
+class State(object):
+
+	def Handle(self):
+
+		print "Handle of State"
+
+class ConcreteStateA(State):
+	
+	def Handle(self):
+
+		print "Handle of ConcreteStateA"
+
+class ConcreteStateB(State):
+
+	def Handle(self):
+
+		print "Handle of ConcreteStateB"
+
+class Context(object):
+
+
+	def __init__(self,state_list):
+
+		self.state_list = state_list
+	
+		self.state = ''
+
+	def Request(self):
+
+		self.state = self.__gen_state__()
+
+		if self.state:
+
+			self.state.Handle()
+
+		
+	def __gen_state__(self):
+
+
+		state_module = __import__(os.path.basename(sys.argv[0]).split('.py')[0])
+
+		if len(self.state_list) > 0:
+			
+			self.state = getattr(state_module,self.state_list[0])()
+
+			self.state_list.remove(self.state_list[0])
+			
+			return self.state
+
+		else:
+			print 'no state in state_list'
+			return ''
+			
+if __name__ == '__main__' :
+
+	state_list = ['ConcreteStateA','ConcreteStateA']
+
+	context = Context(state_list)
+
+	for i in xrange(len(state_list)):
+
+		context.Request()		
+			
+
+#####################################################################################
