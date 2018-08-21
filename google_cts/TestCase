@@ -5,6 +5,15 @@ AndroidTestCase继承自 TestCase
 TestCase 继承自 Assert,需要实现 Test 接口
 
 
+Test 接口
+
+	
+	countTestCase()				计算需要测试的case数量
+
+	run(TestResult result)		
+
+
+
 TestCase 类
 
 	1.入口 run() 新建一个result		TestResult run()
@@ -44,12 +53,33 @@ MetricTestCase 类
 
 	addTestMetric		将一些键值对放入mMetric
 
-	addTestLog			保存Log信息
+	addTestLog			--> LogHolder()							保存Log信息
 
 
 DeviceTestCase 类
 
 	继承自MetricTestCase
+
+	getDevice
+
+	setDevice(ITestDevice device)
+
+	countTestCase()
+
+	run(ITestInvocationListener listener)			--> JunitRunUntil.runTest(result) 调用JunitTest类
+
+
+JunitRunUntil 类
+
+	runTest(ITestInvocationListener listener,Test juniTest)
+
+								-->	调用ITestInvocationListener 的监听动作。
+
+								--> 调用Test接口的run函数
+
+ITestInvocationListener 接口
+
+	继承ITestLogger接口			-->	需要实现	testLog 函数
 
 
 InstrumentationTestCase 类
