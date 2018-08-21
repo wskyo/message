@@ -1,0 +1,20 @@
+设置一个版本库特定的名字合email地址
+	git config user.name "Jon Loeliger"
+	git config user.email "jd1@example.com"
+设置所有版本库的作者名和email地址
+	git config --global user.name "Jon Loeliger"
+	git config --global user.email "jd1@example.com"
+移除设置
+	git config --unset --global user.email
+
+查看config配置
+	git config -l
+	或者
+	cat .git/config
+设置GIT默认编辑器
+	setenv GIT_EDDITOR emacs
+	export GIT_EDITOR=vim
+
+
+配置别名
+	git config --global alias.show-graph 'log --graph --abbrev-commit --pretty=oneline'
