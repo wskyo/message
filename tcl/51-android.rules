@@ -1,0 +1,3 @@
+SUBSYSTEM=="usb",ATTR{idVendor}=="1bbb",MODE="0666"
+SUBSYSTEM=="usb",ATTR{idVendor}=="18d1",MODE="0666"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", MODE="0666"
