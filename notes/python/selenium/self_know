@@ -1,0 +1,101 @@
+
+1.如何利用firefox源码提取对象
+
+例如：<input type="text" name="passwd" id="passwd-id" />
+
+
+element =  driver.find_element_by_id("passwd-id")
+
+element =  driver.find_element_by_tag_name("input")
+
+element =  driver.find_element_by_name("passwd")
+
+element =  driver.find_element_by_xpath("//input[@id='passwd-id'"])
+
+
+
+
+the element no longer attached to the DOM:
+
+现行的网页采用的是部分刷新，不是全局刷新。
+可能纪录要访问的元素就是未刷新前，但网页刷新后导致该元素已经不属于刷新后的网页。
+这个问题网上有几个解决方法：
+
+1.调整等待时间
+
+
+2.使用element的is_displayed()方法或者其他方法在使用element之前
+
+3. 利用try-catch 或者try-except等及函数的递归性重新加载该element
+
+
+	public class NeverStaleWebElement implements WebElement {
+    private WebElement element;
+    private final WebDriver driver;
+    private final By foundBy;
+
+    public NeverStaleWebElement(WebElement element, WebDriver driver, By foundBy) {
+        this.element = element;
+        this.driver = driver;
+        this.foundBy = foundBy;
+    }
+
+    @Override
+    public void click() {
+        try {
+            element.click();
+        } catch (StaleElementReferenceException e) {
+            // log exception
+
+            // assumes implicit wait, use custom findElement() methods for custom behaviour
+            element = driver.findElement(foundBy);
+
+            // recursion, consider a conditioned loop instead
+            click();
+        }
+    }
+
+    // ... similar for other methods, too
+
+}
+4. 打开一个新的窗口加载该element
+
+
+No such content frame;perhaps the listener was not registered?
+
+解决方法：
+
+firefox  -->  Perefence -->  Security --> Exceptions  将该站点添加为信任站点也不可解决这个问题。
+
+
+frameset不用切，frame层层切
+
+frameset
+iframe
+frame
+等通过 driver.switch_to.frame()
+
+driver.switch_to.frame(0)	序列号,就是对应的frame顺序，从0开始
+driver.switch_to.frame('name') 通过Name定位
+driver.switch_to.frame('id') 通过id定位
+driver.switch_to.frame(driver.find_element_by_xpath("xpath"))	driver.find_element_by_xpath("xpath")为xml应该能找到该frame的方式。比如说按照正常方法找元素的路径层次等。
+
+进入frame之后
+可以通过find_element_by_css_selector找到其他同在这个框架下的元素。
+
+如果想切回主页面，采用 driver.switch_to.default_content()的方法切回。想切入下一层还是使用switch_to.frame（）方法切下去。
+
+
+firefox profile
+
+查看firefox配置信息
+about:config
+
+
+selenium环境配置
+
+1.firefox
+
+2.
+
+"pdfjs.disabled", True 		与firefox 通过pdf.js原生支持PDF阅读有关

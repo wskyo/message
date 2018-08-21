@@ -1,0 +1,1385 @@
+pip install selenium
+
+
+$ unzip chromedriver_linux64.zip
+$ sudo mv chromedriver /usr/bin/
+$ sudo chmod +x chromedriver
+
+from selenium import webdriver    
+driver = webdriver.Chrome()  
+# driver = webdriver.Firefox() 
+ driver.get('http://www.baidu.com') 
+ print driver.title  
+driver.quit()
+
+
+
+close	关闭
+back	返回上一层
+reflash
+
+
+
+Python爬虫利器五之Selenium的用法
+前言
+在上一节我们学习了 PhantomJS 的基本用法，归根结底它是一个没有界面的浏览器，而且运行的是 JavaScript 脚本，然而这就能写爬虫了吗？这又和Python有什么关系？说好的Python爬虫呢？库都学完了你给我看这个？客官别急，接下来我们介绍的这个工具， 统统解决掉你的疑惑。
+简介
+Selenium 是什么？一句话，自动化测试工具。它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium 的插件，那么便可以方便地实现Web界面的测试。换句话说叫 Selenium 支持这些浏览器驱动。话说回来，PhantomJS不也是一个浏览器吗，那么 Selenium 支持不？答案是肯定的，这样二者便可以实现无缝对接了。
+然后又有什么好消息呢？Selenium支持多种语言开发，比如 Java，C，Ruby等等，有 Python 吗？那是必须的！哦这可真是天大的好消息啊。
+嗯，所以呢？安装一下 Python 的 Selenium 库，再安装好 PhantomJS，不就可以实现 Python＋Selenium＋PhantomJS 的无缝对接了嘛！PhantomJS 用来渲染解析JS，Selenium 用来驱动以及与 Python 的对接，Python 进行后期的处理，完美的三剑客！
+有人问，为什么不直接用浏览器而用一个没界面的 PhantomJS 呢？答案是：效率高！
+Selenium 有两个版本，目前最新版本是 2.53.1（2016/3/22）
+ Selenium 2，又名 WebDriver，它的主要新功能是集成了 Selenium 1.0 以及 WebDriver（WebDriver 曾经是 Selenium 的竞争对手）。也就是说 Selenium 2 是 Selenium 和 WebDriver 两个项目的合并，即 Selenium 2 兼容 Selenium，它既支持 Selenium API 也支持 WebDriver API。
+更多详情可以查看 Webdriver 的简介。
+Webdriver
+嗯，通过以上描述，我们应该对 Selenium 有了大概对认识，接下来就让我们开始进入动态爬取的新世界吧。
+本文参考内容来自
+Selenium官网 SeleniumPython文档
+安装
+首先安装 Selenium
+ 
+1
+pip install selenium
+
+或者下载源码
+下载源码
+然后解压后运行下面的命令进行安装
+ 
+1
+python setup.py install
+
+安装好了之后我们便开始探索抓取方法了。
+快速开始
+初步体验
+我们先来一个小例子感受一下 Selenium，这里我们用 Chrome 浏览器来测试，方便查看效果，到真正爬取的时候换回 PhantomJS 即可。
+ 
+1
+2
+3
+4
+from selenium import webdriver
+ 
+browser = webdriver.Chrome()
+browser.get('http://www.baidu.com/')
+
+运行这段代码，会自动打开浏览器，然后访问百度。
+如果程序执行错误，浏览器没有打开，那么应该是没有装 Chrome 浏览器或者 Chrome 驱动没有配置在环境变量里。下载驱动，然后将驱动文件路径配置在环境变量即可。
+浏览器驱动下载
+比如我的是 Mac OS，就把下载好的文件放在 /usr/bin 目录下就可以了。
+模拟提交
+下面的代码实现了模拟提交提交搜索的功能，首先等页面加载完成，然后输入到搜索框文本，点击提交。
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+ 
+driver = webdriver.Chrome()
+driver.get("http://www.python.org")
+assert "Python" in driver.title
+elem = driver.find_element_by_name("q")
+elem.send_keys("pycon")
+elem.send_keys(Keys.RETURN)
+print driver.page_source
+
+同样是在 Chrome 里面测试，感受一下。
+ The driver.get method will navigate to a page given by the URL. WebDriver will wait until the page has fully loaded (that is, the “onload” event has fired) before returning control to your test or script. It’s worth noting that if your page uses a lot of AJAX on load then WebDriver may not know when it has completely loaded.
+其中 driver.get 方法会打开请求的URL，WebDriver 会等待页面完全加载完成之后才会返回，即程序会等待页面的所有内容加载完成，JS渲染完毕之后才继续往下执行。注意：如果这里用到了特别多的 Ajax 的话，程序可能不知道是否已经完全加载完毕。
+ WebDriver offers a number of ways to find elements using one of the find_element_by_* methods. For example, the input text element can be located by its name attribute using find_element_by_name method
+WebDriver 提供了许多寻找网页元素的方法，譬如 find_element_by_* 的方法。例如一个输入框可以通过  find_element_by_name 方法寻找 name 属性来确定。
+ Next we are sending keys, this is similar to entering keys using your keyboard. Special keys can be send using Keys class imported from selenium.webdriver.common.keys
+然后我们输入来文本然后模拟点击了回车，就像我们敲击键盘一样。我们可以利用 Keys 这个类来模拟键盘输入。
+最后最重要的一点
+获取网页渲染后的源代码。
+输出 page_source 属性即可。
+这样，我们就可以做到网页的动态爬取了。
+测试用例
+有了以上特性，我们当然可以用来写测试样例了。
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+ 
+class PythonOrgSearch(unittest.TestCase):
+ 
+    def setUp(self):
+        self.driver = webdriver.Chrome()
+ 
+    def test_search_in_python_org(self):
+        driver = self.driver
+        driver.get("http://www.python.org")
+        self.assertIn("Python", driver.title)
+        elem = driver.find_element_by_name("q")
+        elem.send_keys("pycon")
+        elem.send_keys(Keys.RETURN)
+        assert "No results found." not in driver.page_source
+ 
+    def tearDown(self):
+        self.driver.close()
+ 
+if __name__ == "__main__":
+    unittest.main()
+
+运行程序，同样的功能，我们将其封装为测试标准类的形式。
+ The test case class is inherited from unittest.TestCase. Inheriting from TestCase class is the way to tell unittest module that this is a test case. The setUp is part of initialization, this method will get called before every test function which you are going to write in this test case class. The test case method should always start with characters test. The tearDown method will get called after every test method. This is a place to do all cleanup actions. You can also call quit method instead of close. The quit will exit the entire browser, whereas close will close a tab, but if it is the only tab opened, by default most browser will exit entirely.
+测试用例是继承了 unittest.TestCase 类，继承这个类表明这是一个测试类。setUp方法是初始化的方法，这个方法会在每个测试类中自动调用。每一个测试方法命名都有规范，必须以 test 开头，会自动执行。最后的 tearDown 方法会在每一个测试方法结束之后调用。这相当于最后的析构方法。在这个方法里写的是 close 方法，你还可以写 quit 方法。不过 close 方法相当于关闭了这个 TAB 选项卡，然而 quit 是退出了整个浏览器。当你只开启了一个 TAB 选项卡的时候，关闭的时候也会将整个浏览器关闭。
+页面操作
+页面交互
+仅仅抓取页面没有多大卵用，我们真正要做的是做到和页面交互，比如点击，输入等等。那么前提就是要找到页面中的元素。WebDriver提供了各种方法来寻找元素。例如下面有一个表单输入框。
+ 
+1
+<input type="text" name="passwd" id="passwd-id" />
+
+我们可以这样获取它
+ 
+1
+2
+3
+4
+element = driver.find_element_by_id("passwd-id")
+element = driver.find_element_by_name("passwd")
+element = driver.find_elements_by_tag_name("input")
+element = driver.find_element_by_xpath("//input[@id='passwd-id']")
+
+你还可以通过它的文本链接来获取，但是要小心，文本必须完全匹配才可以，所以这并不是一个很好的匹配方式。
+而且你在用 xpath 的时候还需要注意的是，如果有多个元素匹配了 xpath，它只会返回第一个匹配的元素。如果没有找到，那么会抛出 NoSuchElementException 的异常。
+获取了元素之后，下一步当然就是向文本输入内容了，可以利用下面的方法
+ 
+1
+element.send_keys("some text")
+
+同样你还可以利用 Keys 这个类来模拟点击某个按键。
+ 
+1
+element.send_keys("and some", Keys.ARROW_DOWN)
+
+你可以对任何获取到到元素使用 send_keys 方法，就像你在 GMail 里面点击发送键一样。不过这样会导致的结果就是输入的文本不会自动清除。所以输入的文本都会在原来的基础上继续输入。你可以用下面的方法来清除输入文本的内容。
+ 
+1
+element.clear()
+
+这样输入的文本会被清除。
+填充表单
+我们已经知道了怎样向文本框中输入文字，但是其它的表单元素呢？例如下拉选项卡的的处理可以如下
+ 
+1
+2
+3
+4
+5
+element = driver.find_element_by_xpath("//select[@name='name']")
+all_options = element.find_elements_by_tag_name("option")
+for option in all_options:
+    print("Value is: %s" % option.get_attribute("value"))
+    option.click()
+
+首先获取了第一个 select 元素，也就是下拉选项卡。然后轮流设置了 select 选项卡中的每一个 option 选项。你可以看到，这并不是一个非常有效的方法。
+其实 WebDriver 中提供了一个叫 Select 的方法，可以帮助我们完成这些事情。
+ 
+1
+2
+3
+4
+5
+from selenium.webdriver.support.ui import Select
+select = Select(driver.find_element_by_name('name'))
+select.select_by_index(index)
+select.select_by_visible_text("text")
+select.select_by_value(value)
+
+如你所见，它可以根据索引来选择，可以根据值来选择，可以根据文字来选择。是十分方便的。
+全部取消选择怎么办呢？很简单
+ 
+1
+2
+select = Select(driver.find_element_by_id('id'))
+select.deselect_all()
+
+这样便可以取消所有的选择。
+另外我们还可以通过下面的方法获取所有的已选选项。
+ 
+1
+2
+select = Select(driver.find_element_by_xpath("xpath"))
+all_selected_options = select.all_selected_options
+
+获取所有可选选项是
+ 
+1
+options = select.options
+
+如果你把表单都填好了，最后肯定要提交表单对吧。怎吗提交呢？很简单
+ 
+1
+driver.find_element_by_id("submit").click()
+
+这样就相当于模拟点击了 submit 按钮，做到表单提交。
+当然你也可以单独提交某个元素
+ 
+1
+element.submit()
+
+方法，WebDriver 会在表单中寻找它所在的表单，如果发现这个元素并没有被表单所包围，那么程序会抛出 NoSuchElementException 的异常。
+元素拖拽
+要完成元素的拖拽，首先你需要指定被拖动的元素和拖动目标元素，然后利用 ActionChains 类来实现。
+ 
+1
+2
+3
+4
+5
+6
+element = driver.find_element_by_name("source")
+target = driver.find_element_by_name("target")
+ 
+from selenium.webdriver import ActionChains
+action_chains = ActionChains(driver)
+action_chains.drag_and_drop(element, target).perform()
+
+这样就实现了元素从 source 拖动到 target 的操作。
+页面切换
+一个浏览器肯定会有很多窗口，所以我们肯定要有方法来实现窗口的切换。切换窗口的方法如下
+ 
+1
+driver.switch_to_window("windowName")
+
+另外你可以使用 window_handles 方法来获取每个窗口的操作对象。例如
+ 
+1
+2
+for handle in driver.window_handles:
+    driver.switch_to_window(handle)
+
+另外切换 frame 的方法如下
+ 
+1
+driver.switch_to_frame("frameName.0.child")
+
+这样焦点会切换到一个 name 为 child 的 frame 上。
+弹窗处理
+当你出发了某个事件之后，页面出现了弹窗提示，那么你怎样来处理这个提示或者获取提示信息呢？
+ 
+1
+alert = driver.switch_to_alert()
+
+通过上述方法可以获取弹窗对象。
+历史记录
+那么怎样来操作页面的前进和后退功能呢？
+ 
+1
+2
+driver.forward()
+driver.back()
+
+嗯，简洁明了。
+Cookies处理
+为页面添加 Cookies，用法如下
+ 
+1
+2
+3
+4
+5
+6
+# Go to the correct domain
+driver.get("http://www.example.com")
+ 
+# Now set the cookie. This one's valid for the entire domain
+cookie = {‘name’ : ‘foo’, ‘value’ : ‘bar’}
+driver.add_cookie(cookie)
+
+获取页面 Cookies，用法如下
+ 
+1
+2
+3
+4
+5
+# Go to the correct domain
+driver.get("http://www.example.com")
+ 
+# And now output all the available cookies for the current URL
+driver.get_cookies()
+
+以上便是 Cookies 的处理，同样是非常简单的。
+元素选取
+关于元素的选取，有如下的API
+单个元素选取
+ find_element_by_id 
+find_element_by_name 
+find_element_by_xpath 
+find_element_by_link_text 
+find_element_by_partial_link_text 
+find_element_by_tag_name 
+find_element_by_class_name 
+find_element_by_css_selector 
+多个元素选取
+ find_elements_by_name 
+find_elements_by_xpath 
+find_elements_by_link_text 
+find_elements_by_partial_link_text 
+find_elements_by_tag_name 
+find_elements_by_class_name 
+find_elements_by_css_selector 
+另外还可以利用 By 类来确定哪种选择方式
+ 
+1
+2
+3
+4
+from selenium.webdriver.common.by import By
+ 
+driver.find_element(By.XPATH, '//button[text()="Some text"]')
+driver.find_elements(By.XPATH, '//button')
+
+By 类的一些属性如下
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+ID = "id"
+XPATH = "xpath"
+LINK_TEXT = "link text"
+PARTIAL_LINK_TEXT = "partial link text"
+NAME = "name"
+TAG_NAME = "tag name"
+CLASS_NAME = "class name"
+CSS_SELECTOR = "css selector"
+
+更详细的元素选择方法参见官方文档
+元素选择
+页面等待
+这是非常重要的一部分，现在的网页越来越多采用了 Ajax 技术，这样程序便不能确定何时某个元素完全加载出来了。这会让元素定位困难而且会提高产生 ElementNotVisibleException 的概率。
+所以 Selenium 提供了两种等待方式，一种是隐式等待，一种是显式等待。
+隐式等待是等待特定的时间，显式等待是指定某一条件直到这个条件成立时继续执行。
+显式等待
+显式等待指定某个条件，然后设置最长等待时间。如果在这个时间还没有找到元素，那么便会抛出异常了。
+ 
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+ 
+driver = webdriver.Chrome()
+driver.get("http://somedomain/url_that_delays_loading")
+try:
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "myDynamicElement"))
+    )
+finally:
+    driver.quit()
+
+程序默认会 500ms 调用一次来查看元素是否已经生成，如果本来元素就是存在的，那么会立即返回。
+下面是一些内置的等待条件，你可以直接调用这些条件，而不用自己写某些等待条件了。
+ title_is 
+title_contains 
+presence_of_element_located 
+visibility_of_element_located 
+visibility_of 
+presence_of_all_elements_located 
+text_to_be_present_in_element 
+text_to_be_present_in_element_value 
+frame_to_be_available_and_switch_to_it 
+invisibility_of_element_located 
+element_to_be_clickable – it is Displayed and Enabled. 
+staleness_of 
+element_to_be_selected 
+element_located_to_be_selected 
+element_selection_state_to_be 
+element_located_selection_state_to_be 
+alert_is_present 
+ 
+ 
+1
+2
+3
+4
+from selenium.webdriver.support import expected_conditions as EC
+ 
+wait = WebDriverWait(driver, 10)
+element = wait.until(EC.element_to_be_clickable((By.ID,'someid')))
+
+ 
+隐式等待
+隐式等待比较简单，就是简单地设置一个等待时间，单位为秒。
+ 
+1
+2
+3
+4
+5
+6
+from selenium import webdriver
+ 
+driver = webdriver.Chrome()
+driver.implicitly_wait(10) # seconds
+driver.get("http://somedomain/url_that_delays_loading")
+myDynamicElement = driver.find_element_by_id("myDynamicElement")
+
+当然如果不设置，默认等待时间为0。
+程序框架
+对于页面测试和分析，官方提供了一个比较明晰的代码结构，可以参考。
+页面测试架构
+API
+到最后，肯定是放松最全最重要的API了，比较多，希望大家可以多加练习。
+API
+结语
+以上就是 Selenium 的基本用法，我们讲解了页面交互，页面渲染之后的源代码的获取。这样，即使页面是 JS 渲染而成的，我们也可以手到擒来了。就是这么溜！
+
+
+
+
+
+
+
+
+
+
+
+
+
+今天，总结一下selenium怎么操作web页面常见的元素。
+
+主要有：
+
+    上传
+    alter dialog
+    prompt dialog
+    confirm dialog
+    select list
+    radio box
+    input box
+    checkBox
+
+测试页面如下：
+
+View Code
+
+selenium 最核心的技巧是WebElement的识别和定位
+
+selenium总共有八种定位方法 
+
+     By.id()  通过id定位
+     By.name()  通过name 定位
+     By.xpath() 通过xpath定位
+     By.className() 通过className定位
+     By.cssSelector() 通过CSS 定位
+     By.linkText() 通过linkText
+     By.tagName() 通过tagName
+     By.partialLinkText() 通过匹到的部分linkText
+
+目前，使用比较多的是cssSelector和xpath，因为一个页面中Id name className tagName LinkText等比较容易重复 不容易 确定唯一
+
+接下来会有具体的例子来演示如何定位　  
+
+ 
+
+上传文件
+
+一般，上传页面如果是input，像这样的，可以使用sendkeys
+
+ 
+
+首先，这里使用xpath定位到该元素，然后使用sendKeys即可，sendKeys send你要上传的文件的绝对路径
+
+1 //td/input[@type='file']
+
+也可以使用cssSelector，关于xpath和cssSelector更多知识，以后会做一些专题
+
+1 td>input[type='file']
+
+如何验证你写的xptah/cssSelector是正确的呢？
+
+有以下几种方法：
+
+    F12 ,使用浏览器的console  ，xpath使用$x()  function，css使用    $() function                                                          
+    使用第三方插件firebug
+    使用selenium IDE
+
+ 
+
+alert对话框
+
+ 细分三种，Alert，prompt，confirm
+
+ Selenium有以下方法：
+
+     
+
+ Alert alert =driver.switchTo().alert();
+
+ 
+
+ 
+
+      1. driver.switchTo().alert();  获取alert
+
+      2. alert.accept(); 点确定
+
+      3. alert.dismiss(); 点取消
+
+      4. alert.getText();获取alert的内容
+
+ 
+
+    
+
+ 
+
+select菜单
+
+    select也是比较常见的，selenium封装了以下方法
+
+    创建select
+
+   
+
+WebElement selector = driver.findElement(By.id("Selector"));
+Select select = new Select(selector);
+
+   
+
+选择select的option有以下三种方法
+
+    selectByIndex(int index) 通过index
+    selectByVisibleText(String text) 通过匹配到的可见字符
+    selectByValue(String value) 通过匹配到标签里的value
+
+WebElement selector = driver.findElement(By.id("Selector"));
+        Select select = new Select(selector);
+        select.selectByIndex(3);
+        select.selectByVisibleText("桃子");
+        select.selectByValue("apple");
+
+输入框
+
+输入框就比较简单了，不再多说
+
+sendKeys()输入内容
+
+clear()  清空
+
+ 
+
+单选框（RadioBox）
+
+单选框可以有获取状态，是否被选中
+
+radioBox.isSelected();
+
+是否enable
+
+radioBox.isEnabled()
+
+使用click方法选中
+
+ 
+
+复选框（checkBox）
+
+复选框和单选框基本差不多，此处略
+
+ 
+
+超链接
+
+超链接比较常见，一般都是标签a
+
+<a href="http://www.cnblogs.com/tobecrazy/" >Copyright 2015 to be crazy </a>
+
+一般使用click方法
+
+这里我们了解一下浏览器打开超链接时，如果是chrome，点超链接的同时按下Ctrl会打开新标签，按下shift会打开新窗口
+
+这里单讲一下不同窗口切换.
+
+selenium有两个关于获取窗口的方法：
+
+1. driver.getWindowHandle();  返回的是字符串，获取当前窗口的句柄
+
+2. driver.getWindowHandles(); 返回的是 Set<String> ，获取所有窗口
+
+如果你想在窗口之间切换
+
+driver.switchTo().window(window);
+
+小技巧： 如何滚动到你定位的元素
+
+这里使用java script
+
+// scroll to mylink
+        JavascriptExecutor scroll = (JavascriptExecutor) driver;
+        scroll.executeScript("arguments[0].scrollIntoView();", myLink);
+
+ 
+
+接下来是所有测试代码：
+复制代码
+
+package com.packt.webdriver.chapter1;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+import com.packt.webdriver.chapter3.DriverFactory;
+
+/**
+ * this method is for deal with base web elements
+ * 
+ * @author Young
+ *
+ */
+public class dealWithElements {
+
+    public static void main(String[] args) throws Exception {
+        String URL = "file://demo.html";
+        String chromdriver="E:\\chromedriver.exe";
+        System.setProperty("webdriver.chrome.driver", chromdriver);
+        ChromeOptions options = new ChromeOptions();
+//        options.addExtensions(new File(""));
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability("chrome.switches",
+                Arrays.asList("--start-maximized"));
+        options.addArguments("--test-type", "--start-maximized");
+        WebDriver driver=new ChromeDriver(options);
+
+        driver.get(URL);
+        // max size the browser
+        driver.manage().window().maximize();
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+
+        WebElement upload = driver.findElement(By
+                .xpath("//td/input[@type='file']"));
+        upload.sendKeys("C:/Users/Young/Desktop/demo.html");
+        Assert.assertTrue(upload.getAttribute("value").contains("demo"));
+        // for alert
+        WebElement clickOnAlert = driver.findElement(By
+                .xpath("//td/input[@name='alterbutton']"));
+        clickOnAlert.click();
+        delay(2);
+        // get alert
+        Alert alert = driver.switchTo().alert();
+        Assert.assertTrue(alert.getText().contains("alert"));
+        // click alert ok
+        alert.accept();
+
+        delay(2);
+        // for prompt
+        WebElement clickOnPrompt = driver.findElement(By
+                .xpath("//td/input[@name='promptbutton']"));
+        clickOnPrompt.click();
+        delay(2);
+        Alert prompt = driver.switchTo().alert();
+
+        prompt.sendKeys("I love Selenium");
+        prompt.accept();
+        delay(5);
+        Alert afterAccept = driver.switchTo().alert();
+        Assert.assertTrue(afterAccept.getText().contains("I love Selenium"));
+        // click alert ok
+        afterAccept.accept();
+        delay(2);
+        // for confirm
+        WebElement clickOnConfirm = driver.findElement(By
+                .xpath("//td/input[@name='confirmbutton']"));
+        clickOnConfirm.click();
+        delay(2);
+        Alert confirm = driver.switchTo().alert();
+        confirm.dismiss();
+        delay(2);
+        Alert afterDismiss = driver.switchTo().alert();
+        Assert.assertTrue(afterDismiss.getText().contains("You pressed Cancel"));
+        delay(2);
+        afterDismiss.accept();
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+        WebElement selector = driver.findElement(By.id("Selector"));
+        Select select = new Select(selector);
+        select.selectByIndex(3);
+        select.selectByVisibleText("桃子");
+        select.selectByValue("apple");
+
+        System.out.println(select.getAllSelectedOptions().toString());
+        delay(2);
+        WebElement showSelectResult = driver.findElement(By
+                .name("showSelectResult"));
+        showSelectResult.click();
+        delay(2);
+        Alert yourSelect = driver.switchTo().alert();
+        Assert.assertTrue(yourSelect.getText().contains("苹果"));
+
+        delay(2);
+        yourSelect.accept();
+
+        // input box
+        WebElement editBox = driver.findElement(By
+                .xpath("//td/input[@id='edit']"));
+        editBox.sendKeys("Selenium is good");
+        WebElement submitButton = driver.findElement(By
+                .xpath("//input[@type='button' and @name='submit']"));
+        submitButton.click();
+        delay(2);
+        Alert submitAlert = driver.switchTo().alert();
+        Assert.assertEquals(submitAlert.getText(), "Selenium is good");
+        submitAlert.accept();
+        delay(2);
+
+        // for radio Box
+
+        WebElement duRadioBox = driver.findElement(By
+                .cssSelector("div#radio>input.Baidu"));
+        WebElement aLiRadioBox = driver.findElement(By
+                .cssSelector("div#radio>input.Alibaba"));
+        WebElement TXRadioBox = driver.findElement(By
+                .cssSelector("div#radio>input.Tencent"));
+        WebElement MiRadioBox = driver.findElement(By
+                .cssSelector("div#radio>input.Mi"));
+        delay(2);
+        Assert.assertTrue(TXRadioBox.isSelected());
+        Assert.assertTrue(!MiRadioBox.isEnabled());
+        delay(2);
+        duRadioBox.click();
+        Assert.assertTrue(duRadioBox.isSelected());
+        delay(2);
+
+        aLiRadioBox.click();
+        Assert.assertTrue(aLiRadioBox.isSelected());
+        delay(2);
+
+        // for checkBox
+
+        List<WebElement> webCheckBox = driver.findElements(By
+                .xpath("//input[@type='checkbox']"));
+
+        for (WebElement e : webCheckBox) {
+            e.click();
+            Assert.assertTrue(e.isSelected());
+            delay(2);
+        }
+
+        // for links
+        String defaultWindow = driver.getWindowHandle();
+        WebElement myLink = driver.findElement(By
+                .linkText("Copyright 2015 to be crazy"));
+        delay(3);
+        // scroll to mylink
+        JavascriptExecutor scroll = (JavascriptExecutor) driver;
+        scroll.executeScript("arguments[0].scrollIntoView();", myLink);
+        // open link in a new windows press shift when you click
+        delay(2);
+        Actions actions = new Actions(driver);
+        actions.keyDown(Keys.SHIFT).click(myLink).perform();
+
+        delay(3);
+        Set<String> currentWindows = driver.getWindowHandles();
+        System.out.println(currentWindows.size());
+        for (String window : currentWindows) {
+            if (!window.endsWith(defaultWindow)) {
+                driver = driver.switchTo().window(window);
+                driver.manage().timeouts()
+                        .pageLoadTimeout(60, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                break;
+            }
+        }
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("tobecrazy"));
+        delay(10);
+
+        driver.quit();
+    }
+
+    /**
+     * @author Young
+     * @param seconds
+     */
+    public static void delay(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+}
+
+复制代码
+
+
+selenium webdriver 表格的定位方法
+html 数据准备
+
+<html>
+<body>
+
+<div id="div1">
+<input name="divl1input"></input>
+<a href="http://www.sogou.com/">搜狗搜索</a>
+<img alt="div1-img1 "src="http://www.sogou.com/images/logo/new/sogou.png"
+href = "http://www.sogou.com">搜狗图片</img>
+<input type ="button" value="查询"></input>
+</div>
+<br></br>
+<div name="div2">
+<input name="div2input"></input>
+<a  href = "http://www.baidu.com">百度搜索</a>
+<img alt="div2-img2" src="http://www.baidu.com/img/bdlogo.png"
+href= "http://www.baidu.com">百度图片</img>
+<input type="button" value="查询"></input>
+</div>
+
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<a href="http://www.sogou.com"> 搜狗搜索</a><br></br>
+<a href="http://www.baidu.com"> 百度搜索</a>
+
+
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+
+<table width="400" border="1" id= "table">
+<tr>
+<td align="left" >消费项目。。。。</td>
+<td align="right"> one  month </td>
+<td align="right">two  month</td>
+</tr>
+
+
+<tr>
+<td align="left" >衣服</td>
+<td align="right"> 1000 元 </td>
+<td align="right">2000 元</td>
+</tr>
+
+<tr>
+<td align="left" >化妆品</td>
+<td align="right"> 10 元 </td>
+<td align="right">20 元</td>
+</tr>
+
+
+<tr>
+<td align="left" >零食</td>
+<td align="right"> 120 元   </td>
+<td align="right">100 元  </td>
+</tr>
+
+
+<tr>
+<td align="left" >总计</td>
+<td align="right">88880 元 </td>
+<td align="right">10000  元</td>
+</tr>
+
+
+
+
+</table>
+</body>
+</html>
+
+
+java代码 ：
+
+package page_elements_positioning;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Table_Positiing {
+
+    public static void main(String[] args) {
+        String url ="file:///C:/Users/ty/Desktop/selenium_test.html";
+        System.setProperty("webdriver.firefox.bin", "D:\\softerWare\\firefox\\firefox\\firefox.exe");
+        WebDriver driver ;
+        driver = new FirefoxDriver();
+        driver.get(url);
+
+
+    WebElement table =driver.findElement(By.id("table"));
+ List<WebElement> rows =  table.findElements(By.tagName("tr"));
+ for (WebElement row  : rows ){
+
+     List<WebElement> cols =row.findElements(By.tagName("td"));
+     for(WebElement col :cols ){
+         System.out.print(col.getText()+"\t");
+     }
+     System.out.println("");
+
+ }
+
+ System.out.println("-----------------------------------------------------------------------");
+
+ //注意" //*[@id='table']/tbody/td[1]/tr[1]"---- /tbody 是必须要加的
+    WebElement element =driver.findElement(By.xpath("//*[@id='table']/tbody/tr[2]/td[3]"));
+//---去掉 *  号 ！    
+    WebElement element1 =driver.findElement(By.xpath("//*[@id='table']/tbody/tr[3]/td[3]"));
+    System.out.println("//*[@id='table']/tbody/tr[2]/td[3]----"+element.getText());
+    System.out.println("//[@id='table']/tbody/tr[3]/td[3]---"+element1.getText());
+
+    }
+
+}
+
+ 
+测试结果：
+消费项目。。。。 one month two month 
+衣服 1000 元 2000 元 
+化妆品 10 元 20 元 
+零食 120 元 100 元 
+总计 88880 元 10000 元 
+-----------------------------------------------------------------------
+//*[@id='table']/tbody/tr[2]/td[3] -----2000 元
+//[@id='table']/tbody/tr[3]/td[3]-------20 元
+
+
+
+
+在使用selenium webdriver进行元素定位时，通常使用findElement或findElements方法结合By类返回的元素句柄来定位元素。其中By类的常用定位方式共八种，现分别介绍如下。
+1. By.name()
+假设我们要测试的页面源码如下：
+<button id="gbqfba" aria-label="Google Search" name="btnK" class="gbqfba"><span id="gbqfsa">Google Search</span></button>
+ 
+当我们要用name属性来引用这个button并点击它时，代码如下：
+ View Code
+ 
+2. By.id()
+页面源码如下：
+1 <button id="gbqfba" aria-label="Google Search" name="btnK" class="gbqfba"><span id="gbqfsa">Google Search</span></button>
+ 
+要引用该button并点击它时，代码如下：
+
+1 public class SearchButtonById {
+ 2
+ 3         public static void main(String[] args){
+ 4
+ 5             WebDriver driver = new FirefoxDriver();
+ 6
+ 7             driver.get("http://www.forexample.com");
+ 8
+ 9             WebElement searchBox = driver.findElement(By.id("gbqfba"));
+10
+11             searchBox.click();
+12
+13         }
+14
+15 }
+
+ 
+3. By.tagName()
+该方法可以通过元素的标签名称来查找元素。该方法跟之前两个方法的区别是，这个方法搜索到的元素通常不止一个，所以一般建议结合使用 findElements方法来使用。比如我们现在要查找页面上有多少个button，就可以用button这个tagName来进行查找，代码如下：
+
+public class SearchPageByTagName{
+
+     public static void main(String[] args){
+
+            WebDriver driver = new FirefoxDriver();
+            driver.get("http://www.forexample.com");
+            List<WebElement> buttons = driver.findElements(By.tagName("button"));
+
+            System.out.println(buttons.size());  //打印出button的个数
+
+    }
+
+}                    
+
+ 
+另外，在使用tagName方法进行定位时，还有一个地方需要注意的是，通常有些HTML元素的tagName是相同的，如下图(1)所示。
+  
+图（1）
+ 
+从图中我们可以看到，单选框、复选框、文本框和密码框的元素标签都是input，此时单靠tagName无法准确地得到我们想要的元素，需要结合type属性才能过滤出我们要的元素。示例代码如下：
+
+1 public class SearchElementsByTagName{
+ 2
+ 3         public static void main(String[] args){
+ 4
+ 5             WebDriver driver = new FirefoxDriver();
+ 6
+ 7             driver.get("http://www.forexample.com");
+ 8
+ 9             List<WebElement> allInputs = driver.findElements(By.tagName("input"));
+10
+11             //只打印所有文本框的值
+12
+13             for(WebElement e: allInputs){
+14
+15                   if (e.getAttribute(“type”).equals(“text”)){
+16
+17                   System.out.println(e.getText().toString());  //打印出每个文本框里的值
+18
+19                   }
+20
+21             }
+22
+23        }
+24
+25 }
+
+ 
+4. By.className()
+className属性是利用元素的css样式表所引用的伪类名称来进行元素查找的方法。对于任何HTML页面的元素来说，一般程序员或页面设计师 会给元素直接赋予一个样式属性或者利用css文件里的伪类来定义元素样式，使元素在页面上显示时能够更加美观。一般css样式表可能会长成下面这个样子：
+
+1 .buttonStyle{
+ 2
+ 3     width: 50px;
+ 4
+ 5     height: 50px;
+ 6
+ 7     border-radius: 50%;
+ 8
+ 9     margin: 0% 2%;
+10
+11 }
+
+定义好后，就可以在页面元素中引用上述定义好的样式，如下：
+1 <button name="sampleBtnName" id="sampleBtnId" class="buttonStyle">I'm Button</button>
+ 
+如果此时我们要通过className属性来查找该button并操作它的话，就可以使用className属性了，代码如下：
+
+1 public class SearchElementsByClassName{
+ 2
+ 3     public static void main(String[] args){
+ 4
+ 5         WebDriver driver = new FirefoxDriver();
+ 6
+ 7         driver.get("http://www.forexample.com");
+ 8
+ 9         WebElement searchBox =  driver.findElement(By.className("buttonStyle"));
+10
+11         searchBox.sendKeys("Hello, world");
+12
+13     }
+14
+15 }
+
+ 
+注意：使用className来进行元素定位时，有时会碰到一个元素指定了若干个class属性值的“复合样式”的情况，如下面这个 button：<button id="J_sidebar_login" class="btn btn_big btn_submit" type="submit">登录</button>。这个button元素指定了三个不同的css伪类名作为它的样式属性值，此时就 必须结合后面要介绍的cssSelector方法来定位了，稍后会有详细例子。
+ 
+5. By.linkText()
+这个方法比较直接，即通过超文本链接上的文字信息来定位元素，这种方式一般专门用于定位页面上的超文本链接。通常一个超文本链接会长成这个样子：
+1 <a href="/intl/en/about.html">About Google</a>
+我们定位这个元素时，可以使用下面的代码进行操作：
+
+1 public class SearchElementsByLinkText{
+ 2
+ 3     public static void main(String[] args){
+ 4
+ 5         WebDriver driver = new FirefoxDriver();
+ 6
+ 7         driver.get("http://www.forexample.com");
+ 8
+ 9         WebElement aboutLink = driver.findElement(By.linkText("About Google"));
+10
+11         aboutLink.click();
+12
+13     }
+14
+15 }
+
+ 
+6. By.partialLinkText()
+这个方法是上一个方法的扩展。当你不能准确知道超链接上的文本信息或者只想通过一些关键字进行匹配时，可以使用这个方法来通过部分链接文字进行匹配。代码如下：
+
+1 public class SearchElementsByPartialLinkText{
+ 2
+ 3     public static void main(String[] args){
+ 4
+ 5         WebDriver driver = new FirefoxDriver();
+ 6
+ 7         driver.get("http://www.forexample.com");
+ 8
+ 9         WebElement aboutLink = driver.findElement(By.partialLinkText("About"));
+10
+11         aboutLink.click();
+12
+13     }
+14
+15 }
+
+ 
+注意：使用这种方法进行定位时，可能会引起的问题是，当你的页面中不止一个超链接包含About时，findElement方法只会返回第一个查找到的元素，而不会返回所有符合条件的元素。如果你要想获得所有符合条件的元素，还是只能使用findElements方法。
+ 
+7. By.xpath()
+这个方法是非常强大的元素查找方式，使用这种方法几乎可以定位到页面上的任意元素。在正式开始使用XPath进行定位前，我们先了解下什么是 XPath。XPath是XML Path的简称，由于HTML文档本身就是一个标准的XML页面，所以我们可以使用XPath的语法来定位页面元素。
+假设我们现在以图(2)所示HTML代码为例，要引用对应的对象，XPath语法如下：
+  
+图（2）
+绝对路径写法(只有一种)，写法如下：
+引用页面上的form元素(即源码中的第3行)：/html/body/form[1]
+注意：1. 元素的xpath绝对路径可通过firebug直接查询。2. 一般不推荐使用绝对路径的写法，因为一旦页面结构发生变化，该路径也随之失效，必须重新写。3. 绝 对路径以单/号表示，而下面要讲的相对路径则以//表示，这个区别非常重要。另外需要多说一句的是，当xpath的路径以/开头时，表示让Xpath解析 引擎从文档的根节点开始解析。当xpath路径以//开头时，则表示让xpath引擎从文档的任意符合的元素节点开始进行解析。而当/出现在xpath路 径中时，则表示寻找父节点的直接子节点，当//出现在xpath路径中时，表示寻找父节点下任意符合条件的子节点，不管嵌套了多少层级（这些下面都有例 子，大家可以参照来试验）。弄清这个原则，就可以理解其实xpath的路径可以绝对路径和相对路径混合在一起来进行表示，想怎么玩就怎么玩。
+ 
+下面是相对路径的引用写法：
+查找页面根元素：//
+查找页面上所有的input元素：//input
+查找页面上第一个form元素内的直接子input元素(即只包括form元素的下一级input元素，使用绝对路径表示，单/号)：//form[1]/input
+查找页面上第一个form元素内的所有子input元素(只要在form元素内的input都算，不管还嵌套了多少个其他标签，使用相对路径表示，双//号)：//form[1]//input
+查找页面上第一个form元素：//form[1]
+查找页面上id为loginForm的form元素：//form[@id='loginForm']
+查找页面上具有name属性为username的input元素：//input[@name='username']
+查找页面上id为loginForm的form元素下的第一个input元素：//form[@id='loginForm']/input[1]
+查找页面具有name属性为contiune并且type属性为button的input元素：//input[@name='continue'][@type='button']
+查找页面上id为loginForm的form元素下第4个input元素：//form[@id='loginForm']/input[4]
+Xpath功能很强大，所以也可以写得更加复杂一些，如下面图（3）的HTML源码。
+  
+图（3）
+如果我们现在要引用id为“J_password”的input元素，该怎么写呢？我们可以像下面这样写：
+WebElement password = driver.findElement(By.xpath("//*[@id='J_login_form']/dl/dt/input[@id='J_password']"));
+也可以写成：
+WebElement password = driver.findElement(By.xpath("//*[@id='J_login_form']/*/*/input[@id='J_password']"));
+这里解释一下，其中//*[@id=’ J_login_form’]这一段是指在根元素下查找任意id为J_login_form的元素，此时相当于引用到了form元素。后面的路径必须按照 源码的层级依次往下写。按照图（3）所示代码中，我们要找的input元素包含在一个dt标签内，而dt又包含在dl标签内，所以中间必须写上dl和dt 两层，才到input这层。当然我们也可以用*号省略具体的标签名称，但元素的层级关系必须体现出来，比如我们不能写成//* [@id='J_login_form']/input[@id='J_password']，这样肯定会报错的。
+ 
+前面讲的都是xpath中基于准确元素属性的定位，其实xpath作为定位神器也可以用于模糊匹配。比如下面图（4）所示代码：
+  
+图（4）
+这段代码中的“退出”这个超链接，没有标准id元素，只有一个rel和href，不是很好定位。不妨我们就用xpath的几种模糊匹配模式来定位它吧，主要有三种方式，举例如下。
+a. 用contains关键字，定位代码如下：
+1 driver.findElement(By.xpath(“//a[contains(@href, ‘logout’)]”));
+这句话的意思是寻找页面中href属性值包含有logout这个单词的所有a元素，由于这个退出按钮的href属性里肯定会包含logout，所以这种方式是可行的，也会经常用到。其中@后面可以跟该元素任意的属性名。
+b. 用start-with，定位代码如下：
+1 driver.findElement(By.xpath(“//a[starts-with(@rel, ‘nofo’)]));
+这句的意思是寻找rel属性以nofo开头的a元素。其中@后面的rel可以替换成元素的任意其他属性。
+c. 用Text关键字，定位代码如下：
+1 driver.findElement(By.xpath(“//*[text()=’退出’]));
+这个方法可谓相当霸气啊。直接查找页面当中所有的退出二字，根本就不用知道它是个a元素了。这种方法也经常用于纯文字的查找。
+另外，如果知道超链接元素的文本内容，也可以用
+1 driver.findElement(By.xpath(“//a[contains(text(), ’退出’)]));
+这种方式一般用于知道超链接上显示的部分或全部文本信息时，可以使用。
+ 
+最后，关于xpath这种定位方式，webdriver会将整个页面的所有元素进行扫描以定位我们所需要的元素，所以这是一个非常费时的操作，如果你的脚本中大量使用xpath做元素定位的话，将导致你的脚本执行速度大大降低，所以请慎用。
+ 
+8. By.cssSelector()
+cssSelector这种元素定位方式跟xpath比较类似，但执行速度较快，而且各种浏览器对它的支持都相当到位，所以功能也是蛮强大的。
+下面是一些常见的cssSelector的定位方式：
+定位id为flrs的div元素，可以写成：#flrs     注：相当于xpath语法的//div[@id=’flrs’]
+定位id为flrs下的a元素，可以写成 #flrs > a  注：相当于xpath语法的//div[@id=’flrs’]/a
+定位id为flrs下的href属性值为/forexample/about.html的元素，可以写成： #flrs > a[href=”/forexample/about.html”]
+如果需要指定多个属性值时，可以逐一加在后面，如#flrs > input[name=”username”][type=”text”]。
+ 
+明白基本语法后，我们来尝试用cssSelector方式来引用图（3）中选中的那个input对象，代码如下：
+WebElement password = driver.findElement(By.cssSelector("#J_login_form>dl>dt>input[id=’ J_password’]"));
+同样必须注意层级关系，这个不能省略。
+ 
+cssSelector还有一个用处是定位使用了复合样式表的元素，之前在第4种方式className里面提到过。现在我们就来看看如何通过cssSelector来引用到第4种方式中提到的那个button。button代码如下：
+<button id="J_sidebar_login" class="btn btn_big btn_submit" type="submit">登录</button>
+cssSelector引用元素代码如下：
+driver.findElement(By.cssSelector("button.btn.btn_big.btn_submit"))
+。这样就可以顺利引用到使用了复合样式的元素了。
+ 
+此外，cssSelector还有一些高级用法，如果熟练后可以更加方便地帮助我们定位元素，如我们可以利用^用于匹配一个前缀，$用于匹配一个后缀，*用于匹配任意字符。例如：
+匹配一个有id属性，并且id属性是以”id_prefix_”开头的超链接元素：a[id^='id_prefix_']
+匹配一个有id属性，并且id属性是以”_id_sufix”结尾的超链接元素：a[id$='_id_sufix']
+匹配一个有id属性，并且id属性中包含”id_pattern”字符的超链接元素：a[id*='id_pattern']
+ 
+最后再总结一下，各种方式在选择的时候应该怎么选择：
+1. 当页面元素有id属性时，最好尽量用id来定位。但由于现实项目中很多程序员其实写的代码并不规范，会缺少很多标准属性，这时就只有选择其他定位方法。
+2. xpath很强悍，但定位性能不是很好，所以还是尽量少用。如果确实少数元素不好定位，可以选择xpath或cssSelector。
+3. 当要定位一组元素相同元素时，可以考虑用tagName或name。
+4. 当有链接需要定位时，可以考虑linkText或partialLinkText方式。
+
+
+
+
+版权声明：本文为博主原创文章，转载请声明出处并添加原文链接。
+目录(?)[+]
+更多关于python selenium的文章，请关注我的专栏：Python Selenium自动化测试详解
+
+总有人看不明白，以防万一，先在开头大写加粗说明一下：
+frameset不用切，frame需层层切！
+
+很多人在用selenium定位页面元素的时候会遇到定位不到的问题，明明元素就在那儿，用firebug也可以看到，就是定位不到，这种情况很有可能是frame在搞鬼（原因之一，改天专门说说定位不到元素，可能的一些原因及处理办法）。
+frame标签有frameset、frame、iframe三种，frameset跟其他普通标签没有区别，不会影响到正常的定位，而frame与iframe对selenium定位而言是一样的，selenium有一组方法对frame进行操作。
+1.怎么切到frame中(switch_to.frame())
+selenium提供了switch_to.frame()方法来切换frame
+switch_to.frame(reference)
+1
+不得不提到switch_to_frame()，很多人在这样写的时候会发现，这句话被划上了删除线，原因是这个方法已经out了，之后很有可能会不支持，建议的写法是switch_to.frame()
+reference是传入的参数，用来定位frame，可以传入id、name、index以及selenium的WebElement对象，假设有如下HTML代码 index.html：
+<html lang="en">
+<head>
+    <title>FrameTest</title>
+</head>
+<body>
+<iframe src="a.html" id="frame1" name="myframe"></iframe>
+</body>
+</html>
+1
+2
+3
+4
+5
+6
+7
+8
+想要定位其中的iframe并切进去，可以通过如下代码：
+from selenium import webdriver
+driver = webdriver.Firefox()
+driver.switch_to.frame(0)  # 1.用frame的index来定位，第一个是0
+# driver.switch_to.frame("frame1")  # 2.用id来定位
+# driver.switch_to.frame("myframe")  # 3.用name来定位
+# driver.switch_to.frame(driver.find_element_by_tag_name("iframe"))  # 4.用WebElement对象来定位
+1
+2
+3
+4
+5
+6
+通常采用id和name就能够解决绝大多数问题。但有时候frame并无这两项属性，则可以用index和WebElement来定位：
+ index从0开始，传入整型参数即判定为用index定位，传入str参数则判定为用id/name定位 
+WebElement对象，即用find_element系列方法所取得的对象，我们可以用tag_name、xpath等来定位frame对象 
+举个栗子：
+<iframe src="myframetest.html" />
+1
+用xpath定位，传入WebElement对象：
+driver.switch_to.frame(driver.find_element_by_xpath("//iframe[contains(@src,'myframe')]"))
+1
+2.从frame中切回主文档(switch_to.default_content())
+切到frame中之后，我们便不能继续操作主文档的元素，这时如果想操作主文档内容，则需切回主文档。
+driver.switch_to.default_content()
+1
+3.嵌套frame的操作(switch_to.parent_frame())
+有时候我们会遇到嵌套的frame，如下：
+<html>
+    <iframe id="frame1">
+        <iframe id="frame2" / >
+    </iframe>
+</html>
+1
+2
+3
+4
+5
+1.从主文档切到frame2，一层层切进去
+driver.switch_to.frame("frame1")
+driver.switch_to.frame("frame2")
+1
+2
+2.从frame2再切回frame1，这里selenium给我们提供了一个方法能够从子frame切回到父frame，而不用我们切回主文档再切进来。
+driver.switch_to.parent_frame()  # 如果当前已是主文档，则无效果
+1
+有了parent_frame()这个相当于后退的方法，我们可以随意切换不同的frame，随意的跳来跳去了。
+所以只要善用以下三个方法，遇到frame分分钟搞定：
+driver.switch_to.frame(reference)
+driver.switch_to.parent_frame()
+driver.switch_to.default_content()
+1
+2
+3
+
+
+补充
+另外补充一下，之前曾看到过用点分法来切入嵌套frame的方法，但我试验之后发现并不能定位到frame，如果有同学可以成功，麻烦留言告知一下，用法如下：
+driver.switch_to.frame('frame1.0.frame3')
+1
+据说以上代码可以切到 “frame1” 下的 “第一个frame” 下的 “frame3” 中。
+
+
+
+正常下载pdf python代码如下
+import os
+from selenium import webdriver
+from time import sleep
+fp = webdriver.FirefoxProfile()
+fp.set_preference("browser.download.folderList",2)
+fp.set_preference("browser.download.manager.showWhenStarting",False)
+fp.set_preference("browser.download.dir", "c:\\test")
+fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf")
+browser = webdriver.Firefox(firefox_profile=fp)
+
+browser.get('http://sahitest.com/demo/saveAs.htm')
+driver.find_element_by_xpath('/html/body/a[2]').click()
+sleep(3)
+browser.quit()
+但我告诉你 这样是下载不下来的  
+正确的下载方式是这样的  一定要加上我标红的这二句  吐血的经验
+# -*- coding: utf-8 -*-
+
+from selenium import webdriver
+from time import sleep
+
+
+fp = webdriver.FirefoxProfile()
+fp.set_preference("browser.download.folderList", 2)
+fp.set_preference("browser.download.manager.showWhenStarting", False)
+fp.set_preference("browser.download.dir", "c:\\test")
+fp.set_preference("plugin.disable_full_page_plugin_for_types", "application/pdf")
+fp.set_preference("pdfjs.disabled", True)
+fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/pdf")
+driver = webdriver.Firefox(firefox_profile=fp)
+driver.implicitly_wait(10)
+driver.maximize_window()
+driver.get('http://sahitest.com/demo/saveAs.htm')
+driver.find_element_by_xpath('/html/body/a[2]').click()
+sleep(3)
+#driver.quit()
+
+
+

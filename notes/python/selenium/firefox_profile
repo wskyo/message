@@ -1,0 +1,132 @@
+自学Selenium2 ( WebDriver )，理论和实践的差距还是很大的，所以学习任何编程语言、工具，实践是最好的老师。
+进入正题，这篇文章讲述，在自动化测试时，对Firefox浏览器的profile设置、启动有所不同，需根据自己情况进行相应修改。
+
+1 Firefox的profie设置
+自动化测试时，有可能会遇到下载文件的情况，如下图；目前Selenium2还无法处理这样的对话框，但可通过对Firefox的profile预先进行设置达到自动下载的效果。
+
+
+1.1 创建FirefoxProfile对象
+[java] view plain copy
+print?
+FirefoxProfile profile = new FirefoxProfile();  
+1.2 设置下载路径
+[java] view plain copy
+print?
+// 设置是否询问下载位置（可忽略）；默认true——不询问，直接下载到指定路径，具体设置见browser.folderList，false——询问  
+profile.setPreference("browser.download.useDownloadDir",true);  
+// 指定下载位置  
+profile.setPreference("browser.download.downloadDir", "c:\\OutputFolder");  
+// 设置下载方式；0——下载到桌面，默认1——下载到Firefox默认位置，2——下载到指定位置  
+profile.setPreference("browser.download.folderList", 2);  
+// 当一个下载开始时，设置是否显示下载管理器；默认true——显示，flase——不显示  
+profile.setPreference("browser.download.manager.showWhenStarting",false);  
+
+2 设置无需确认即可下载的文件格式
+[java] view plain copy
+print?
+profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream, application/vnd.ms-excel, text/csv, application/zip,application/xml");  
+注意：
+MIME类型是设置某种拓展名的文件用一种应用程序打开的方式类型。
+常见文件的MIME类型：
+.txt
+text/plain 或 text/x-log
+.pdf
+application/pdf
+.csv
+text/csv
+.xls
+application/vnd.ms-excel
+.doc
+application/msword
+.zip
+application/zip
+.xml
+application/xml
+.rar
+application/octet-stream
+.exe
+application/octet-stream
+.gif
+image/gif
+.jpeg
+image/jpeg
+.html
+text/html
+
+有时，需要的文件无法在搜索引擎上查询到其对应文件类型的MIME类型，可在浏览器中查看，如Firefox浏览器的工具栏 -> 选项 -> 应用程序。
+http://www.w3school.com.cn/media/media_mimeref.asp
+
+3 启动Firefox时加载插件
+WebDriver启动的是一个干净的没有任务、插件、cookies信息的Firefox浏览器（即使本机Firefox安装某些插件），但在自动化测试中可能需要插件（如Firebug）进行调试。
+注意：需要下载firebug.xpi，且最好使用非Firefox浏览器下载，不然提示直接安装到Firefox；最好不要在Firebug官网中下载，因为提示你需要使用Firefox浏览器。
+[java] view plain copy
+print?
+// 定义插件所在位置  
+File file = new File("E:\\Firefox\\files\\firebug-2.0.17.xpi");  
+// 创建一个FirefoxProfile对象profile  
+FirefoxProfile profile = new FirefoxProfile();  
+try{  
+// 将Firebug加载到profile对象中  
+profile.addExtension(file);  
+}catch (IOException e){  
+e.printStackTrace();  
+}  
+// 设置Firebug的当前版本号  
+profile.setPreference("extensions.firebug.currentVersion","2.0.17");  
+// 激活Firebug  
+profile.setPreference("extensions.firebug.allPagesActivation","on");  
+
+4 启动Firefox浏览器
+4.1 Firefox安装在默认路径下
+直接创建一个FirefoxDriver对象。
+[java] view plain copy
+print?
+WebDriver driver = new FirefoxDriver();  
+4.2 Firefox未安装在默认路径下
+需要指定Firefox的可执行程序firefox.exe的路径，再创建FirefoxDriver对象。
+[java] view plain copy
+print?
+System.setProperty("webdriver.firefox.bin", "E:\\Firefox\\firefox.exe");  
+WebDriver driver = new FirefoxDriver();  
+
+结合起来，就是如下代码：
+[java] view plain copy
+print?
+File file = new File("E:\\Firefox\\files\\firebug-2.0.17.xpi");  
+FirefoxProfile profile = new FirefoxProfile();  
+try{  
+    profile.addExtension(file);  
+} catch (IOException e){  
+    e.printStackTrace();  
+}  
+profile.setPreference("extensions.firebug.currentVersion","2.0.17");  
+profile.setPreference("extensions.firebug.allPagesActivation","on");  
+profile.setPreference("browser.download.downloadDir","C:\\Output");  
+profile.setPreference("browser.download.folderList",2);  
+profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream, application/vnd.ms-excel, text/csv, application/zip,application/xml");  
+System.setPreperty("webdriver.firefox.bin","E:\\Firefox\\firefox.exe");  
+WebDriver driver = new FirefoxDriver();  
+
+
+
+
+
+
+
+
+selenium配置firefox profile, 创建firefox profile 
+标签： firefoxseleniumserverpath
+2010-07-26 17:19 12351人阅读 评论(0) 收藏 举报
+ 分类：
+Selenium（7）
+版权声明：本文为博主原创文章，未经博主允许不得转载。
+1 ． 打开运行窗口。输入 firefox –p 回车。会出现下面类似的窗口。
+
+ 
+如果没有出现，可能是你已经打开了 firefox ，如果是请先关闭。
+2 ． 点击创建配置文件。然后单击下一步。然后选择一个存放 profile 的文件夹。
+
+3 ．给你的新的配置文件输入一个名称。然后点击结束按钮。
+这样你的 firefox profile 就配置好了，接下来我们要给我们的 profile 下的 firefox 实例，添加一些插件。这样你在使用这个 profile 的时候就会有相应的插件。
+4 ． 打开运行窗口输入 firefox –p 回车。在弹出串口中选择你要使用的 profile 然后点击启动 firefox 按钮就可以使用你的新 profile 了。
+5 ． 在 selenium 的 start.bat 文件中加入 -firefoxProfileTemplate "your firefox profile path" ，这样你的 selenium server 启动的 firefox 就是指定的 profile 了。
