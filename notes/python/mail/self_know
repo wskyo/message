@@ -1,0 +1,34 @@
+
+TCL发邮件示例：
+msg对象记得将From,To，Cc,Subject写上，不然显示出来这部分有可能是空白。
+sender为发邮件的人，tolist为list，为收件人。
+
+#!/usr/bin/python
+import smtplib
+from email.header import Header
+from email.MIMEText import MIMEText
+import sys
+
+def mail():
+	print "--------start--------"
+	mailBody = []
+	mailBody.append('<p align=\'Left\'>This is a test mail.Please ignore it.</b></p>')
+	reload(sys)
+	print sys.setdefaultencoding('gbk')
+	msg = MIMEText(''.join(mailBody), 'html','utf-16')
+	msg.set_charset('gb2312')
+	smtpServer = smtplib.SMTP('mail.tcl.com')
+	sender = 'hudson.admin.hz@tcl.com'
+	tolist = ['xiaodan.cheng@tcl.com']
+	msg['From'] = 'hudson.admin.hz@tcl.com'
+	msg['To'] = 'xiaodan.cheng@tcl.com,,908762503@qq.com'
+	msg['Cc'] = 'xiaodan.cheng@tcl.com'
+	msg['Subject'] = 'test email'
+	domainAccount = 'hudson.admin.hz'
+	domainPassword = "12345678"
+	smtpServer.login(domainAccount, domainPassword)
+	smtpServer.sendmail(sender,tolist, msg.as_string())
+	smtpServer.quit()
+	print "--------end--------"
+if __name__ == '__main__':
+	mail()

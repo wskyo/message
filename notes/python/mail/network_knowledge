@@ -1,0 +1,911 @@
+
+
+
+#-*- encoding: utf-8 -*-  
+import sys  
+import locale  
+import poplib  
+from email import parser  
+import email  
+import string  
+  
+# 确定运行环境的encoding  
+__g_codeset = sys.getdefaultencoding()  
+if "ascii"==__g_codeset:  
+    __g_codeset = locale.getdefaultlocale()[1]  
+#  
+  
+def object2double(obj):  
+    if(obj==None or obj==""):  
+        return 0  
+    else:  
+        return float(obj)  
+    #end if      
+#  
+  
+def utf8_to_mbs(s):  
+    return s.decode("utf-8").encode(__g_codeset)  
+#  
+  
+def mbs_to_utf8(s):  
+    return s.decode(__g_codeset).encode("utf-8")  
+#  
+  
+host = 'pop.exmail.qq.com'  
+username = 'user1@xxxx.cn'  
+password = 'password'  
+  
+pop_conn = poplib.POP3_SSL(host)  
+pop_conn.user(username)  
+pop_conn.pass_(password)  
+  
+#Get messages from server:  
+# 获得邮件  
+messages = [pop_conn.retr(i) for i in range(1, len(pop_conn.list()[1]) + 1)]  
+#print messages  
+  
+#print "--------------------------------------------------"  
+# Concat message pieces:  
+messages = ["\n".join(mssg[1]) for mssg in messages]  
+#print messages  
+  
+#Parse message intom an email object:  
+# 分析  
+messages = [parser.Parser().parsestr(mssg) for mssg in messages]  
+i = 0  
+for index in range(0,len(messages)):  
+    message = messages[index];  
+    i = i + 1;  
+    subject = message.get('subject')     
+    h = email.Header.Header(subject)  
+    dh = email.Header.decode_header(h)  
+    subject = unicode(dh[0][0], dh[0][1]).encode('utf8')  
+    mailName = "mail%d.%s" % (i, subject)  
+    f = open('%d.log'%(i), 'w');  
+    print >> f, "Date: ", message["Date"]  
+    print >> f, "From: ", email.utils.parseaddr(message.get('from'))[1]  
+    print >> f, "To: ", email.utils.parseaddr(message.get('to'))[1]  
+    print >> f, "Subject: ", subject  
+    print >> f, "Data: "  
+    j = 0  
+    for part in message.walk():  
+        j = j + 1  
+        fileName = part.get_filename()  
+        contentType = part.get_content_type()  
+        mycode=part.get_content_charset();  
+        # 保存附件  
+        if fileName:  
+            data = part.get_payload(decode=True)  
+            h = email.Header.Header(fileName)  
+            dh = email.Header.decode_header(h)  
+            fname = dh[0][0]  
+            encodeStr = dh[0][1]  
+            if encodeStr != None:  
+                fname = fname.decode(encodeStr, mycode)  
+            #end if  
+            fEx = open("%s"%(fname), 'wb')  
+            fEx.write(data)  
+            fEx.close()  
+        elif contentType == 'text/plain':# or contentType == 'text/html':  
+            #保存正文  
+            data = part.get_payload(decode=True)  
+            content=str(data);  
+            if mycode=='gb2312':  
+                content= mbs_to_utf8(content)  
+            #end if      
+            nPos = content.find('降息')  
+            print("nPos is %d"%(nPos))  
+            print >> f, data  
+        #end if  
+    #end for   
+    f.close()  
+#end for      
+pop_conn.quit()  
+
+
+
+
+
+#!/usr/bin/env python  
+# -*- coding: gbk -*-  
+#导入smtplib和MIMEText  
+import smtplib  
+from email.mime.text import MIMEText  
+#############  
+#要发给谁，这里发给2个人  
+mailto_list=["aaa@qq.com","123456789@qq.com"]  
+#####################  
+#设置服务器，用户名、口令以及邮箱的后缀  
+mail_host="smtp.qq.com"  
+mail_user="your qq"  
+mail_pass="password"  
+mail_postfix="qq.com"  
+######################  
+def send_mail(to_list,sub,content):  
+    ''''' 
+    to_list:发给谁 
+    sub:主题 
+    content:内容 
+    send_mail("aaa@126.com","sub","content") 
+    '''  
+    me=mail_user+"<"+mail_user+"@"+mail_postfix+">"  
+    msg = MIMEText(content)  
+    msg['Subject'] = sub #设置主题  
+    msg['From'] = me     #发件人  
+    msg['To'] = ";".join(to_list) #收件人  
+    try:  
+        s = smtplib.SMTP()  
+        s.connect(mail_host)  
+        s.login(mail_user,mail_pass)  
+        s.sendmail(me, to_list, msg.as_string())  
+        s.close()  
+        return True  
+    except Exception, e:  
+        print str(e)  
+        return False  
+if __name__ == '__main__':  
+    if send_mail(mailto_list,"subject","content"):  
+        print "发送成功"  
+    else:  
+        print "发送失败"  
+
+
+
+接收邮件 根据发件人并提取出指定邮件
+[python] view plain copy
+import poplib  
+import string  
+from email import parser  
+  
+host = 'pop.qq.com'  
+username = 'your_qq@qq.com'  
+password = 'your_password'  
+  
+pop_conn = poplib.POP3_SSL(host)  
+pop_conn.user(username)  
+pop_conn.pass_(password)  
+  
+#从服务器获取邮件列表:  
+messages = [pop_conn.retr(i) for i in range(1, len(pop_conn.list()[1]) + 1)]  
+  
+# Concat message pieces:  
+messages = ["/n".join(mssg[1]) for mssg in messages]  
+  
+#解析邮件到email object:  
+messages = [parser.Parser().parsestr(mssg) for mssg in messages]  
+for message in messages:  
+    addrfrom = str(message.get('from'))  
+    try:  
+        addrfrom.index('info@kingsoft.com')  
+        start_addr = addrfrom.index('<')  
+        end_addr = addrfrom.index('>')  
+        print addrfrom[start_addr + 1 : end_addr] #如果邮件是来自金山则打印他的标题  
+    except ValueError:  
+        continue  
+pop_conn.quit()  
+
+
+要使用imap接收邮件,当然要导入imaplib拉.
+import imaplib
+然后按常规的,建立链接→登录
+conn = imaplib.IMAP4("imap.xxx.com",143)
+
+conn.login("userName","password")
+然后我想查看收件箱的邮件,咋办呢?要先选择一个目录,收件箱默认名称是"INBOX",IMAP是支持创建文件夹,查看其它文件夹的,如果是自己 新建的文件夹,那么名称一般会是"INBOX.新建文件夹",不同的邮箱可能表示方式不一样,如果你不知道的话,那运行conn.list()查看所有的 文件夹.
+conn.select("INBOX")
+选择后,然后查看文件夹,注意,IMAP的查看其实是一个搜索的过程,IMAP的原始命令是search all(大概的),在python里这么用:
+type, data = conn.search(None, 'ALL')
+然后返回的是这个收件箱里所有邮件的编号,按接收时间升序排列,最后的表示最近.
+search这个很鬼麻烦,因为官方文档里没讲这个函数的第二个参数怎么用,于是找了下,可以填的命令有:
+http://www.afterlogic.com/mailbee-net/docs/MailBee.ImapMail.Imap.Search_overload_1.html
+于是如果我想找Essh邮件的话,使用
+type, data = conn.search(None, '(SUBJECT "Essh")')
+里面要用一个括号,代表是一个查询条件,可以同时指定多个查询条件,例如FROM xxxx SUBJECT "aaa",注意,命令要用括号罩住(痛苦的尝试)
+search第一个参数是charset的意思,填None表示用默认ASCII,
+data里获取到的是一个只有一个字符串元素的数组,包含很多数字,用空格隔开
+['1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103'
+于是想获取最后一封的做法是:
+msgList = data[0].split()
+last = msgList[len(msgList) - 1]
+然后把那个邮件获取回来,用fetch函数
+例子:
+conn.fetch(last, '(RFC822.SIZE BODY[HEADER.FIELDS (SUBJECT)])')
+但是返回的是一串MIME编码的东东,看不懂,如果能像eml那一操作一封邮件就好了.
+方法是有的,用email库.
+import email
+然后以RFC822获取邮件格式,再用email.message_from_string转换为message对象.就可以当message操作了,(http://docs.python.org/2/library/email.message.html)
+type,data=connect.fetch(msgList[len(msgList)-1],'(RFC822)')
+msg=email.message_from_string(data[0][1])
+content=msg.get_payload(decode=True)
+最后content得到就是邮件的内容了,这样暂时达到我的目的了,说到这里先.
+
+1、Imaplib
+IMAP4.append(mailbox, flags, date_time, message)：Append message to named mailbox.
+IMAP4.authenticate(mechanism, authobject)：Authenticate command — requires response processing.mechanism specifies which authentication mechanism is to be used - it should appear in the instance variable capabilities in the form AUTH=mechanism.
+IMAP4.check()：Checkpoint mailbox on server.
+IMAP4.close()：Close currently selected mailbox. Deleted messages are removed from writable mailbox. This is the recommended command before LOGOUT.
+IMAP4.copy(message_set, new_mailbox)：Copy message_set messages onto end of new_mailbox.
+IMAP4.create(mailbox)：Create new mailbox named mailbox.
+IMAP4.delete(mailbox)：Delete old mailbox named mailbox.
+IMAP4.deleteacl(mailbox, who)：Delete the ACLs (remove any rights) set for who on mailbox.
+IMAP4.expunge()：Permanently remove deleted items from selected mailbox. Generates an EXPUNGE response for each deleted message. Returned data contains a list of EXPUNGE message numbers in order received.
+IMAP4.fetch(message_set, message_parts)：Fetch (parts of) messages. message_parts should be a string of message part names enclosed within parentheses, eg: "(UID BODY[TEXT])". Returned data are tuples of message part envelope and data.
+IMAP4.getacl(mailbox)：Get the ACLs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.getannotation(mailbox, entry, attribute)：Retrieve the specified ANNOTATIONs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.getquota(root)：Get the quota root‘s resource usage and limits. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.getquotaroot(mailbox)：Get the list of quota roots for the named mailbox. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.list([directory[, pattern]])：List mailbox names in directory matching pattern. directory defaults to the top-level mail folder, and pattern defaults to match anything. Returned data contains a list of LIST responses.
+IMAP4.login(user, password)：Identify the client using a plaintext password. The password will be quoted.
+IMAP4.login_cram_md5(user, password)：Force use of CRAM-MD5 authentication when identifying the client to protect the password. Will only work if the server CAPABILITY response includes the phrase AUTH=CRAM-MD5.
+IMAP4.logout()：Shutdown connection to server. Returns server BYE response.
+IMAP4.lsub([directory[, pattern]])：List subscribed mailbox names in directory matching pattern. directory defaults to the top level directory and pattern defaults to match any mailbox. Returned data are tuples of message part envelope and data.
+IMAP4.myrights(mailbox)：Show my ACLs for a mailbox (i.e. the rights that I have on mailbox).
+IMAP4.namespace()：Returns IMAP namespaces as defined in RFC2342.
+IMAP4.noop()：Send NOOP to server.
+IMAP4.open(host, port)：Opens socket to port at host. This method is implicitly called by the IMAP4 constructor. The connection objects established by this method will be used in the read, readline, send, and shutdown methods. You may override this method.
+IMAP4.partial(message_num, message_part, start, length)：Fetch truncated part of a message. Returned data is a tuple of message part envelope and data.
+IMAP4.proxyauth(user)：Assume authentication as user. Allows an authorised administrator to proxy into any user’s mailbox.
+IMAP4.read(size)：Reads size bytes from the remote server. You may override this method.
+IMAP4.readline()：Reads one line from the remote server. You may override this method.
+IMAP4.recent()：Prompt server for an update. Returned data is None if no new messages, else value of RECENT response.
+IMAP4.rename(oldmailbox, newmailbox)：Rename mailbox named oldmailbox to newmailbox.
+IMAP4.response(code)：Return data for response code if received, or None. Returns the given code, instead of the usual type.
+IMAP4.search(charset, criterion[, ...])：Search mailbox for matching messages. charset may be None, in which case no CHARSET will be specified in the request to the server. The IMAP protocol requires that at least one criterion be specified; an exception will be raised when the server returns an error.
+IMAP4.send(data)：Sends data to the remote server. You may override this method.
+IMAP4.setacl(mailbox, who, what)：Set an ACL for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.setannotation(mailbox, entry, attribute[, ...])：Set ANNOTATIONs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.setquota(root, limits)：Set the quota root‘s resource limits. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.shutdown()：Close connection established in open. This method is implicitly called by IMAP4.logout(). You may override this method.
+IMAP4.socket()：Returns socket instance used to connect to server.
+IMAP4.sort(sort_criteria, charset, search_criterion[, ...])：The sort command is a variant of search with sorting semantics for the results. Returned data contains a space separated list of matching message numbers.
+IMAP4.status(mailbox, names)：Request named status conditions for mailbox.
+IMAP4.store(message_set, command, flag_list)：Alters flag dispositions for messages in mailbox. command is specified by section 6.4.6 of RFC 2060 as being one of “FLAGS”, “+FLAGS”, or “-FLAGS”, optionally with a suffix of ”.SILENT”.
+IMAP4.thread(threading_algorithm, charset, search_criterion[, ...])：The thread command is a variant of search with threading semantics for the results. Returned data contains a space separated list of thread members.
+IMAP4.uid(command, arg[, ...])：Execute command args with messages identified by UID, rather than message number. Returns response appropriate to command. At least one argument must be supplied; if none are provided, the server will return an error and an exception will be raised.
+IMAP4.unsubscribe(mailbox)：Unsubscribe from old mailbox.
+IMAP4.xatom(name[, arg[, ...]])：Allow simple extension commands notified by server in CAPABILITY response.
+IMAP4_SSL.ssl()：Returns SSLObject instance used for the secure connection with the server.
+IMAP4.PROTOCOL_VERSION：The most recent supported protocol in the CAPABILITY response from the server.
+IMAP4.debug：Integer value to control debugging output. The initialize value is taken from the module variable Debug. Values greater than three trace each command.
+2、imap 命令详解
+CREATE <folder>：CREATE可以创建指定名字的新邮箱。邮箱名称通常是带路径的文件夹全名。（有些IMAP客户机使用邮件夹称呼新邮箱）
+C: A003 CREATE owatagusiam/                 /*创建一个新目录owatagusiam*/
+S: A003 OK CREATE completed
+C: A004 CREATE owatagusiam/blurdybloop  
+/* 在创建的目录owatagusiam下创建一个名为blurdybloop 的邮箱，当然可以省略第一步，直接A004 CREATE owatagusiam/blurdybloop ，表示在新的目录owatagusiam 下创建了一个名为blurdybloop 的邮箱*/         
+S: A004 OK CREATE completed
+DELETE <folder>：DELETE命令删除指定名字的文件夹。文件夹名字通常是带路径的文件夹全名，当邮箱被删除后，其中的邮件也不复存在。
+C: A683 DELETE blurdybloop
+S: A683 OK DELETE completed 
+C: A684 DELETE foo
+S: A684 NO Name "foo" has inferior hierarchical names
+C: A685 DELETE foo/bar 
+S: A685 OK DELETE Completed
+RENAME <old folder><new folder>：RENAME命令可以修改文件夹的名称，它使用两个参数：当前邮箱名和新邮箱名，两个参数的命名符合标准路径命名规则。
+C: A683 RENAME blurdybloop sarasoop
+S: A683 OK RENAME completed
+C: A684 RENAME stuff/junk newbox         /*把stuff目录（文件夹）下的邮箱junk改名为newbox*/
+S: A684 OK RENAME Completed
+LIST <BASE><template>：LIST命令用于列出邮箱中已有的文件夹，有点像操作系统的列目录命令，有两个参数，邮箱路 径参数BASE：表示用户登陆目录；第二个参数template：表示希望显示的邮箱名。这个命令可以包含起始的路径位置和需要列出的文件夹所符合的特 征，可以使用通配符"*"。
+C: A101 LIST "" ""
+S: * LIST (\Noselect) "/" ""
+S: A101 OK LIST Completed
+C: A102 LIST #news.comp.mail.misc ""
+S: * LIST (\Noselect) "." #news.
+S: A102 OK LIST Completed
+C: A103 LIST /usr/staff/jones ""
+S: * LIST (\Noselect) "/" /
+S: A103 OK LIST Completed
+C: A202 LIST ~/Mail/ %
+S: * LIST (\Noselect) "/" ~/Mail/foo
+S: * LIST () "/" ~/Mail/meetings
+S: A202 OK LIST completed
+APPEND <folder><attributes><date/time><size><mail data>：APPEND命令允许Client上载一个邮件到指定的Folder（文件夹/邮箱）中。命令中包含了新邮件的属性、日期/时间、大 小，随后是邮件数据。
+C: A003 APPEND saved-messages (\Seen) {310}
+C: Date: Mon， 7 Feb 1994 21:52:25 -0800 (PST)
+C: From: Fred Foobar <foobar@Blurdybloop.COM>
+C: Subject: afternoon meeting
+C: To: mooch@owatagu.siam.edu
+C: Message-Id: <B27397-0100000@Blurdybloop.COM>
+C: MIME-Version: 1.0
+C: Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+C:
+C: Hello Joe， do you think we can meet at 3:30 tomorrow?
+C:
+S: A003 OK APPEND completed
+SELECT <folder>：SELECT命令让Client选定某个邮箱（Folder），表示即将对该邮箱（Folder）内的邮件作操作。邮箱标志的当前状态也返回给了用户，同时返回的还有一些关于邮件和邮箱的附加信息。
+C: A142 SELECT INBOX
+S: * 172 EXISTS
+S: * 1 RECENT
+S: * OK [UNSEEN 12] Message 12 is first unseen
+S: * OK [UIDVALIDITY 3857529045] UIDs valid
+S: * FLAGS (\Answered \Flagged \Deleted \Seen \Draft)
+S: * OK [PERMANENTFLAGS (\Deleted \Seen \*)] Limited
+S: A142 OK [READ-WRITE] SELECT completed
+FETCH <mail id><datanames>：FETCH 命令用于读取邮件的文本信息，且仅用于显示的目的。包含两个参数，messageset：表示希望读取的邮件号列表，IAMP服务器邮箱中的每个邮件都有 一个唯一的ID标识，（邮件号列表参数可以是一个邮件号，也可以是由逗号分隔的多个邮件号，或者由冒号间隔的一个范围），IMAP服务器返回邮件号列表中 全部邮件的指定数据项内容。
+数据名参数确定能够被独立返回的邮件的一部分，下面我们看看各参数返回的邮件信息：
+ALL：只返回按照一定格式的邮件摘要，包括邮件标志、RFC822.SIZE、自身的时间和信封信息。IMAP客户机能够将标准邮件解析成这些信息并显示出来。
+BODY：只返回邮件体文本格式和大小的摘要信息。IMAP客户机可以识别这些细腻，并向用户显示详细的关于邮件的信息。其实是一些非扩展的BODYSTRUCTURE的信息。
+FAST：只返回邮件的一些摘要，包括邮件标志、RFC822.SIZE、和自身的时间。
+FULL：同样的还是一些摘要信息，包括邮件标志、RFC822.SIZE、自身的时间和BODYSTRUCTURE的信息。
+BODYSTRUCTUR： 是邮件的[MIME-IMB]的体结构。这是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段和[MIME-IMB]头信息得出来 的。包括的内容有：邮件正文的类型、字符集、编码方式等和各附件的类型、字符集、编码方式、文件名称等等。
+ENVELOPE：信息的信封结构。是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段得出来的，默认各字段都是需要的。主要包括：自身的时间、附件数、收件人、发件人等。
+FLAGS：此邮件的标志。
+INTERNALDATE：自身的时间。
+RFC822.SIZE：邮件的[RFC-2822]大小
+RFC822.HEADER：在功能上等同于BODY.PEEK[HEADER]，
+RFC822：功能上等同于BODY[]。
+RFC822.TEXT：功能上等同于BODY[TEXT]
+UID：返回邮件的UID号，UID号是唯一标识邮件的一个号码。
+BODY[section] <<partial>>：返回邮件的中的某一指定部分，返回的部分用section来表示，section部分包含的信息通常是 代表某一部分的一个数字或者是下面的某一个部分：HEADER, HEADER.FIELDS, HEADER.FIELDS.NOT, MIME, and TEXT。如果section部分是空的话，那就代表返回全部的信息，包括头信息。
+BODY[HEADER]返回完整的文件头信息。
+BODY[HEADER.FIELDS ()]：在小括号里面可以指定返回的特定字段。
+BODY[HEADER.FIELDS.NOT ()]：在小括号里面可以指定不需要返回的特定字段。
+BODY[MIME]：返回邮件的[MIME-IMB]的头信息，在正常情况下跟BODY[HEADER]没有区别。
+BODY[TEXT]：返回整个邮件体，这里的邮件体并不包括邮件头。
+STORE <mail id><new attributes>：STORE 命令用于修改指定邮件的属性，包括给邮件打上已读标记、删除标记，等等。STORE命令当前只有两个数据项类型可用，FLAGS：表示邮件的一组标志； FLAGS.SLIENT，表示一组邮件的标志，通过在两种数据项前加上加号或者减号可以进一步改变它们的执行情况，加号表示数据项的值添加到邮件中，减 号表示将数据项的值从邮件中删除。
+C: A003 STORE 2:4 +FLAGS (\Deleted)      /*冒号表示间隔的一个范围：给从2到4的邮件设置Deleted属性*/
+S: * 2 FETCH FLAGS (\Deleted \Seen)
+S: * 3 FETCH FLAGS (\Deleted)
+S: * 4 FETCH FLAGS (\Deleted \Flagged \Seen)
+S: A003 OK STORE completed
+同时改命令还可以用于把邮件标记为未读等等。在web上可以对邮件进行的操作在imap中都可以实现。
+CLOSE：CLOSE命令表示Client结束对当前Folder（文件夹/邮箱）的访问，关闭邮箱该邮箱中所有标志为、DELETED的邮件就被从物理上删除。CLOSE没有命令参数。随后可以SELECT另一Folder。
+C: A341 CLOSE
+S: A341 OK CLOSE completed
+
+EXPUNGE:EXPUNGE命令在不关闭邮箱的情况下删除所有的标志为、DELETED的邮件。EXPUNGE删除的邮件将不可以恢复。 
+C: A202 EXPUNGE
+S: * 3 EXPUNGE
+S: * 3 EXPUNGE
+S: * 5 EXPUNGE
+S: * 8 EXPUNGE
+S: A202 OK EXPUNGE completed
+LOGOUT:LOGOUT命令结束本次IMAP会话。
+C: A023 LOGOUT
+S: * BYE IMAP4rev1 Server logging out
+S: A023 OK LOGOUT completed
+(Server and client then close the connection)
+EXAMINE <mailbox>:
+EXAMINE命令以只读方式打开邮箱，参数是需要打开的邮箱的名字，使用EXAMINE命令打开的邮箱不允许对邮件进行改动，因此不能增加或删除邮件的标志。
+SUBSCRIBE <mailbox>:SUBSCRIBE命令用来在客户机的活动邮箱列表中增加一个邮箱，该命令只有一个参数，希望添加的邮箱名。
+C: A114 SUBSCRIBE new/anotherbox
+S: A114 OK SUBSCRIBE completed
+UNSUBSCRIBE <mailbox>:UNSUBSCRIBE命令用来从活动列表中去掉一个邮箱，一个参数：希望去掉的邮箱名。
+C: A115 UNSUBSCRIBE new/anotherbox
+S: A115 OK SUBSCRIBE completed
+LSUB <folder><mailbox>:LSUB命令修正了LIST命令，LIST返回用户$HOME目录下所有的文件，但LSUB命令只显示那些使用SUBSCRIBE命令设置为活动邮箱的文件。两个参数：邮箱路径和邮箱名。
+C: A116 LSUB “” *
+S:* LSUB () “/” stuff/junk
+S:* LSUB () “/” neebox
+S:* LSUB () “/” new/anotherbox
+S: A116 OK LSUB completed
+STATUS <mailbox>(<parameter1>  < parameter2>  ……<parameter5>):STATUS命令查询邮箱的当前状态。第一个参数是需要查询的邮箱名，第二个参数是客户机需要查询的项目列 表（要查询显示的信息），当在圆括号中。STATUS可以在不使用SELECT命令（打开邮箱）或者EXAMINE（以只读方式打开邮箱）前提下获取邮箱 的信息。
+STATUS命令可以获得的数据项
+项 目                 说  明
+MESSAGE         邮箱中的邮件总数
+RECENT         邮箱中标志为\RECENT的邮件数
+UIDNEXT         可以分配给新邮件的下一个UID
+UIDVALIDITY         邮箱的UID有效性标志
+UNSEEN         邮箱中没有被标志为\UNSEEN的邮件数
+C: A117 STATUS inbox  (message recent unseen)
+S:* STATUS inbox (MESSAGE 1 RECENT 0 UNSENN 0)
+S: A117 OK STATUS completed
+C: A118 STATUS newbox  (message recent unseen)
+S:* STATUS inbox (MESSAGE 1 RECENT 0 UNSENN 2)
+S: A118 OK STATUS completed
+CHECK :CHECK命令用来在邮箱设置一个检查点。没有参数。就是IMAP中的sync命令。任何未完成的操作，例如从服务器内存向硬盘写数据，都将会被做完以保持邮箱的一致性状态。该命令确保乃村中的磁盘缓冲数据都被写到了磁盘上。
+SEARCH [CHARSET specification] (search criteria):命 令可以根据搜索条件在处于活动状态的邮箱中搜索邮件，然后显示匹配的邮件编号。字符集标志参数[CHARSET specification]由CHARSET和注册的字符集标志符组成，缺省的标志符是US-ASCⅡ，所以该参数长省略。search criteria：查询条件参数，明确查询的关键字和值。查询关键字有几十种。
+C: A119 SEARCH header subject another
+S: SEARCH 1 2
+S:* A119 OK SEARCH completed
+C: A120 SEARCH header subject another
+S: *SEARCH 2
+S: A120 OK SEARCH completed
+C: A121 SEARCH UNSEEN
+S: *SEARCH 1 2
+S: A120 OK SEARCH completed
+以上每个例子都在邮件头的Subject:字段中查询一个不同的单词。服务器返回条件的邮件号列表，如果没有匹配邮件则返回不带UID的SEARCH单词。
+COPY <mail id><mailboxname>:COPY命令可以把邮件从一个邮箱复制到另一个邮箱，两个参数：mail id是希望从活动邮箱中复制的邮件的标号，mailboxname是希望邮件被复制到的邮箱。
+IAMP没有定义移动邮件的命令，移动操作相当于先把邮件复制到新邮箱中，然后对源邮箱中的邮件设置\DELETED标志。下一次执行检查点过后，新邮箱中的邮件被删除，新邮件就被显示出来。
+UID:UID 命令和FETCH、COPY、STORE命令或者SEARCH命令一起使用，它允许这些命令使用邮件的UID号而不是在邮箱中的顺序号。UID号是唯一标 识邮件系统中邮件的32位证书。通常这些命令都使用顺序号来标识邮箱中的邮件，使用UID可以使IMAP客户机记住不同IMAP会话中的邮件。
+CAPABILITY:CAPABILITY命令请求返回IMAP服务器支持的功能列表，服务器收到客户机发送的CAPABILITY命令后将返回该服务器所支持的功能。无参数。
+C: A122 CAPABILITY
+S:*A122 CAPABILITY IMAP4 IMAP4REVl NAMESPACE IDLE SCAN SORT   MAILBOX
+--REFERRALS [ic:ccc] LOGIN-REFERRALS AUTH=LOGIN THREAD=
+ORDERDSUBJECT
+S: A122 OK CAPABILITY completed
+NOOP:NOOP命令什么也不做，用来向服务器发送自动命令，防止因长时间处于不活动状态而导致连接中断，服务器对该命令的响应始终为肯定。无参数。
+LOGOUT:LOGOUT命令使当前登陆用户退出登陆并关闭所有打开的邮箱，任何做了\DELETED标志的邮件都将在这个时候被删除。1、Imaplib
+IMAP4.append(mailbox, flags, date_time, message)：Append message to named mailbox.
+IMAP4.authenticate(mechanism, authobject)：Authenticate command — requires response processing.mechanism specifies which authentication mechanism is to be used - it should appear in the instance variable capabilities in the form AUTH=mechanism.
+IMAP4.check()：Checkpoint mailbox on server.
+IMAP4.close()：Close currently selected mailbox. Deleted messages are removed from writable mailbox. This is the recommended command before LOGOUT.
+IMAP4.copy(message_set, new_mailbox)：Copy message_set messages onto end of new_mailbox.
+IMAP4.create(mailbox)：Create new mailbox named mailbox.
+IMAP4.delete(mailbox)：Delete old mailbox named mailbox.
+IMAP4.deleteacl(mailbox, who)：Delete the ACLs (remove any rights) set for who on mailbox.
+IMAP4.expunge()：Permanently remove deleted items from selected mailbox. Generates an EXPUNGE response for each deleted message. Returned data contains a list of EXPUNGE message numbers in order received.
+IMAP4.fetch(message_set, message_parts)：Fetch (parts of) messages. message_parts should be a string of message part names enclosed within parentheses, eg: "(UID BODY[TEXT])". Returned data are tuples of message part envelope and data.
+IMAP4.getacl(mailbox)：Get the ACLs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.getannotation(mailbox, entry, attribute)：Retrieve the specified ANNOTATIONs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.getquota(root)：Get the quota root‘s resource usage and limits. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.getquotaroot(mailbox)：Get the list of quota roots for the named mailbox. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.list([directory[, pattern]])：List mailbox names in directory matching pattern. directory defaults to the top-level mail folder, and pattern defaults to match anything. Returned data contains a list of LIST responses.
+IMAP4.login(user, password)：Identify the client using a plaintext password. The password will be quoted.
+IMAP4.login_cram_md5(user, password)：Force use of CRAM-MD5 authentication when identifying the client to protect the password. Will only work if the server CAPABILITY response includes the phrase AUTH=CRAM-MD5.
+IMAP4.logout()：Shutdown connection to server. Returns server BYE response.
+IMAP4.lsub([directory[, pattern]])：List subscribed mailbox names in directory matching pattern. directory defaults to the top level directory and pattern defaults to match any mailbox. Returned data are tuples of message part envelope and data.
+IMAP4.myrights(mailbox)：Show my ACLs for a mailbox (i.e. the rights that I have on mailbox).
+IMAP4.namespace()：Returns IMAP namespaces as defined in RFC2342.
+IMAP4.noop()：Send NOOP to server.
+IMAP4.open(host, port)：Opens socket to port at host. This method is implicitly called by the IMAP4 constructor. The connection objects established by this method will be used in the read, readline, send, and shutdown methods. You may override this method.
+IMAP4.partial(message_num, message_part, start, length)：Fetch truncated part of a message. Returned data is a tuple of message part envelope and data.
+IMAP4.proxyauth(user)：Assume authentication as user. Allows an authorised administrator to proxy into any user’s mailbox.
+IMAP4.read(size)：Reads size bytes from the remote server. You may override this method.
+IMAP4.readline()：Reads one line from the remote server. You may override this method.
+IMAP4.recent()：Prompt server for an update. Returned data is None if no new messages, else value of RECENT response.
+IMAP4.rename(oldmailbox, newmailbox)：Rename mailbox named oldmailbox to newmailbox.
+IMAP4.response(code)：Return data for response code if received, or None. Returns the given code, instead of the usual type.
+IMAP4.search(charset, criterion[, ...])：Search mailbox for matching messages. charset may be None, in which case no CHARSET will be specified in the request to the server. The IMAP protocol requires that at least one criterion be specified; an exception will be raised when the server returns an error.
+IMAP4.send(data)：Sends data to the remote server. You may override this method.
+IMAP4.setacl(mailbox, who, what)：Set an ACL for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.setannotation(mailbox, entry, attribute[, ...])：Set ANNOTATIONs for mailbox. The method is non-standard, but is supported by the Cyrus server.
+IMAP4.setquota(root, limits)：Set the quota root‘s resource limits. This method is part of the IMAP4 QUOTA extension defined in rfc2087.
+IMAP4.shutdown()：Close connection established in open. This method is implicitly called by IMAP4.logout(). You may override this method.
+IMAP4.socket()：Returns socket instance used to connect to server.
+IMAP4.sort(sort_criteria, charset, search_criterion[, ...])：The sort command is a variant of search with sorting semantics for the results. Returned data contains a space separated list of matching message numbers.
+IMAP4.status(mailbox, names)：Request named status conditions for mailbox.
+IMAP4.store(message_set, command, flag_list)：Alters flag dispositions for messages in mailbox. command is specified by section 6.4.6 of RFC 2060 as being one of “FLAGS”, “+FLAGS”, or “-FLAGS”, optionally with a suffix of ”.SILENT”.
+IMAP4.thread(threading_algorithm, charset, search_criterion[, ...])：The thread command is a variant of search with threading semantics for the results. Returned data contains a space separated list of thread members.
+IMAP4.uid(command, arg[, ...])：Execute command args with messages identified by UID, rather than message number. Returns response appropriate to command. At least one argument must be supplied; if none are provided, the server will return an error and an exception will be raised.
+IMAP4.unsubscribe(mailbox)：Unsubscribe from old mailbox.
+IMAP4.xatom(name[, arg[, ...]])：Allow simple extension commands notified by server in CAPABILITY response.
+IMAP4_SSL.ssl()：Returns SSLObject instance used for the secure connection with the server.
+IMAP4.PROTOCOL_VERSION：The most recent supported protocol in the CAPABILITY response from the server.
+IMAP4.debug：Integer value to control debugging output. The initialize value is taken from the module variable Debug. Values greater than three trace each command.
+2、imap 命令详解
+CREATE <folder>：CREATE可以创建指定名字的新邮箱。邮箱名称通常是带路径的文件夹全名。（有些IMAP客户机使用邮件夹称呼新邮箱）
+C: A003 CREATE owatagusiam/                 /*创建一个新目录owatagusiam*/
+S: A003 OK CREATE completed
+C: A004 CREATE owatagusiam/blurdybloop  
+/* 在创建的目录owatagusiam下创建一个名为blurdybloop 的邮箱，当然可以省略第一步，直接A004 CREATE owatagusiam/blurdybloop ，表示在新的目录owatagusiam 下创建了一个名为blurdybloop 的邮箱*/         
+S: A004 OK CREATE completed
+DELETE <folder>：DELETE命令删除指定名字的文件夹。文件夹名字通常是带路径的文件夹全名，当邮箱被删除后，其中的邮件也不复存在。
+C: A683 DELETE blurdybloop
+S: A683 OK DELETE completed 
+C: A684 DELETE foo
+S: A684 NO Name "foo" has inferior hierarchical names
+C: A685 DELETE foo/bar 
+S: A685 OK DELETE Completed
+RENAME <old folder><new folder>：RENAME命令可以修改文件夹的名称，它使用两个参数：当前邮箱名和新邮箱名，两个参数的命名符合标准路径命名规则。
+C: A683 RENAME blurdybloop sarasoop
+S: A683 OK RENAME completed
+C: A684 RENAME stuff/junk newbox         /*把stuff目录（文件夹）下的邮箱junk改名为newbox*/
+S: A684 OK RENAME Completed
+LIST <BASE><template>：LIST命令用于列出邮箱中已有的文件夹，有点像操作系统的列目录命令，有两个参数，邮箱路 径参数BASE：表示用户登陆目录；第二个参数template：表示希望显示的邮箱名。这个命令可以包含起始的路径位置和需要列出的文件夹所符合的特 征，可以使用通配符"*"。
+C: A101 LIST "" ""
+S: * LIST (\Noselect) "/" ""
+S: A101 OK LIST Completed
+C: A102 LIST #news.comp.mail.misc ""
+S: * LIST (\Noselect) "." #news.
+S: A102 OK LIST Completed
+C: A103 LIST /usr/staff/jones ""
+S: * LIST (\Noselect) "/" /
+S: A103 OK LIST Completed
+C: A202 LIST ~/Mail/ %
+S: * LIST (\Noselect) "/" ~/Mail/foo
+S: * LIST () "/" ~/Mail/meetings
+S: A202 OK LIST completed
+APPEND <folder><attributes><date/time><size><mail data>：APPEND命令允许Client上载一个邮件到指定的Folder（文件夹/邮箱）中。命令中包含了新邮件的属性、日期/时间、大 小，随后是邮件数据。
+C: A003 APPEND saved-messages (\Seen) {310}
+C: Date: Mon， 7 Feb 1994 21:52:25 -0800 (PST)
+C: From: Fred Foobar <foobar@Blurdybloop.COM>
+C: Subject: afternoon meeting
+C: To: mooch@owatagu.siam.edu
+C: Message-Id: <B27397-0100000@Blurdybloop.COM>
+C: MIME-Version: 1.0
+C: Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+C:
+C: Hello Joe， do you think we can meet at 3:30 tomorrow?
+C:
+S: A003 OK APPEND completed
+SELECT <folder>：SELECT命令让Client选定某个邮箱（Folder），表示即将对该邮箱（Folder）内的邮件作操作。邮箱标志的当前状态也返回给了用户，同时返回的还有一些关于邮件和邮箱的附加信息。
+C: A142 SELECT INBOX
+S: * 172 EXISTS
+S: * 1 RECENT
+S: * OK [UNSEEN 12] Message 12 is first unseen
+S: * OK [UIDVALIDITY 3857529045] UIDs valid
+S: * FLAGS (\Answered \Flagged \Deleted \Seen \Draft)
+S: * OK [PERMANENTFLAGS (\Deleted \Seen \*)] Limited
+S: A142 OK [READ-WRITE] SELECT completed
+FETCH <mail id><datanames>：FETCH 命令用于读取邮件的文本信息，且仅用于显示的目的。包含两个参数，messageset：表示希望读取的邮件号列表，IAMP服务器邮箱中的每个邮件都有 一个唯一的ID标识，（邮件号列表参数可以是一个邮件号，也可以是由逗号分隔的多个邮件号，或者由冒号间隔的一个范围），IMAP服务器返回邮件号列表中 全部邮件的指定数据项内容。
+数据名参数确定能够被独立返回的邮件的一部分，下面我们看看各参数返回的邮件信息：
+ALL：只返回按照一定格式的邮件摘要，包括邮件标志、RFC822.SIZE、自身的时间和信封信息。IMAP客户机能够将标准邮件解析成这些信息并显示出来。
+BODY：只返回邮件体文本格式和大小的摘要信息。IMAP客户机可以识别这些细腻，并向用户显示详细的关于邮件的信息。其实是一些非扩展的BODYSTRUCTURE的信息。
+FAST：只返回邮件的一些摘要，包括邮件标志、RFC822.SIZE、和自身的时间。
+FULL：同样的还是一些摘要信息，包括邮件标志、RFC822.SIZE、自身的时间和BODYSTRUCTURE的信息。
+BODYSTRUCTUR： 是邮件的[MIME-IMB]的体结构。这是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段和[MIME-IMB]头信息得出来 的。包括的内容有：邮件正文的类型、字符集、编码方式等和各附件的类型、字符集、编码方式、文件名称等等。
+ENVELOPE：信息的信封结构。是服务器通过解析[RFC-2822]头中的[MIME-IMB]各字段得出来的，默认各字段都是需要的。主要包括：自身的时间、附件数、收件人、发件人等。
+FLAGS：此邮件的标志。
+INTERNALDATE：自身的时间。
+RFC822.SIZE：邮件的[RFC-2822]大小
+RFC822.HEADER：在功能上等同于BODY.PEEK[HEADER]，
+RFC822：功能上等同于BODY[]。
+RFC822.TEXT：功能上等同于BODY[TEXT]
+UID：返回邮件的UID号，UID号是唯一标识邮件的一个号码。
+BODY[section] <<partial>>：返回邮件的中的某一指定部分，返回的部分用section来表示，section部分包含的信息通常是 代表某一部分的一个数字或者是下面的某一个部分：HEADER, HEADER.FIELDS, HEADER.FIELDS.NOT, MIME, and TEXT。如果section部分是空的话，那就代表返回全部的信息，包括头信息。
+BODY[HEADER]返回完整的文件头信息。
+BODY[HEADER.FIELDS ()]：在小括号里面可以指定返回的特定字段。
+BODY[HEADER.FIELDS.NOT ()]：在小括号里面可以指定不需要返回的特定字段。
+BODY[MIME]：返回邮件的[MIME-IMB]的头信息，在正常情况下跟BODY[HEADER]没有区别。
+BODY[TEXT]：返回整个邮件体，这里的邮件体并不包括邮件头。
+STORE <mail id><new attributes>：STORE 命令用于修改指定邮件的属性，包括给邮件打上已读标记、删除标记，等等。STORE命令当前只有两个数据项类型可用，FLAGS：表示邮件的一组标志； FLAGS.SLIENT，表示一组邮件的标志，通过在两种数据项前加上加号或者减号可以进一步改变它们的执行情况，加号表示数据项的值添加到邮件中，减 号表示将数据项的值从邮件中删除。
+C: A003 STORE 2:4 +FLAGS (\Deleted)      /*冒号表示间隔的一个范围：给从2到4的邮件设置Deleted属性*/
+S: * 2 FETCH FLAGS (\Deleted \Seen)
+S: * 3 FETCH FLAGS (\Deleted)
+S: * 4 FETCH FLAGS (\Deleted \Flagged \Seen)
+S: A003 OK STORE completed
+同时改命令还可以用于把邮件标记为未读等等。在web上可以对邮件进行的操作在imap中都可以实现。
+CLOSE：CLOSE命令表示Client结束对当前Folder（文件夹/邮箱）的访问，关闭邮箱该邮箱中所有标志为、DELETED的邮件就被从物理上删除。CLOSE没有命令参数。随后可以SELECT另一Folder。
+C: A341 CLOSE
+S: A341 OK CLOSE completed
+
+EXPUNGE:EXPUNGE命令在不关闭邮箱的情况下删除所有的标志为、DELETED的邮件。EXPUNGE删除的邮件将不可以恢复。 
+C: A202 EXPUNGE
+S: * 3 EXPUNGE
+S: * 3 EXPUNGE
+S: * 5 EXPUNGE
+S: * 8 EXPUNGE
+S: A202 OK EXPUNGE completed
+LOGOUT:LOGOUT命令结束本次IMAP会话。
+C: A023 LOGOUT
+S: * BYE IMAP4rev1 Server logging out
+S: A023 OK LOGOUT completed
+(Server and client then close the connection)
+EXAMINE <mailbox>:
+EXAMINE命令以只读方式打开邮箱，参数是需要打开的邮箱的名字，使用EXAMINE命令打开的邮箱不允许对邮件进行改动，因此不能增加或删除邮件的标志。
+SUBSCRIBE <mailbox>:SUBSCRIBE命令用来在客户机的活动邮箱列表中增加一个邮箱，该命令只有一个参数，希望添加的邮箱名。
+C: A114 SUBSCRIBE new/anotherbox
+S: A114 OK SUBSCRIBE completed
+UNSUBSCRIBE <mailbox>:UNSUBSCRIBE命令用来从活动列表中去掉一个邮箱，一个参数：希望去掉的邮箱名。
+C: A115 UNSUBSCRIBE new/anotherbox
+S: A115 OK SUBSCRIBE completed
+LSUB <folder><mailbox>:LSUB命令修正了LIST命令，LIST返回用户$HOME目录下所有的文件，但LSUB命令只显示那些使用SUBSCRIBE命令设置为活动邮箱的文件。两个参数：邮箱路径和邮箱名。
+C: A116 LSUB “” *
+S:* LSUB () “/” stuff/junk
+S:* LSUB () “/” neebox
+S:* LSUB () “/” new/anotherbox
+S: A116 OK LSUB completed
+STATUS <mailbox>(<parameter1>  < parameter2>  ……<parameter5>):STATUS命令查询邮箱的当前状态。第一个参数是需要查询的邮箱名，第二个参数是客户机需要查询的项目列 表（要查询显示的信息），当在圆括号中。STATUS可以在不使用SELECT命令（打开邮箱）或者EXAMINE（以只读方式打开邮箱）前提下获取邮箱 的信息。
+STATUS命令可以获得的数据项
+项 目                 说  明
+MESSAGE         邮箱中的邮件总数
+RECENT         邮箱中标志为\RECENT的邮件数
+UIDNEXT         可以分配给新邮件的下一个UID
+UIDVALIDITY         邮箱的UID有效性标志
+UNSEEN         邮箱中没有被标志为\UNSEEN的邮件数
+C: A117 STATUS inbox  (message recent unseen)
+S:* STATUS inbox (MESSAGE 1 RECENT 0 UNSENN 0)
+S: A117 OK STATUS completed
+C: A118 STATUS newbox  (message recent unseen)
+S:* STATUS inbox (MESSAGE 1 RECENT 0 UNSENN 2)
+S: A118 OK STATUS completed
+CHECK :CHECK命令用来在邮箱设置一个检查点。没有参数。就是IMAP中的sync命令。任何未完成的操作，例如从服务器内存向硬盘写数据，都将会被做完以保持邮箱的一致性状态。该命令确保乃村中的磁盘缓冲数据都被写到了磁盘上。
+SEARCH [CHARSET specification] (search criteria):命 令可以根据搜索条件在处于活动状态的邮箱中搜索邮件，然后显示匹配的邮件编号。字符集标志参数[CHARSET specification]由CHARSET和注册的字符集标志符组成，缺省的标志符是US-ASCⅡ，所以该参数长省略。search criteria：查询条件参数，明确查询的关键字和值。查询关键字有几十种。
+C: A119 SEARCH header subject another
+S: SEARCH 1 2
+S:* A119 OK SEARCH completed
+C: A120 SEARCH header subject another
+S: *SEARCH 2
+S: A120 OK SEARCH completed
+C: A121 SEARCH UNSEEN
+S: *SEARCH 1 2
+S: A120 OK SEARCH completed
+以上每个例子都在邮件头的Subject:字段中查询一个不同的单词。服务器返回条件的邮件号列表，如果没有匹配邮件则返回不带UID的SEARCH单词。
+COPY <mail id><mailboxname>:COPY命令可以把邮件从一个邮箱复制到另一个邮箱，两个参数：mail id是希望从活动邮箱中复制的邮件的标号，mailboxname是希望邮件被复制到的邮箱。
+IAMP没有定义移动邮件的命令，移动操作相当于先把邮件复制到新邮箱中，然后对源邮箱中的邮件设置\DELETED标志。下一次执行检查点过后，新邮箱中的邮件被删除，新邮件就被显示出来。
+UID:UID 命令和FETCH、COPY、STORE命令或者SEARCH命令一起使用，它允许这些命令使用邮件的UID号而不是在邮箱中的顺序号。UID号是唯一标 识邮件系统中邮件的32位证书。通常这些命令都使用顺序号来标识邮箱中的邮件，使用UID可以使IMAP客户机记住不同IMAP会话中的邮件。
+CAPABILITY:CAPABILITY命令请求返回IMAP服务器支持的功能列表，服务器收到客户机发送的CAPABILITY命令后将返回该服务器所支持的功能。无参数。
+C: A122 CAPABILITY
+S:*A122 CAPABILITY IMAP4 IMAP4REVl NAMESPACE IDLE SCAN SORT   MAILBOX
+--REFERRALS [ic:ccc] LOGIN-REFERRALS AUTH=LOGIN THREAD=
+ORDERDSUBJECT
+S: A122 OK CAPABILITY completed
+NOOP:NOOP命令什么也不做，用来向服务器发送自动命令，防止因长时间处于不活动状态而导致连接中断，服务器对该命令的响应始终为肯定。无参数。
+LOGOUT:LOGOUT命令使当前登陆用户退出登陆并关闭所有打开的邮箱，任何做了\DELETED标志的邮件都将在这个时候被删除。
+
+
+
+
+
+
+
+
+
+
+SMTP (Simple Mail Transfer Protocol)
+　　邮件传送代理 (Mail Transfer Agent，MTA) 程序使用SMTP协议来发送电邮到接收者的邮件服务器。SMTP协议只能用来发送邮件，不能用来接收邮件。大多数的邮件发送服务器 (Outgoing Mail Server) 都是使用SMTP协议。SMTP协议的默认TCP端口号是25。
+　　SMTP协议的一个重要特点是它能够接力传送邮件。它工作在两种情况下：一是电子邮件从客户机传输到服务器；二是从某一个服务器传输到另一个服务器。
+
+POP3 (Post Office Protocol) & IMAP (Internet Message Access Protocol)
+　　POP协议和IMAP协议是用于邮件接收的最常见的两种协议。几乎所有的邮件客户端和服务器都支持这两种协议。
+　　POP3协议为用户提供了一种简单、标准的方式来访问邮箱和获取电邮。使用POP3协议的电邮客户端通常的工作过程是：连接服务器、获取所有信息并保存在用户主机、从服务器删除这些消息然后断开连接。POP3协议的默认TCP端口号是110。
+　　IMAP协议也提供了方便的邮件下载服务，让用户能进行离线阅读。使用IMAP协议的电邮客户端通常把信息保留在服务器上直到用户显式删除。这 种特性使得多个客户端可以同时管理一个邮箱。IMAP协议提供了摘要浏览功能，可以让用户在阅读完所有的邮件到达时间、主题、发件人、大小等信息后再决定 是否下载。IMAP协议的默认TCP端口号是143。
+
+邮件格式 (RFC 2822)
+　　每封邮件都有两个部分：邮件头和邮件体，两者使用一个空行分隔。
+　　邮件头每个字段 (Field) 包括两部分：字段名和字段值，两者使用冒号分隔。有两个字段需要注意：From和Sender字段。From字段指明的是邮件的作者，Sender字段指 明的是邮件的发送者。如果From字段包含多于一个的作者，必须指定Sender字段；如果From字段只有一个作者并且作者和发送者相同，那么不应该再 使用Sender字段，否则From字段和Sender字段应该同时使用。
+　　邮件体包含邮件的内容，它的类型由邮件头的Content-Type字段指明。RFC 2822定义的邮件格式中，邮件体只是单纯的ASCII编码的字符序列。
+MIME (Multipurpose Internet Mail Extensions) (RFC 1341)
+　　MIME扩展邮件的格式，用以支持非ASCII编码的文本、非文本附件以及包含多个部分 (multi-part) 的邮件体等。
+
+Python email模块
+1. class email.message.Message
+__getitem__，__setitem__实现obj[key]形式的访问。
+Msg.attach(playload): 向当前Msg添加playload。
+Msg.set_playload(playload): 把整个Msg对象的邮件体设成playload。
+Msg.add_header(_name, _value, **_params): 添加邮件头字段。
+2. class email.mime.base.MIMEBase(_maintype, _subtype, **_params)
+　　所有MIME类的基类，是email.message.Message类的子类。
+3. class email.mime.multipart.MIMEMultipart()
+　　在3.0版本的email模块 (Python 2.3-Python 2.5) 中，这个类位于email.MIMEMultipart.MIMEMultipart。
+　　这个类是MIMEBase的直接子类，用来生成包含多个部分的邮件体的MIME对象。
+4. class email.mime.text.MIMEText(_text)
+　　使用字符串_text来生成MIME对象的主体文本。
+
+发邮件代码范例：
+[python] view plain copy
+print?
+#!/usr/bin/env python  
+# -*- coding: UTF-8 -*-  
+   
+from email.mime.multipart import MIMEMultipart  
+from email.mime.base import MIMEBase  
+from email.mime.text import MIMEText  
+   
+# python 2.3.*: email.Utils email.Encoders  
+from email.utils import COMMASPACE,formatdate  
+from email import encoders  
+   
+import os  
+   
+#server['name'], server['user'], server['passwd']  
+def send_mail(server, fro, to, subject, text, files=[]):   
+    assert type(server) == dict   
+    assert type(to) == list   
+    assert type(files) == list   
+   
+    msg = MIMEMultipart()   
+    msg['From'] = fro   
+    msg['Subject'] = subject   
+    msg['To'] = COMMASPACE.join(to) #COMMASPACE==', '   
+    msg['Date'] = formatdate(localtime=True)   
+    msg.attach(MIMEText(text))   
+   
+    for file in files:   
+        part = MIMEBase('application', 'octet-stream') #'octet-stream': binary data   
+        part.set_payload(open(file, 'rb'.read()))   
+        encoders.encode_base64(part)   
+        part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))   
+        msg.attach(part)   
+   
+    import smtplib   
+    smtp = smtplib.SMTP(server['name'])   
+    smtp.login(server['user'], server['passwd'])   
+    smtp.sendmail(fro, to, msg.as_string())   
+    smtp.close()  
+文件形式的邮件：
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8    
+  
+import smtplib    
+from email.mime.text import MIMEText    
+from email.header import Header    
+    
+sender = '***'    
+receiver = '***'    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+msg = MIMEText('你好','text','utf-8') #中文需参数‘utf-8’，单字节字符不需要    
+msg['Subject'] = Header(subject, 'utf-8')    
+    
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msg.as_string())    
+smtp.quit()   
+HTML形式的邮件 
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8    
+  
+import smtplib    
+from email.mime.text import MIMEText    
+    
+sender = '***'    
+receiver = '***'    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+msg = MIMEText('<html><h1>你好</h1></html>','html','utf-8')    
+    
+msg['Subject'] = subject    
+    
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msg.as_string())    
+smtp.quit()    
+带图片的HTML形式的邮件
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8    
+  
+import smtplib    
+from email.mime.multipart import MIMEMultipart    
+from email.mime.text import MIMEText    
+from email.mime.image import MIMEImage    
+    
+sender = '***'    
+receiver = '***'    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+msgRoot = MIMEMultipart('related')    
+msgRoot['Subject'] = 'test message'    
+    
+msgText = MIMEText('<b>Some <i>HTML</i> text</b> and an image.<br><img src="cid:image1"><br>good!','html','utf-8')    
+msgRoot.attach(msgText)    
+    
+fp = open('h:\\python\\1.jpg', 'rb')    
+msgImage = MIMEImage(fp.read())    
+fp.close()    
+    
+msgImage.add_header('Content-ID', '<image1>')    
+msgRoot.attach(msgImage)    
+    
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msgRoot.as_string())    
+smtp.quit()  
+带附件的邮件
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8    
+  
+import smtplib    
+from email.mime.multipart import MIMEMultipart    
+from email.mime.text import MIMEText    
+from email.mime.image import MIMEImage    
+    
+sender = '***'    
+receiver = '***'    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+msgRoot = MIMEMultipart('related')    
+msgRoot['Subject'] = 'test message'    
+    
+#构造附件    
+att = MIMEText(open('h:\\python\\1.jpg', 'rb').read(), 'base64', 'utf-8')    
+att["Content-Type"] = 'application/octet-stream'    
+att["Content-Disposition"] = 'attachment; filename="1.jpg"'    
+msgRoot.attach(att)    
+            
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msgRoot.as_string())    
+smtp.quit()  
+群邮件
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8   
+   
+import smtplib    
+from email.mime.text import MIMEText    
+    
+sender = '***'    
+receiver = ['***','****',……]    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+msg = MIMEText('你好','text','utf-8')    
+    
+msg['Subject'] = subject    
+    
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msg.as_string())    
+smtp.quit()    
+各种元素都包含的邮件
+[python] view plain copy
+print?
+#!/usr/bin/env python3    
+#coding: utf-8    
+  
+import smtplib    
+from email.mime.multipart import MIMEMultipart    
+from email.mime.text import MIMEText    
+from email.mime.image import MIMEImage    
+    
+sender = '***'    
+receiver = '***'    
+subject = 'python email test'    
+smtpserver = 'smtp.163.com'    
+username = '***'    
+password = '***'    
+    
+# Create message container - the correct MIME type is multipart/alternative.    
+msg = MIMEMultipart('alternative')    
+msg['Subject'] = "Link"    
+    
+# Create the body of the message (a plain-text and an HTML version).    
+text = "Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org"    
+html = """\  
+<html>  
+  <head></head>  
+  <body>  
+    <p>Hi!<br>  
+       How are you?<br>  
+       Here is the <a href="http://www.python.org">link</a> you wanted.  
+    </p>  
+  </body>  
+</html>  
+"""    
+    
+# Record the MIME types of both parts - text/plain and text/html.    
+part1 = MIMEText(text, 'plain')    
+part2 = MIMEText(html, 'html')    
+    
+# Attach parts into message container.    
+# According to RFC 2046, the last part of a multipart message, in this case    
+# the HTML message, is best and preferred.    
+msg.attach(part1)    
+msg.attach(part2)    
+#构造附件    
+att = MIMEText(open('h:\\python\\1.jpg', 'rb').read(), 'base64', 'utf-8')    
+att["Content-Type"] = 'application/octet-stream'    
+att["Content-Disposition"] = 'attachment; filename="1.jpg"'    
+msg.attach(att)    
+       
+smtp = smtplib.SMTP()    
+smtp.connect('smtp.163.com')    
+smtp.login(username, password)    
+smtp.sendmail(sender, receiver, msg.as_string())    
+smtp.quit()  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
