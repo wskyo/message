@@ -1,0 +1,77 @@
+property 函数
+
+用法
+
+property(fget=None, fset=None, fdel=None, doc=None) -> property attribute
+
+设置之后，可以把相应的函数当做属性值使用。实际上是调用这些函数。
+fget	获取属性
+fset	设置属性
+fdel	删除属性
+
+>>> help(property)
+Help on class property in module __builtin__:
+
+class property(object)
+ |  property(fget=None, fset=None, fdel=None, doc=None) -> property attribute
+ |  
+ |  fget is a function to be used for getting an attribute value, and likewise
+ |  fset is a function for setting, and fdel a function for del'ing, an
+ |  attribute.  Typical use is to define a managed attribute x:
+ |  class C(object):
+ |      def getx(self): return self._x
+ |      def setx(self, value): self._x = value
+ |      def delx(self): del self._x
+ |      x = property(getx, setx, delx, "I'm the 'x' property.")
+ |  
+ |  Decorators make defining new properties or modifying existing ones easy:
+ |  class C(object):
+ |      @property
+ |      def x(self): return self._x
+ |      @x.setter
+ |      def x(self, value): self._x = value
+ |      @x.deleter
+ |      def x(self): del self._x
+ |  
+ |  Methods defined here:
+ |  
+ |  __delete__(...)
+ |      descr.__delete__(obj)
+ |  
+ |  __get__(...)
+ |      descr.__get__(obj[, type]) -> value
+ |  
+ |  __getattribute__(...)
+ |      x.__getattribute__('name') <==> x.name
+ |  
+ |  __init__(...)
+ |      x.__init__(...) initializes x; see help(type(x)) for signature
+ |  
+ |  __set__(...)
+ |      descr.__set__(obj, value)
+ |  
+ |  deleter(...)
+ |      Descriptor to change the deleter on a property.
+ |  
+ |  getter(...)
+ |      Descriptor to change the getter on a property.
+ |  
+ |  setter(...)
+ |      Descriptor to change the setter on a property.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  fdel
+ |  
+ |  fget
+ |  
+ |  fset
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __new__ = <built-in method __new__ of type object>
+ |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+
+>>> 
