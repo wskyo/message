@@ -1,0 +1,132 @@
+
+备忘录（memento)
+
+在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可以恢复以前的状态。
+
+
+class Originator
+{
+	private string state;
+	public string state
+	{
+		get{ return state;}
+		set{ state = value;}
+	}
+	public Memeto CreateMemeto()
+	{
+		return (new Memeto(state));
+	}
+	public void SetMemeto(Memeto memeto)
+	{
+		state = memeto.state;
+	}
+	public void Show()
+	{
+		Console.Write("state="+state);
+	}
+}
+class Memeto
+{
+	private string state;
+	public Memeto(string state)
+	{
+		this.state = state;
+	}
+	public string state()
+	{
+		get { return state; }
+	}
+
+}
+class CareTaker
+{
+	private Memeto memeto;
+	public Memeto Memeto
+	{
+		get { return memeto; }
+		set { memeto = value;}
+	}
+}
+static void main(string[] args)
+{
+	Originator o = new Originator();
+	o.state = "on"
+	o.show()
+
+	CareTaker c = new CareTaker();
+	c.Memeto = o.CreatMemeto();
+	
+	o.state = "off"
+	o.show()
+	
+	o.setMemeto(c.Memeto)
+	o.show()
+
+	Console.Read()
+}
+################################################################################################################
+#!/usr/bin/python
+#
+#test memeto
+#
+
+class Memeto(object):
+
+	def __init__(self,state):
+
+		self.__state__ = state
+
+	def __set__(self,state):
+		
+		self.__state__ = state
+
+	def __get__(self):
+
+		return self.__state__
+
+class Originator(object):
+
+	def __init__(self):
+
+		self.state = ''
+
+	def createMemeto(self):
+
+		return Memeto(self.state)
+
+	def setMemeto(self,memeto):
+
+		self.state = memeto.__state__
+
+	def show(self):
+
+		print 'stat==',self.state
+
+class Caretaker(object):
+
+	def __init__(self):
+
+		self.memeto = ''
+
+	def __set__(self,memeto):
+
+		self.memeto = memeto
+
+	def __get__(self):
+
+		return self.memeto
+
+if __name__ == '__main__' :
+
+	o = Originator()
+	o.state = 'on'
+	o.show()
+
+	c = Caretaker()
+	c.memeto = o.createMemeto()
+	
+	o.state = 'off'
+	o.show()
+	
+	o.setMemeto(c.memeto)
+	o.show()
