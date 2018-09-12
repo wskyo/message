@@ -1,0 +1,185 @@
+composite(组合模式)
+
+将对象组合成树形结构以表示‘部分-整体’的层次结构。组合模式使得用户对单个对象和组合对象使用具有一致性。
+
+abstract class Component
+{
+	protected string name;
+	public Component(string name)
+	{
+		this.name = name;
+	}
+	public abstract Add(Component c);
+	public abstract Remove(Component c);
+	public abstract Display(int depth);
+}
+class Leaf:Component
+{
+	public Leaf(string name):base(name)
+	{}
+	public override Add(Component c)
+	{
+		Console.Write("Cannot Write a Leaf!")
+	}
+	public override Remove(Component c)
+	{
+		Console.Write("Cannot Remove a Leaf!")
+	}
+	publice override Display(int depth)
+	{
+		Console.Write(new string('-',depth) + name)
+	}
+}
+class Composite:Component
+{
+	private List<Component>children = new List<Component>();
+	public Composite(string name):base(name)
+	{
+		
+	}
+	public override Add(Component c)
+	{
+		children.Add(c);
+	}
+	public override Remove(Component c）
+	{
+		children.Remove(c);
+	}
+	public override Display(int depth)
+	{
+		Console.WriteLine(new string('-',depth) + name);
+		foreach (Component component in children)
+		{
+			component.Display(depth+2);
+		}
+	}
+}
+static void Main(string[] args)
+{
+	Composite root = new Composite("root");
+	root.Add(new Leaf("Leaf A");
+	root.Add(new Leaf("Leaf B");
+	Composite comp = new Composite("Composite X");
+	comp.Add(new Leaf("Leaf XA");
+	comp.Add(new Leaf("Leaf XB");
+	root.Add(comp)
+	Composite comp2 = new Composite("Composite XY");
+	comp2.Add(new Leaf("Leaf XYA");
+	comp2.Add(new Leaf("Leaf XYB");
+	comp.Add(comp2);
+	root.Add(new Leaf("Leaf C");
+	Leaf leaf = new Leaf("Leaf D");
+	root.Add(leaf);
+	root.Remove(leaf);
+	root.Display(1);
+	Console.Read();
+}
+
+########################################################################################################################################################################
+#!/usr/bin/python
+
+#
+
+#composite test
+
+#
+
+
+
+class Component:
+
+    def __init__(self,name):
+
+        self.name = name
+
+    def Add(self,component):
+
+        pass
+
+    def Remove(self,component):
+
+        pass
+
+    def Display(self,depth):
+
+        pass
+
+class Leaf(Component):
+
+    def __init__(self,name):
+
+        self.name = name
+
+    def Add(self,component):
+
+        print "Cannot add a leaf"
+
+    def Remove(self,component):
+
+        print "Cannot remove a leaf"
+
+    def Display(self,depth):
+
+        print '-' * depth + self.name
+
+class Composite(Component):
+
+    def __init__(self,name):
+
+        self.name = name
+
+        self.children = []
+
+    def Add(self,component):
+
+        self.children.append(component)
+
+    def Remove(self,component):
+
+        self.children.remove(component)
+
+    def Display(self,depth):
+
+        print '-'*depth + self.name
+
+        for child in self.children:
+
+            child.Display(depth+2)
+
+if __name__ == "__main__":
+
+    root = Composite("root")
+
+    leafa = Leaf("Leaf A")
+
+    root.Add(leafa)
+
+    root.Add(Leaf("Leaf B"))
+
+    comp = Composite("Composite X")
+
+    comp.Add(Leaf("Leaf XA"))
+
+    comp.Add(Leaf("Leaf XB"))
+
+    root.Add(comp)
+
+    comp2 = Composite("Composite XY")
+
+    comp2.Add(Leaf("Leaf XYA"))
+
+    comp2.Add(Leaf("Leaf XYB"))
+
+    comp.Add(comp2)
+
+    root.Add(Leaf("Leaf C"))
+
+    leaf = Leaf("Leaf D")
+
+    root.Add(leaf)
+
+    root.Remove(leaf)
+
+    root.Display(1)
+#####################################################################################################################################
+
