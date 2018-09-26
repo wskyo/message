@@ -1,0 +1,33 @@
+dict 设置默认值
+
+
+
+
+setdefault(...)
+    D.setdefault(k[,d]) -> D.get(k,d), also set D[k]=d if k not in D
+
+
+有两层意思：
+1.如果D里面没有这个key 则将这个键值对加入到D里面
+>>> a={}
+>>> dir(a)
+['__class__', '__cmp__', '__contains__', '__delattr__', '__delitem__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', 'clear', 'copy', 'fromkeys', 'get', 'has_key', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'pop', 'popitem', 'setdefault', 'update', 'values', 'viewitems', 'viewkeys', 'viewvalues']
+>>> help(a.setdefault)
+
+>>> help(a.setdefault)
+
+>>> a.setdefault('2',2)
+2
+>>> print a
+{'2': 2}
+
+
+2.如果D里面有这个key,则不做任何改变，不改变键值对。
+
+>>> a['2']=4
+>>> print a
+{'2': 4}
+>>> a.setdefault('2',2)
+4
+>>> print a
+{'2': 4}

@@ -12,6 +12,8 @@ element =  driver.find_element_by_name("passwd")
 
 element =  driver.find_element_by_xpath("//input[@id='passwd-id'"])
 
+element =  driver.find_element_by_css_selector("tr.dataRow:nth-child(2)>td:nth-child(6)")
+
 
 
 

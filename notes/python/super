@@ -1,0 +1,48 @@
+Help on class super in module __builtin__:
+
+class super(object)
+ |  super(type, obj) -> bound super object; requires isinstance(obj, type)
+ |  super(type) -> unbound super object
+ |  super(type, type2) -> bound super object; requires issubclass(type2, type)
+ |  Typical use to call a cooperative superclass method:
+ |  class C(B):
+ |      def meth(self, arg):
+ |          super(C, self).meth(arg)
+ |  
+ |  Methods defined here:
+ |  
+ |  __get__(...)
+ |      descr.__get__(obj[, type]) -> value
+ |  
+ |  __getattribute__(...)
+ |      x.__getattribute__('name') <==> x.name
+ |  
+ |  __init__(...)
+ |      x.__init__(...) initializes x; see help(type(x)) for signature
+ |  
+ |  __repr__(...)
+ |      x.__repr__() <==> repr(x)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __self__
+ |      the instance invoking super(); may be None
+ |  
+ |  __self_class__
+ |      the type of the instance invoking super(); may be None
+ |  
+ |  __thisclass__
+ |      the class invoking super()
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __new__ = <built-in method __new__ of type object>
+ |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+
+ 常见利用super调用父类或祖父类的函数；
+
+ class C(B):
+ 	def meth(self,arg):
+ 		super(C,self).meth(arg)
