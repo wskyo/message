@@ -1,0 +1,519 @@
+XPath
+编辑
+XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言。XPath基于XML的树状结构，提供在数据结构树中找寻节点的能力。起初 XPath 的提出的初衷是将其作为一个通用的、介于XPointer与XSLT间的语法模型。但是 XPath 很快的被开发者采用来当作小型查询语言。
+中文名 可扩展标记语言路径语言 外文名 Xml Path Language 外语缩写 XPath 
+目录
+ 1 含义
+ 2 语法
+ 3 表达式
+ 4 运算符
+ 5 标准函数
+ 6 使用
+ 7 标准
+ 8 轴定义
+ ▪ 步（step）包括：
+ ▪ 步的语法：
+ ▪ 实例
+ 9 节点关系
+ ▪ 父（Parent）
+ ▪ 子（Children）
+ ▪ 同胞（Sibling）
+ ▪ 先辈（Ancestor）
+ ▪ 后代（Descendant）
+ 10 存取函数
+ 11 语言升级
+ 12 实例
+简介
+XPath 是一门在 XML 文档中查找信息的语言。XPath 用于在 XML 文档中通过元素和属性进行导航。
+什么是 XPath?
+XPath 使用路径表达式在 XML [1]  文档中进行导航
+XPath 包含一个标准函数库
+XPath 是 XSLT 中的主要元素
+XPath 是一个 W3C 标准
+含义
+编辑
+XPath 使用路径表达式在 XML 文档中进行导航
+XPath 包含一个标准函数库
+XPath 是 XSLT 中的主要元素
+XPath 是一个 W3C 标准
+语法
+编辑
+选取节点 XPath 使用路径表达式在 XML 文档中选取节点。节点是通过沿着路径或者 step 来选取的。
+下面列出了最有用的路径表达式：
+表达式
+描述
+nodename
+选取此节点的所有子节点。
+/
+从根节点选取。
+//
+从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。
+.
+选取当前节点。
+..
+选取当前节点的父节点。
+@
+选取属性。
+
+在下面的表格中，我们已列出了一些路径表达式以及表达式的结果：
+路径表达式
+结果
+bookstore
+选取 bookstore 元素的所有子节点。
+/bookstore
+选取根元素 bookstore。
+注释：假如路径起始于正斜杠( / )，则此路径始终代表到某元素的绝对路径！
+bookstore/book
+选取属于 bookstore 的子元素的所有 book 元素。
+//book
+选取所有 book 子元素，而不管它们在文档中的位置。
+bookstore//book
+选择属于 bookstore 元素的后代的所有 book 元素，而不管它们位于 bookstore 之下的什么位置。
+//@lang
+选取名为 lang 的所有属性。
+
+
+表达式
+编辑
+XPath 使用路径表达式来选取 XML 文档中的节点或者节点集。这些路径表达式和我们在常规的电脑文件系统中看到的表达式非常相似。路径表达式是从一个XML节点（当前的上下文节点）到另一个 节点、或一组节点的书面步骤顺序。这些步骤以“/”字符分开，每一步有三个构成成分：
+
+轴描述（用最直接的方式接近目标节点）
+
+节点测试（用于筛选节点位置和名称）
+
+节点描述（用于筛选节点的属性和子节点特征）
+一般情况下，我们使用简写后的语法。虽然完整的轴描述是一种更加贴近人类语言，利用自然语言的单词和语法来书写的描述方式，但是相比之下也更加啰嗦。
+运算符
+编辑
+下面列出了可用在 XPath 表达式中的运算符：
+运算符
+描述
+实例
+返回值
+|
+计算两个节点集
+//book | //cd
+返回所有拥有 book 和 cd 元素的节点集
++
+加法
+6 + 4
+10
+-
+减法
+6 - 4
+2
+*
+乘法
+6 * 4
+24
+div
+除法
+8 div 4
+2
+=
+等于
+price=9.80
+如果 price 是 9.80，则返回 true。
+如果 price 是 9.90，则返回 false。
+!=
+不等于
+price!=9.80
+如果 price 是 9.90，则返回 true。
+如果 price 是 9.80，则返回 false。
+<
+小于
+price<9.80
+如果 price 是 9.00，则返回 true。
+如果 price 是 9.90，则返回 false。
+<=
+小于或等于
+price<=9.80
+如果 price 是 9.00，则返回 true。
+如果 price 是 9.90，则返回 false。
+>
+大于
+price>9.80
+如果 price 是 9.90，则返回 true。
+如果 price 是 9.80，则返回 false。
+>=
+大于或等于
+price>=9.80
+如果 price 是 9.90，则返回 true。
+如果 price 是 9.70，则返回 false。
+or
+或
+price=9.80 or price=9.70
+如果 price 是 9.80，则返回 true。
+如果 price 是 9.50，则返回 false。
+and
+与
+price>9.00 and price<9.90
+如果 price 是 9.80，则返回 true。
+如果 price 是 8.50，则返回 false。
+mod
+计算除法的余数
+5 mod 2
+1
+
+标准函数
+编辑
+XPath 含有超过 100 个内建的函数。这些函数用于字符串值、数值，日期和时间比较、节点和 QName 处理、序列处理、逻辑值等等。
+使用
+编辑
+XPath 是 XSLT 标准中的主要元素。如果没有 XPath 方面的知识，您就无法创建 XSLT 文档。
+XQuery 和 XPointer 均构建于 XPath 表达式之上。XQuery 1.0 和 XPath 2.0 共享相同的数据模型，并支持相同的函数和运算符。
+您可以在我们的《XQuery 教程》中阅读更多有关 XQuery 的知识。
+标准
+编辑
+XPath 于 1999年11月16日 成为 W3C 标准。
+XPath 被设计供 XSLT、XPointer 以及其他 XML 解析软件使用。
+轴定义
+编辑
+轴可定义相对于当前节点的节点集。
+轴名称
+结果
+ancestor
+选取当前节点的所有先辈（父、祖父等）。
+ancestor-or-self
+选取当前节点的所有先辈（父、祖父等）以及当前节点本身。
+attribute
+选取当前节点的所有属性。
+child
+选取当前节点的所有子元素。
+descendant
+选取当前节点的所有后代元素（子、孙等）。
+descendant-or-self
+选取当前节点的所有后代元素（子、孙等）以及当前节点本身。
+following
+选取文档中当前节点的结束标签之后的所有节点。
+namespace
+选取当前节点的所有命名空间节点。
+parent
+选取当前节点的父节点。
+preceding
+选取文档中当前节点的开始标签之前的所有节点。
+preceding-sibling
+选取当前节点之前的所有同级节点。
+self
+选取当前节点。
+
+每个步均根据当前节点集之中的节点来进行计算。
+步（step）包括：
+
+ 轴（axis）
+
+定义所选节点与当前节点之间的树关系
+
+节点测试（node-test）
+
+识别某个轴内部的节点
+
+零个或者更多谓语（predicate）
+
+更深入地提炼所选的节点集
+步的语法：
+轴名称::节点测试[谓语]
+实例
+例子
+结果
+child::book
+选取所有属于当前节点的子元素的 book 节点。
+attribute::lang
+选取当前节点的 lang 属性。
+child::*
+选取当前节点的所有子元素。
+attribute::*
+选取当前节点的所有属性。
+child::text()
+选取当前节点的所有文本子节点。
+child::node()
+选取当前节点的所有子节点。
+descendant::book
+选取当前节点的所有 book 后代。
+ancestor::book
+选择当前节点的所有 book 先辈。
+ancestor-or-self::book
+选取当前节点的所有 book 先辈以及当前节点（如果此节点是 book 节点）
+child::*/child::price
+选取当前节点的所有 price 孙节点。
+
+节点关系
+编辑
+节点（Node）是XPath 的术语。
+在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML 文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。[2]  
+父（Parent）
+每个元素以及属性都有一个父。
+在下面的例子中，book 元素是 title、author、year 以及 price 元素的父：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+<book>
+ 
+ 
+<title>HarryPotter</title>
+ 
+ 
+<author>JK.Rowling</author>
+ 
+ 
+<year>2005</year>
+ 
+ 
+<price>29.99</price>
+ 
+ 
+</book>
+
+子（Children）
+元素节点可有零个、一个或多个子。
+在下面的例子中，title、author、year 以及 price 元素都是 book 元素的子：
+1
+2
+3
+4
+5
+6
+<book>
+<title>HarryPotter</title>
+<author>JK.Rowling</author>
+<year>2005</year>
+<price>29.99</price>
+</book>
+
+同胞（Sibling）
+拥有相同的父的节点
+在下面的例子中，title、author、year 以及 price 元素都是同胞：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+<book>
+ 
+ 
+<title>HarryPotter</title>
+ 
+ 
+<author>JK.Rowling</author>
+ 
+ 
+<year>2005</year>
+ 
+ 
+<price>29.99</price>
+ 
+ 
+</book>
+
+先辈（Ancestor）
+某节点的父、父的父，等等。
+在下面的例子中，title 元素的先辈是 book 元素和 bookstore 元素：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+<bookstore>
+ 
+ 
+ 
+ 
+<book>
+ 
+ 
+<title>HarryPotter</title>
+ 
+ 
+<author>JK.Rowling</author>
+ 
+ 
+<year>2005</year>
+ 
+ 
+<price>29.99</price>
+ 
+ 
+</book>
+ 
+ 
+ 
+ 
+</bookstore>
+
+后代（Descendant）
+某个节点的子，子的子，等等。
+在下面的例子中，bookstore 的后代是 book、title、author、year 以及 price 元素：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+<bookstore>
+ 
+ 
+ 
+ 
+<book>
+ 
+ 
+<title>HarryPotter</title>
+ 
+ 
+<author>JK.Rowling</author>
+ 
+ 
+<year>2005</year>
+ 
+ 
+<price>29.99</price>
+ 
+ 
+</book>
+ 
+ 
+ 
+ 
+</bookstore>
+
+存取函数
+编辑
+名称 说明
+fn:node-name(node) 返回参数节点的节点名称。
+fn:nilled(node) 返回是否拒绝参数节点的布尔值。
+fn:data(item.item,...) 接受项目序列，并返回原子值序列。
+fn:base-uri()
+fn:base-uri(node)
+返回当前节点或指定节点的 base-uri 属性的值。
+fn:document-uri(node) 返回指定节点的 document-uri 属性的值。
+语言升级
+编辑
+在 W3C 建议下，XPath 1.0于 1999年 11月16日 发表。 XPath 2.0 目前正在W3C审核过程的最终阶段。XPath 2.0表达了XPath语言在大小与能力上显著的增加。
+最值得一提的改变是XPath 2.0有了更丰富的型别系统；XPath 2.0支持不可分割型态，如在 XML Schema 内建型态定义一样，并且也可自纲要（schema）导入用户自定型别。现在每个值都是一个序列（一个单一不可分割值或节点都被视为长度一的序列）。 XPath 1.0节点组被节点序列取代，它可以是任何顺序。
+为了支持更丰富的型别组，XPath 2.0提供相当延展的函式与操作子群。
+XPath 2.0实际上是 XQuery 1.0 的子集合。它提供了一个for表达式。该式是XQuery里“FLWOR”表达式的缩减版。利用列出XQuery省去的部分来描述该语言是可能的。主要范例是查询前导语（query prolog）、元素和属性建构式、“FLWOR”语法的余项式、以及typeswitch表达式。
+实例
+编辑
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bookstore>
+<book category="COOKING">
+<title lang="en">Everyday Italian</title>
+<author>Giada De Laurentiis</author>
+<year>2005</year>
+<price>30.00</price>
+</book>
+<book category="CHILDREN">
+<title lang="en">Harry Potter</title>
+<author>J K. Rowling</author>
+<year>2005</year>
+<price>29.99</price>
+</book>
+<book category="WEB">
+<title lang="en">XQuery Kick Start</title>
+<author>James McGovern</author>
+<author>Per Bothner</author>
+<author>Kurt Cagle</author>
+<author>James Linn</author>
+<author>Vaidyanathan Nagarajan</author>
+<year>2003</year> <price>49.99</price>
+</book>
+<book category="WEB">
+<title lang="en">Learning XML</title>
+<author>Erik T. Ray</author> <year>2003</year>
+<price>39.95</price>
+</book>
+</bookstore>

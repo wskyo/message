@@ -1,0 +1,33 @@
+Help on class enumerate in module __builtin__:
+
+class enumerate(object)
+ |  enumerate(iterable[, start]) -> iterator for index, value of iterable
+ |  
+ |  Return an enumerate object.  iterable must be another object that supports
+ |  iteration.  The enumerate object yields pairs containing a count (from
+ |  start, which defaults to zero) and a value yielded by the iterable argument.
+ |  enumerate is useful for obtaining an indexed list:
+ |      (0, seq[0]), (1, seq[1]), (2, seq[2]), ...
+ |  
+ |  Methods defined here:
+ |  
+ |  __getattribute__(...)
+ |      x.__getattribute__('name') <==> x.name
+ |  
+ |  __iter__(...)
+ |      x.__iter__() <==> iter(x)
+ |  
+ |  next(...)
+ |      x.next() -> the next value, or raise StopIteration
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  __new__ = <built-in method __new__ of type object>
+ |      T.__new__(S, ...) -> a new object with type S, a subtype of T
+(END)
+
+
+enumerate 返回一个从start开始的的iterator类型，即（index,value)
+
+start 默认为0,可以不传入。可以通过传入start值，改变默认index的起始值。

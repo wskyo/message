@@ -1,0 +1,13 @@
+list
+
+
+推荐使用 [ fn(item) for item in a_list if condition(item) ]
+更加pythonic
+
+不推荐
+new_list = []
+for item in a_list:
+	if condition(item):
+		new_list.append(fn(item))
+推荐
+new_list = [ fn(item) for item in a_list if condition(item) ]
