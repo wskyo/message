@@ -1,0 +1,10 @@
+*#3228#	查看版本号
+*#*#825364#*#*	查看modem log
+*#*#82533284#*#*	查看MTK log
+*#*#3646633#*#*进入工模-》Others->MoMs->点击“Disable MoMs for CTS Test.
+
+*#2886#	打开mini
+
+ams debug开关（adb shell dumpsys activity log x on）
+
+*#*#3646633#*#* 
