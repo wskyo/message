@@ -1,0 +1,48 @@
+any
+
+
+any(...)
+    any(iterable) -> bool
+    
+    Return True if bool(x) is True for any x in the iterable.
+    If the iterable is empty, return False.
+
+
+
+ 不推荐
+
+ found = False
+ for item in a_list:
+ 	if condition(item):
+ 		found = True
+ 		break
+ if found:
+ 	#do something if found...
+ 	pass
+
+
+
+ 推荐
+
+ if any(condition(item) for item in a_list):
+ 	#do something if found...
+ 	pass
+
+
+
+>>> found=False
+ >>> for item in x_list:
+...     if item%2 == 0:
+...             found =True
+...             break
+... 
+>>> if found:
+...     print found
+... 
+True
+
+
+>>> if any(item%2==0 for item in x_list):
+...     print True
+... 
+True

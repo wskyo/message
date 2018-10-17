@@ -1,0 +1,26 @@
+int str
+
+
+python中类型转换
+直接在要转换的类型前加对应的类型符
+
+
+比较
+
+
+int  -->  str
+
+
+a=1
+b=str(a)
+
+type(b) 
+
+
+str --> int
+
+
+a='1'
+b=int(a)
+type(b)
+

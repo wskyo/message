@@ -1,0 +1,57 @@
+with
+
+1.文件操作
+
+
+#不推荐
+
+
+f = open("some_file.txt")
+try:
+
+	data = f.read()
+	#其他操作
+finally:
+	f.close()
+
+#推荐
+
+with open("some_file.txt") as f:
+	data = f.read()
+	#其他操作
+
+
+2.加锁
+
+#不推荐
+
+import threading
+lock = threading.Lock()
+lock.acquire()
+try:
+	#互斥操作。。。
+finally:
+	lock.releas()
+
+
+#推荐
+
+import threading
+lock = threading.Lock()
+with lock:
+	#互斥操作。。。
+
+
+3.忽视异常(仅限python 3)
+
+#不推荐
+try:
+	os.remove("somefile.txt")
+except OSError:
+	pass
+
+#推荐
+from contextlib import ignored
+
+with ignored(OSError):
+	os.remove("somefile.txt")

@@ -1,0 +1,13 @@
+imap ifilter
+
+中间结果尽量使用 imap/ifilter 代替 map/filter
+
+#不推荐
+reduce(rf,filter(ff,map(mf,a_list)))
+
+
+#推荐
+from itertools import ifilter,imap
+reduce(rf,ifilter(ff,imap(mf,a_list)))
+*lazy evaluation 会带来更高的内存使用效率，特别是处理大数据操作的时候。
+

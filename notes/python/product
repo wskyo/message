@@ -1,0 +1,95 @@
+product
+
+
+不推荐
+for x in x_list:
+	for y in y_list:
+		for z in z_list:
+			pass
+
+
+推荐
+from itertools import product
+for x,y,z in product(x_list,y_list,z_list):
+	#do something for x,y,z
+	pass
+
+e.g
+
+
+>>> x_list=[1,2,3,4,5]
+>>> y_list=[8,9,10]
+>>> z_list=[6,7]
+>>> for x in x_list:
+...     for y in y_list:
+...             for z in z_list:
+...                     print "x,y,z",x,y,z
+... 
+x,y,z 1 8 6
+x,y,z 1 8 7
+x,y,z 1 9 6
+x,y,z 1 9 7
+x,y,z 1 10 6
+x,y,z 1 10 7
+x,y,z 2 8 6
+x,y,z 2 8 7
+x,y,z 2 9 6
+x,y,z 2 9 7
+x,y,z 2 10 6
+x,y,z 2 10 7
+x,y,z 3 8 6
+x,y,z 3 8 7
+x,y,z 3 9 6
+x,y,z 3 9 7
+x,y,z 3 10 6
+x,y,z 3 10 7
+x,y,z 4 8 6
+x,y,z 4 8 7
+x,y,z 4 9 6
+x,y,z 4 9 7
+x,y,z 4 10 6
+x,y,z 4 10 7
+x,y,z 5 8 6
+x,y,z 5 8 7
+x,y,z 5 9 6
+x,y,z 5 9 7
+x,y,z 5 10 6
+x,y,z 5 10 7
+>>>
+
+
+>>> from itertools import product
+>>> for x,y,z in product(x_list,y_list,z_list):
+...     print "x,y,z",x,y,z
+... 
+x,y,z 1 8 6
+x,y,z 1 8 7
+x,y,z 1 9 6
+x,y,z 1 9 7
+x,y,z 1 10 6
+x,y,z 1 10 7
+x,y,z 2 8 6
+x,y,z 2 8 7
+x,y,z 2 9 6
+x,y,z 2 9 7
+x,y,z 2 10 6
+x,y,z 2 10 7
+x,y,z 3 8 6
+x,y,z 3 8 7
+x,y,z 3 9 6
+x,y,z 3 9 7
+x,y,z 3 10 6
+x,y,z 3 10 7
+x,y,z 4 8 6
+x,y,z 4 8 7
+x,y,z 4 9 6
+x,y,z 4 9 7
+x,y,z 4 10 6
+x,y,z 4 10 7
+x,y,z 5 8 6
+x,y,z 5 8 7
+x,y,z 5 9 6
+x,y,z 5 9 7
+x,y,z 5 10 6
+x,y,z 5 10 7
+>>>

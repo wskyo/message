@@ -1,0 +1,21 @@
+builder
+
+
+不推荐
+
+def my_range(n):
+	i = 0
+	result = []
+	while i <= n
+		result.append(fn(i))
+		i += 1
+	return result
+
+def my_range(n):
+	i = 0
+	result = []
+	while i <= n
+		yield fn(i)
+		i += 1
+
+尽量用生成器代替列表，除非必须用到列表特有的函数。
