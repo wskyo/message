@@ -1,0 +1,27 @@
+
+apktool
+
+https://ibotpeaches.github.io/Apktool/
+
+Linux:
+
+    1.Download Linux wrapper script (Right click, Save Link As apktool)
+    2.Download apktool-2 (find newest here)
+    3.Rename downloaded jar to apktool.jar
+    4.Move both files (apktool.jar & apktool) to /usr/local/bin (root needed)
+    5.Make sure both files are executable (chmod +x)
+    6.Try running apktool via cli
+
+apktool d -f apk路径+文件名.apk -o 反编译后文件输出路径
+
+
+
+
+dex2jar
+https://bitbucket.org/pxb1988/dex2jar
+
+user@swd:/home/swd3/cts/cts/apk_source$ d2j-dex2jar.sh classes.dex 
+dex2jar classes.dex -> ./classes-dex2jar.jar
+
+jd-guil
+http://jd.benow.ca/

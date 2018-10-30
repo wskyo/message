@@ -17,6 +17,9 @@ element =  driver.find_element_by_css_selector("tr.dataRow:nth-child(2)>td:nth-c
 
 
 
+
+
+
 the element no longer attached to the DOM:
 
 现行的网页采用的是部分刷新，不是全局刷新。
@@ -70,6 +73,8 @@ No such content frame;perhaps the listener was not registered?
 firefox  -->  Perefence -->  Security --> Exceptions  将该站点添加为信任站点也不可解决这个问题。
 
 
+切换到frame上
+
 frameset不用切，frame层层切
 
 frameset
@@ -88,10 +93,19 @@ driver.switch_to.frame(driver.find_element_by_xpath("xpath"))	driver.find_elemen
 如果想切回主页面，采用 driver.switch_to.default_content()的方法切回。想切入下一层还是使用switch_to.frame（）方法切下去。
 
 
+
 firefox profile
 
 查看firefox配置信息
 about:config
+
+
+判断页面元素是否存在
+
+try:
+    self.driver.find_element_by_id(id)
+except:
+    pass 
 
 
 selenium环境配置

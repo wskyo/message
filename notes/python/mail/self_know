@@ -33,6 +33,81 @@ def mail():
 if __name__ == '__main__':
 	mail()
 
+MIME 对象
+
+	1.
+		email.mime.base.MIMEBase（_maintype，_subtype，*，policy = compat32，** _ params ）：
+
+		这是所有MIME特定类的基类，_maintpe是Content-Type主要类型（text or image），_subtype是Content-Type次要类型（plain or gif），_params是一个键值字典参数直接传递给Message.add_header
+
+	2.
+		email.mime.multipart.MIMEMultipart（_subtype='mixed'，boundary= None，_subparts = None，*，policy = compat32，** _ params )：
+		作用是生成包含多个部分的邮件体的 MIME 对象，参数 _subtype 指定要添加到"Content-type:multipart/subtype" 报头的可选的三种子类型，分别为 mixed、related、alternative，默认值为 mixed。定义 mixed实现构建一个带附件的邮件体；定义related 实现构建内嵌资源的邮件体；定义alternative 则实现构建纯文本与超文本共存的邮件体；_subparts是有效负载的一系类初始部分，可以使用attach()方法将子部件附加到消息中。
+	3.
+		email.mime.application.MIMEApplication(_data, _subtype='octet-stream', _encoder=email.encoders.encode_base64, *, policy=compat32, **_params)：
+
+		被用来表示主要类型的MIME消息对象应用，_data是一个包含原始字节数据的字符串，_subtype指定MIME子类型默认为八位字节流，_encoder是一个可调用函数，它执行传输数据的实际编码，使用set_payload()将有效载荷改为编码形式，默认编码位base64,可使用email.encoders模块查看内置编码表。
+	4.
+		email.mime.audio.MIMEAudio (_audiodata[, _subtype[, _encoder]])：
+
+		创建包含音频数据的邮件体，_audiodata 包含原始二进制音频数据的字节字符串；_subtype音频类型，_encoder编码。
+
+	5.
+
+		email.mime.image.MIMEImage(_imagedata[, _subtype[, _encoder[, **_params]]])：
+
+		MIMENonMultipart中的一个子类,创建包含图片数据的邮件体，_imagedata 是包含原始图片数据的字节字符串；_sutype指定图像子类型；_encoder指定一个函数内部编码默认为：email.encoders.encode_base64默认为base64编码
+	6.
+		email.mime.text.MIMEText (_text[, _subtype[, _charset]])：
+
+		MIMENonMultipart中的一个子类，创建包含文本数据的邮件体，_text 是包含消息负载的字符串，_subtype 指定文本类型，支持 plain（默认值）或 html类型的字符串。_charset设置字符集，参数接受一个charset实例。
+
+	MIME实例对象的方法：
+
+    	as_string() ：返回字符串信息，相当于__str__(),str(msg)
+    	as_bytes() ：返回字节信息，相当于__bytes__(),bytes(msg)
+    	is_multipart() ：判断是否为有效载荷的列表message对象，是返回True,否则返回False
+    	set_unixfrom(unixfrom) ：将消息的信封头设置为unixfrom为字符串
+    	get_unixfrom() ：返回消息的信封头。默认为None
+    	attach(payload) ：将给定的有效负载添加到当前有效负载
+    	get_payload(i=None, decode=False) ：返回当前的有效载荷，这将是一个列表 Message
+    	set_payload(payload, charset=None) :将整个消息对象的有效载荷设置为有效载荷
+    	set_charset(charset) ；将有效负载的字符集设置为charset
+    	get_charset() :返回Charset与消息有效负载相关的实例
+    	__len__() :返回标题的总数，包括重复项
+    	__contains__(name) :如果消息对象具有名为name的字段，则返回true
+    	__getitem__(name) :返回指定标题字段的值
+    	__setitem__(name, val) :将字段添加到带有字段名称和值val的消息中
+    	__delitem__(name) :从消息的标题中删除所有出现的具有名称name的字段
+    	keys() :返回所有消息标题字段名称的列表
+    	values() :返回所有消息字段值的列表
+    	items() ：返回包含所有消息的字段标题和值
+    	add_header(_name, _value, **_params) :扩展标题设置,_name为要添加的标题字段，_value为标题的值。
+
+    个人理解
+
+    1.MIME对象可以认为是一个字典对象。
+
+    	例如，msg为MIME对象
+    		msg['From'] = FROM 			# 邮件发件人 , 邮件头部可见
+			msg['To'] = TO 				# 邮件收件人 , 邮件头部可见
+			msg['Cc'] = Cc 				# 邮件抄送人
+			msg['Subject'] = SUBJECT 	# 邮件主题
+	2.MIME对象添加附件的方法。
+
+		方法一，通过add_header添加附件。
+			with open(filename,'rb') as f:
+        		attachfile = MIMEMultipart(f.read())
+        		attachfile.add_header('Content-Disposition', 'attachment', filename=filename)
+        		msg.attach(attachfile)
+
+        方法二，通过类似字典对象添加键值对的方式添加。
+			with open(filename,'rb') as f:
+        		attachfile = MIMEMultipart(f.read())
+        		attachfile['Content_Type'] = 'application/vnd.ms-excel'
+        		attachfile['Content-Disposition'] = 'attachment; filename=%s' % filename
+        		msg.attach(attachfile)
+    3.MIME对象最常用的是MIMEMultipart，兼容性强
 
 
 

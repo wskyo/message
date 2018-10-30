@@ -995,3 +995,464 @@ if __name__ == '__main__':
 
 
 
+ python3之模块SMTP协议客户端与email邮件MIME对象
+
+ 
+1、smtplib模块的常用类与方法
+
+smtplib模块实现邮件的发送功能，模拟一个stmp客户端，通过与smtp服务器交互来实现邮件发送的功能，可以理解成Foxmail的发邮件功能，在使用之前我们需要准备smtp服务器主机地址、邮箱账号以及密码信息。
+
+在python2.3以后python自带smtplib模块，无需额外安装。
+
+class smtplib.SMTP(host="",port=0,local_hostname=None,[timeout,]source_address=None)：
+
+SMTP类定义作为SMTP的构造函数，定义了一个SMTP客户端会话对象，功能是与smtp服务器建立链接，在链接成功后，就可以向服务器发送相关请求，比如登陆、校验、发送、退出等。
+
+    host：参数为远程smtp主机地址;如：smtp.163.com
+    port：为链接端口默认为25
+    local_hostname：是将本地主机的FQDN(完整域名)发送 HELO/EHLO（标识用户身份）的指令
+    timeout：为链接或尝试链接多少秒后超时
+    source_address：绑定到具有多个网络接口的计算机中的某个特定源地址上或特定的TCP端口，它需要一个元组（主机，端口）
+
+SMTP类方法：
+
+SMTP.connect(host='localhost',port=0)　：链接到远程SMTP主机的方法，host为远程主机地址，port为远程主机smtp端口，默认为25，也可以直接使用host:port形式来表示：如：SMTP.connect('smtp.163.com','25')
+
+SMTP.login(user,password)：登陆需要认证的SMTP服务器，参数为用户名与密码，如SMTP.login('python@163.com','123')
+
+SMTP.sendmail(from_addr,to_addrs,msg,mail_options=[],rcpt_options=[])：实现邮件的发送功能，参数from_addr为发件人，to_addrs为收件人，msg为邮件内容，如：SMTP.sendmail('python@163.com','demo@qq.com',body)。
+
+SMTP.starttls(keyfile=None,certfile=None)：启用TLS安全传输模式，所有SMTP指令都将加密传输，如使用gmail的smtp服务时需哟啊启动此项才能正常发送邮件。
+
+SMTP.quit()：断开smtp服务器链接
+
+SMTP.set_debuglevel(level)：设置调试输出级别，值为1，2或True，发送调试消息到服务器
+
+SMTP.send_message(msg,from_addr=None,to_addrs=None,mail_options=[],rcpt_options=[])：这是使用有email.message.Message对象表示的消息进行调用的便捷方法使用sendmail()，参数的含义与sendmail()相同，只有msg是一个Message对象；如果from_addr是None或者to_addrs是None，则send_message用从msg头部提取的地址填充那些参数，from设置为发件人自动，TO设置为to_addrs。
+
+实例1实现简单邮件发送：
+
+import smtplib
+
+from smtplib import SMTP
+HOST="smtp.163.com"  #定义smtp主机
+SUBJECT="test email form python"  #定义邮件主题
+TO = "11111@163.com"   #定义邮件收件人
+FROM="22222@163.com"  #定义邮件发件人
+text="python is test smtp"   #邮件内容,编码为ASCII范围内的字符或字节字符串，所以不能写中文
+BODY = '\r\n'.join((      #组合sendmail方法的邮件主体内容，各段以"\r\n"进行分离
+    "From: %s" %"admin",
+    "TO: %s" %TO,
+    "subject: %s" %SUBJECT,
+    "",
+    text
+))
+server = SMTP()   #创建一个smtp对象
+server.connect(HOST,'25')  #链接smtp主机
+server.login(FROM,"123")  #邮箱账号登陆
+server.sendmail(FROM,TO,BODY) #发送邮件
+server.quit()  #端口smtp链接
+
+实例2：读取文件内容发送邮件主体
+
+import smtplib
+from email.utils import formataddr
+from email.mime.text import MIMEText
+
+with open('textfile','rb') as fp:   #读取文件内容
+    msg=MIMEText(fp.read(),'plain','utf-8')   #创建消息对象
+
+
+msg['Subject'] = "emailMessage"
+msg['From'] = formataddr(["张三","920664709@163.com"])
+msg['To'] = formataddr(["李四","920664709@163.com"])
+
+try:
+    server = smtplib.SMTP() # 创建一个 SMTP() 对象
+    server.connect("smtp.163.com","25") # 通过 connect 方法连接 smtp 主机
+    #server.starttls() # 启动安全传输模式
+    server.login("920664709@163.com","xxxxxx") # 邮箱账号登录校验
+    server.sendmail("92066@163.com","92066@163.com", msg.as_string()) # 邮件发送
+    server.quit() # 断开 smtp 连接
+    print("邮件发送成功！")
+except Exception as e:
+    print('失败：'+str(e))
+
+2、处理邮件MIME
+
+通过邮件传输简单的文本已经无法满足我们的需求，比如我们时常会定制业务质量报表，在邮件主体中会包含 HTML、图像、声音以及附件格式等，MIME（Multipurpose Internet Mail Extensions，多用途互联网邮件扩展）作为一种新的扩展邮件格式很好地补充了这一点，更多MIME 知识见 https://docs.python.org/3/library/email.html。下面介绍几个 Python 中常用的 MIME 实现类：
+
+email.mime.base.MIMEBase（_maintype，_subtype，*，policy = compat32，** _ params ）：
+
+这是所有MIME特定类的基类，_maintpe是Content-Type主要类型（text or image），_subtype是Content-Type次要类型（plain or gif），_params是一个键值字典参数直接传递给Message.add_header
+
+filename1 = '图片.pdf'
+attachfile_base = MIMEBase('application', 'octet-stream')  #创建基础对象指定类型
+attachfile_base.set_payload(open(filename,'rb').read())  #设置我有效负载
+attachfile_base.add_header('Content-Disposition', 'attachment', filename=('utf-8', '', filename1) )
+encoders.encode_base64(attachfile_base)
+msg.attach(attachfile_base)
+
+email.mime.multipart.MIMEMultipart（_subtype='mixed'，boundary= None，_subparts = None，*，policy = compat32，** _ params )：
+作用是生成包含多个部分的邮件体的 MIME 对象，参数 _subtype 指定要添加到"Content-type:multipart/subtype" 报头的可选的三种子类型，分别为 mixed、related、alternative，默认值为 mixed。定义 mixed实现构建一个带附件的邮件体；定义related 实现构建内嵌资源的邮件体；定义alternative 则实现构建纯文本与超文本共存的邮件体；_subparts是有效负载的一系类初始部分，可以使用attach()方法将子部件附加到消息中。
+
+from email.mime.multipart import MIMEMultipart
+
+msg1 = MIMEMultipart('mixed')  #创建带附件的实例
+msg2 = MIMEMultipart('related')  #创建内嵌资源的实例
+msg3 = MIMEMultipart('alternative') #创建纯文本与超文本实例
+
+email.mime.application.MIMEApplication(_data, _subtype='octet-stream', _encoder=email.encoders.encode_base64, *, policy=compat32, **_params)：
+
+被用来表示主要类型的MIME消息对象应用，_data是一个包含原始字节数据的字符串，_subtype指定MIME子类型默认为八位字节流，_encoder是一个可调用函数，它执行传输数据的实际编码，使用set_payload()将有效载荷改为编码形式，默认编码位base64,可使用email.encoders模块查看内置编码表。
+
+filename = '简历.pdf'
+with open(filename,'rb') as f:
+    attachfile = MIMEApplication(f.read())
+attachfile.add_header('Content-Disposition', 'attachment', filename=filename)
+msg.attach(attachfile)
+
+email.mime.audio.MIMEAudio (_audiodata[, _subtype[, _encoder]])：
+
+创建包含音频数据的邮件体，_audiodata 包含原始二进制音频数据的字节字符串；_subtype音频类型，_encoder编码。
+
+from email.mime.audio import MIMEAudio
+
+msgaudio = MIMEAudio(open('yishengsuoai.mp3','rb').read(),'plain')   #文本音频对象
+
+msgaudio.add_header('Content-Disposition','attachment',filename='text.mp3') #扩展标题类型，文件名
+msg.attach(msgaudio) #附加对象加入到msg
+
+email.mime.image.MIMEImage(_imagedata[, _subtype[, _encoder[, **_params]]])：
+
+MIMENonMultipart中的一个子类,创建包含图片数据的邮件体，_imagedata 是包含原始图片数据的字节字符串；_sutype指定图像子类型；_encoder指定一个函数内部编码默认为：email.encoders.encode_base64默认为base64编码
+
+from email.mime.image import MIMEImage   #导入MIMEImage类
+
+with open('test.png','rb') as fp:
+    msgImage = MIMEImage(fp.read()) #读取图片赋值一个图片对象
+
+msgImage.add_header('Content-ID','imgid') #为图片对象拓展标题字段和值
+msg.attach(msgImage) #将图像负载添加到msg负载
+
+email.mime.text.MIMEText (_text[, _subtype[, _charset]])：
+
+MIMENonMultipart中的一个子类，创建包含文本数据的邮件体，_text 是包含消息负载的字符串，_subtype 指定文本类型，支持 plain（默认值）或 html类型的字符串。_charset设置字符集，参数接受一个charset实例。
+
+from email.mime.text import MIMEText
+
+#创建文本内容的邮件体
+msg = MIMEText("python test email",'plain','utf-8')
+
+#创建HTML格式的邮件体
+msg = MIMEText("<p>python test email</p><p><a href="http://www.demo.com">链接</a></p>",'html','utf-8')
+
+MIME实例对象的方法：
+
+    as_string() ：返回字符串信息，相当于__str__(),str(msg)
+    as_bytes() ：返回字节信息，相当于__bytes__(),bytes(msg)
+    is_multipart() ：判断是否为有效载荷的列表message对象，是返回True,否则返回False
+    set_unixfrom(unixfrom) ：将消息的信封头设置为unixfrom为字符串
+    get_unixfrom() ：返回消息的信封头。默认为None
+    attach(payload) ：将给定的有效负载添加到当前有效负载
+    get_payload(i=None, decode=False) ：返回当前的有效载荷，这将是一个列表 Message
+    set_payload(payload, charset=None) :将整个消息对象的有效载荷设置为有效载荷
+    set_charset(charset) ；将有效负载的字符集设置为charset
+    get_charset() :返回Charset与消息有效负载相关的实例
+    __len__() :返回标题的总数，包括重复项
+    __contains__(name) :如果消息对象具有名为name的字段，则返回true
+    __getitem__(name) :返回指定标题字段的值
+    __setitem__(name, val) :将字段添加到带有字段名称和值val的消息中
+    __delitem__(name) :从消息的标题中删除所有出现的具有名称name的字段
+    keys() :返回所有消息标题字段名称的列表
+    values() :返回所有消息字段值的列表
+    items() ：返回包含所有消息的字段标题和值
+    add_header(_name, _value, **_params) :扩展标题设置,_name为要添加的标题字段，_value为标题的值。
+
+msg.add_header('Content-ID','imgid')   #设置图片ID
+msg.add_header('Content-Disposition','attachment',filename='test.xlsx') #为附件添加一个标题
+msg.add_header('Content-Disposition','attachment',filename=('utf-8','','中文标题')) #添加非ASCII字符时需指定编码
+
+    replace_header(_name,_value) :替换标题
+
+更多内容请阅读官方文档
+
+email.header.Header(s=None,charset=None)：创建一个可以包含不同字符集中的字符串，并符合MIME的标头。
+
+可选参数:s是初始标题值默认为None,可以使用append()方法追加到标题，charset指定字符集
+
+from email.header import Header
+
+msg['From'] = Header("测试邮件来自",'utf-8')
+
+附加工具：email.utils
+
+email.utils.localtime(dt=None)　：返回当前时间，dt参数为datetime实例
+
+email.utils.formataddr(pair,charset='utf-8')　　：pair是一个元祖或列表返回分割的标题和地址如邮箱收件人昵称和邮箱账号
+
+from email.utils import formataddr
+msg['From'] = formataddr(['Meslef','92066@163.com'])
+msg['To'] = formataddr(['Anybody','92066@163.com'])
+
+ 3、实例
+
+前面介绍了 Python 的 smtplib 及 email模块的常用方法，那么两者在邮件定制到发送过程中是如何分工的？我们可以将 email.mime 理解成 smtplib 模块邮件内容主体的扩展，从原先默认只支持纯文本格式扩展到HTML，同时支持附件、音频、图像等格式，smtplib 只负责邮件的投递即可。下面介绍在日常运营工作中邮件应用的几个示例
+
+通过引入email.mime的MIMEText类来实现支持HTML格式的邮件，支持所有HTML元素，包括表格、图片、动画、CSS样式、表单等。
+（1）使用HTML的表格定制业务数据报表
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2018/6/1 11:58
+# @Author  : Py.qi
+# @File    : fangwenliang.py
+# @Software: PyCharm
+
+import smtplib
+from email.mime.text import MIMEText # 导入 MIMEText 类
+
+HOST = "smtp.qq.com" # 定义 smtp 主机
+SUBJECT = u" 官网流量数据报表 " # 定义邮件主题
+TO = "92066@163.com" # 定义邮件收件人
+FROM = "92066@qq.com" # 定义邮件发件人
+test = """
+<body>
+<table width="800" border="1" cellspacing="0" cellpadding="4">
+<tr>
+    <td bgcolor="#CECFAD" height="20" style="font-size:14px">* 官网数据 <a
+    href="http://www.baidu.com"> 更多 >></a></td>
+</tr>
+<tr>
+    <td bgcolor="#EFEBDE" height="100" style="font-size:13px">
+        1、 日访问量 :<font color=red>152433</font> 
+            访问次数 :23651 
+            页面浏览量 :45123
+            点击数 :545122 
+            数据流量 :504Mb<br>
+        2、状态码信息 <br>
+            &nbsp;&nbsp;500:105 404:3264 503:214<br>
+        3、访客浏览器信息 <br>
+            &nbsp;&nbsp;IE:50% firefox:10% chrome:30% other:10%<br>
+        4、页面信息 <br>
+            &nbsp;&nbsp;/index.php 42153<br>
+            &nbsp;&nbsp;/view.php 21451<br>
+            &nbsp;&nbsp;/login.php 5112<br>
+    </td>
+</tr>
+</table>
+"""              
+msg = MIMEText(test,"html","utf-8")  #定义主体内容
+msg['Subject'] = SUBJECT # 邮件主题
+msg['From']=FROM # 邮件发件人 , 邮件头部可见
+msg['To']=TO # 邮件收件人 , 邮件头部可见
+try:
+    server = smtplib.SMTP() # 创建一个 SMTP() 对象
+    server.connect(HOST,"25") # 通过 connect 方法连接 smtp 主机
+    server.starttls() # 启动安全传输模式
+    server.login("92066@qq.com","iqcuwzhgmj") # 邮箱账号登录校验
+    server.sendmail(FROM, TO, msg.as_string()) # 邮件发送
+    server.quit() # 断开 smtp 连接
+    print("邮件发送成功！")
+except Exception as e:
+    print('失败：'+str(e))
+
+发送带图片的邮件时，需要引入MIMEImage类和MIMEText类组合实现图文格式的数据发送；通过MIMEMultipart类来进行组装
+（2）定制服务器性能报表发送邮件
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2018/6/1 11:58
+# @Author  : Py.qi
+# @File    : fangwenliang.py
+# @Software: PyCharm
+
+import smtplib
+from email.mime.text import MIMEText # 导入 MIMEText 类
+from email.mime.multipart import MIMEMultipart  #导入MIMEMultipart类
+from email.mime.image import MIMEImage   #导入MIMEImage类
+
+HOST = "smtp.qq.com" # 定义 smtp 主机
+SUBJECT = u"系统性能报表" # 定义邮件主题
+TO = "92066@163.com" # 定义邮件收件人
+FROM = "92066@qq.com" # 定义邮件发件人
+
+def addimg(src,imgid):   #定义图片读取函数，参数1为图片路径，2为图片ID机标识符
+    with open(src,'rb') as f:
+        msgimage = MIMEImage(f.read())   #读取图片内容
+    msgimage.add_header('Content-ID',imgid)  #指定文件的Content-ID,<img>,在HTML中图片src将用到
+    return msgimage
+
+msg = MIMEMultipart('related')  #创建MIMEMultipart对象，采用related定义内嵌资源邮件体
+
+test = """  
+<table width="600" border="0" cellspacing="0" cellpadding="4">
+    <tr bgcolor="#CECFAD" height="20" style="font-size:14px">
+        <td colspan=2>*系统性能数据 <a href="10.0.0.10"> 更多 >></a></td>
+    </tr>
+    <tr bgcolor="#EFEBDE" height="100" style="font-size:13px">
+        <td>
+            <img src="cid:io">   #图片地址由MIMEMultipart通过ID传递
+        </td>
+        <td>
+            <img src="cid:key_hit">
+        </td>
+    </tr>
+    <tr bgcolor="#EFEBDE" height="100" style="font-size:13px">
+        <td>
+            <img src="cid:men">
+        </td>
+        <td>
+            <img src="cid:swap">
+        </td>
+    </tr>
+</table>
+"""
+msgtext = MIMEText(test,"html","utf-8") #创建Text对象内容，包括图片<img>
+
+msg.attach(msgtext)   #MIMEMultipart对象附加MIMEText的内容
+msg.attach(addimg("1.png",'io'))  #附加图片内容，io指向HTML文本内的参数
+msg.attach(addimg("2.png",'key_hit'))
+msg.attach(addimg("3.png",'men'))
+msg.attach(addimg("4.png",'swap'))
+
+msg['Subject'] = SUBJECT # 邮件主题
+msg['From']=FROM # 邮件发件人 , 邮件头部可见
+msg['To']=TO # 邮件收件人 , 邮件头部可见
+try:
+    server = smtplib.SMTP() # 创建一个 SMTP() 对象
+    server.connect(HOST,"25") # 通过 connect 方法连接 smtp 主机
+    server.starttls() # 启动安全传输模式
+    server.login("92066@qq.com","iqcuwzhgmj") # 邮箱账号登录校验
+    server.sendmail(FROM, TO, msg.as_string()) # 邮件发送
+    server.quit() # 断开 smtp 连接
+    print("邮件发送成功！")
+except Exception as e:
+    print('失败：'+str(e))
+
+（3）带图片及附件的邮件
+View Code
+（4）所有邮件格式总结
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 2018/6/2 12:06
+# @Author  : Py.qi
+# @File    : coent_smtp.py
+# @Software: PyCharm
+
+import smtplib
+from email.utils import make_msgid,formatdate
+from email.mime.text import MIMEText #html格式和文本格式邮件
+from email.mime.multipart import MIMEMultipart #带多个部分的邮件
+from email.mime.image import MIMEImage #带图片格式邮件
+from email.mime.audio import MIMEAudio  #音频文件对象
+from email.utils import formataddr   #分隔标题与地址
+from email.header import Header   #设置标题字符集
+from email import encoders  #编码器
+from email.mime.application import MIMEApplication  #主要类型的MIME消息对象应用
+from email.mime.base import MIMEBase
+
+# 发件人地址，通过控制台创建的发件人地址
+username = 'service@gemail.com'
+# 发件人密码，通过控制台创建的发件人密码
+password = '*****'
+# 自定义的回复地址
+replyto = '92066@qq.com'
+# 收件人地址或是地址列表，支持多个收件人，最多30个
+rcptto = ['***', '***']
+
+#构建信件标头结构
+msg = MIMEMultipart('alternative')  #创建一个多部分的邮件对象
+msg['Subject'] = Header('自定义信件主题', 'utf-8')
+msg['From'] = formataddr([Header('自定义发信昵称','utf-8'),username])
+msg['To'] = formataddr([Header('自定义收信昵称','utf-8'),rcptto])
+msg['Reply-to'] = replyto
+msg['Message-id'] = make_msgid() #Message-ID标头
+msg['Date'] = formatdate()  #日期
+
+
+#构建文本邮件内容
+msg_text = MIMEText('自定义TEXT纯文本部分','plain','utf-8')
+msg.attach(msg_text)
+#读取文件创建邮件内容
+with open('textfile','rb') as fp:   #读取文件内容
+    msg_text=MIMEText(fp.read(),'plain','utf-8')
+
+#构建HTML格式的邮件内容
+msg_html = MIMEText("<h1>HTML格式邮件</h1>","html","utf-8")
+msg.attach(msg_html)
+
+#构建HTML格式邮件带图片内容
+html1 = "<div><img src='cid:imgid'></div>"
+msg_html_img = MIMEText(html1,'html','utf-8')
+msg.attach(msg_html_img)
+with open("imgfile","rb") as f:
+    msg_img = MIMEImage(f.read())
+msg_img.add_header('Content-ID','imgid') #扩展图片标题
+msg.attach(msg_img)
+
+#带附件的邮件MIMEApplication
+filename = '简历.pdf'
+with open(filename,'rb') as f:
+    attachfile = MIMEApplication(f.read())
+attachfile.add_header('Content-Disposition', 'attachment', filename=filename)
+msg.attach(attachfile)
+
+#带多个附件的邮件MIMEApplication
+filenames = ['简历.pdf','副本.pdf']
+for tmp in filename:
+    with open(tmp,'rb') as f:
+        attachfiles = MIMEApplication(f.read())
+        attachfiles.add_header('Content-Disposition', 'attachment', filename=tmp)
+        msg.attach(attachfiles)
+
+#带附件的邮件MIMEBase
+filename1 = '图片.pdf'
+attachfile_base = MIMEBase('application', 'octet-stream')  #创建基础对象指定类型
+attachfile_base.set_payload(open(filename,'rb').read())  #设置我有效负载
+attachfile_base.add_header('Content-Disposition', 'attachment', filename=('utf-8', '', filename1) )
+encoders.encode_base64(attachfile_base)
+msg.attach(attachfile_base)
+
+#创建音频文件
+AUDIO_HTML = '''
+    <p>this's audio file</p>
+    <audio controls>
+    <source src="cid:audioid" type="audio/mpeg">
+    </audio>
+'''
+msg_test1 = MIMEText(AUDIO_HTML,'html','utf-8')
+msg_audio = MIMEAudio(open('iphone.mp3','rb').read(),'plain')
+msg_audio.add_header('Content-ID','audioid')
+msg.attach(msg_test1)
+msg.attach(msg_audio)
+#收到邮件不能播放，有待解决！
+
+# 发送邮件
+try:
+    client = smtplib.SMTP()
+    #需要使用SSL，可以这样创建client
+    #client = smtplib.SMTP_SSL()
+    client.connect('smtp.163.com', 25)
+    #开启DEBUG模式
+    client.set_debuglevel(1)
+    client.login(username, password)
+    client.sendmail(username, rcptto, msg.as_string())
+    client.quit()
+    print('email send success!')
+except smtplib.SMTPConnectError as e:
+    print('邮件发送失败，连接失败:', e.smtp_code, e.smtp_error)
+except smtplib.SMTPAuthenticationError as e:
+    print('邮件发送失败，认证错误:', e.smtp_code, e.smtp_error)
+except smtplib.SMTPSenderRefused as e:
+    print('邮件发送失败，发件人被拒绝:', e.smtp_code, e.smtp_error)
+except smtplib.SMTPRecipientsRefused as e:
+    print('邮件发送失败，收件人被拒绝:', e.smtp_code, e.smtp_error)
+except smtplib.SMTPDataError as e:
+    print('邮件发送失败，数据接收拒绝:', e.smtp_code, e.smtp_error)
+except smtplib.SMTPException as e:
+    print('邮件发送失败, ', e.message)
+except Exception as e:
+    print('邮件发送异常, ', str(e))
+

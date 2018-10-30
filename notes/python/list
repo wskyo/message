@@ -11,3 +11,33 @@ for item in a_list:
 		new_list.append(fn(item))
 推荐
 new_list = [ fn(item) for item in a_list if condition(item) ]
+
+
+
+>>> print a
+[[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+
+vector=[''*i for i in xrange(ncols)]
+
+table=[vector for i in xrange(nrows)]
+
+>>> for x in xrange(nrows):
+...     for y in xrange(ncols):
+...             table[x][y]=a[x][y]
+... 
+>>> print table
+[[10, 11, 12], [10, 11, 12], [10, 11, 12], [10, 11, 12]]
+>>> 
+
+这句是个错误示范，更改table的任意一个值，均会影响vector的值，进而影响table的其他值。
+table=[vector for i in xrange(nrows)]
+
+
+正确的用法如下：
+
+>>> table=[[''*i for i in xrange(ncols)] for j in xrange(nrows)]
+>>> print table
+[['', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]
+>>> table[0][0]="2"
+>>> print table
+[['2', '', ''], ['', '', ''], ['', '', ''], ['', '', '']]
