@@ -1,3 +1,7 @@
+
+A  --->  B  
+A |||  B
+A|||B|||
 google所以的case均继承自 AndroidTestCase
 
 AndroidTestCase继承自 TestCase
@@ -14,7 +18,10 @@ Test 接口
 
 
 
-TestCase 类
+TestFailure    ||||Test |||  , |||Throwable|||
+
+
+TestCase 类          --->  Assert    ,   |||  Test 
 
 	1.入口 run() 新建一个result		TestResult run()
 
@@ -35,7 +42,7 @@ TestCase 类
 		3.	tearDown()		TestCase 清理工作
 
 
-TestResult 类
+TestResult 类    |||TestFailure||| ,  |||TestListener|||
 
 	入口 run(TestCase test)
 
@@ -47,7 +54,7 @@ TestResult 类
 
 		3.	endTest()		-->	TestListener.endTest()			监听器结束
 
-MetricTestCase 类
+MetricTestCase 类   --->   TestCase
 
 	继承自TestCase
 
@@ -56,7 +63,7 @@ MetricTestCase 类
 	addTestLog			--> LogHolder()							保存Log信息
 
 
-DeviceTestCase 类
+DeviceTestCase 类     --->   MetricTestCase  ,  ||| IDeviceTest,  |||  IRemoteTest,  |||  ITestCollector,  ||| ITestFilterReceiver, ||| ITestAnnotationFilterReceiver |||
 
 	继承自MetricTestCase
 
@@ -67,6 +74,14 @@ DeviceTestCase 类
 	countTestCase()
 
 	run(ITestInvocationListener listener)			--> JunitRunUntil.runTest(result) 调用JunitTest类
+
+IDeviceTest    --->   INativeDevice
+
+INativeDevice
+
+	public abstract IDevice getIDevice();
+	...
+
 
 
 JunitRunUntil 类

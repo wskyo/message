@@ -97,14 +97,14 @@ MIME 对象
 
 		方法一，通过add_header添加附件。
 			with open(filename,'rb') as f:
-        		attachfile = MIMEMultipart(f.read())
+        		attachfile = MIMEMultipart(f.read(),'xls','utf-8')
         		attachfile.add_header('Content-Disposition', 'attachment', filename=filename)
         		msg.attach(attachfile)
 
         方法二，通过类似字典对象添加键值对的方式添加。
 			with open(filename,'rb') as f:
-        		attachfile = MIMEMultipart(f.read())
-        		attachfile['Content_Type'] = 'application/vnd.ms-excel'
+        		attachfile = MIMEMultipart(f.read(),'xls','utf-8')
+        		#attachfile['Content_Type'] = 'application/vnd.ms-excel' 如果定义的时候没有标明附件类型，
         		attachfile['Content-Disposition'] = 'attachment; filename=%s' % filename
         		msg.attach(attachfile)
     3.MIME对象最常用的是MIMEMultipart，兼容性强

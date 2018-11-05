@@ -1,0 +1,177 @@
+itertor
+迭代器模式（Itertor），提供一种方法顺序访问一个聚合对象中各个元素，又不暴露该对象的内部显示。
+
+
+
+abstract class Iterator
+{
+	public abstract object First();
+	public abstract object Next();
+	public abstract bool IsDone();
+	public abstract object CurrentItem();
+}
+abstract class aggregate
+{
+	public abstract Iterator CreateIterator();
+}
+class ConcreteIterator:Iterator
+{
+	private ConcreteAggregate aggregate;
+	private int current = 0;
+	public ConcreteIterator(ConcreteAggregate aggregate)
+	{
+		this.aggregate = aggregate
+	}
+	public override object First()
+	{
+		return aggregate[0];
+	}
+	public override object Next()
+	{
+		object ret = null;
+		current++;
+		if ( current < aggregate.Count)
+		{
+			ret = aggregate[ current ];
+		}
+		return ret;
+	}
+	public override bool IsDone()
+	{
+		return current >= aggregate.Count ? true : false;
+	}
+	public override object CurrentItem()
+	{
+		return aggregate[ current ];
+	}
+}
+class ConcreteAggregate:Aggregate
+{
+	private IList<object> items = new IList<object>();
+	publice override Iterator CreateIterator()
+	{
+		return new ConcreteIterator(this);
+	}
+	public int Count()
+	{
+		get { return items.Count;}
+	}
+	public object this[int index]
+	{
+		get { return items[index];}
+		set { items.Insert(index,value);}
+	}
+}
+static void main(string[] args)
+{
+	ConcreteAggregate a = new ConcreteAggregate();
+	a[0] = "a";
+	a[1] = "b";
+	a[2] = "c";
+	a[3] = "d";
+	a[4] = "e";
+	a[5] = "f";
+	Iterator i = new Iterator(a);
+	object item = i.First();
+	while(!i.IsDone())
+	{
+		Console.Write("{0}buy ticket",i.CurrentItem());
+	}
+	Console.Read();
+}
+
+
+###########################################################################################
+#!/usr/bin/python
+#
+#iterator test
+#
+
+class Iterator:
+    def First(self):
+        pass
+    def Next(self):
+        pass
+    def IsDone(self):
+        pass
+    def CurrentItem(self):
+        pass
+
+class Aggregate:
+    def CreateIterator(self):
+        pass
+class ConcretAggregate(Aggregate):
+    def __init__(self):
+        self.item = {}
+    def CreateIterator(self):
+        return ConcretIterator(self)
+    def __setitem__(self,key,value):
+        self.item[key] = value
+    def __getitem__(self,index):
+        return self.item[index]
+    def __len__(self):
+        return len(self.item.keys())
+
+class ConcretIterator(Iterator):
+    def __init__(self,aggregate):
+        self.aggregate = aggregate
+        self.current = 0
+    def First(self):
+        return self.aggregate[0]
+    def Next(self):
+        ret = ''
+        self.current += 1
+        if self.current < len(self.aggregate) :
+            ret = self.aggregate[self.current]
+        return ret
+    def IsDone(self):
+        if self.current >= len(self.aggregate):
+            return True
+        else:
+            return False
+    def CurrentItem(self):
+        return self.aggregate[self.current]
+
+if __name__ == '__main__':
+    a = ConcretAggregate()
+    a[0] = 'a'
+    a[1] = 'b'
+    a[2] = 'c'
+    a[3] = 'd'
+    a[4] = 'e'
+    i = ConcretIterator(a)
+    item = i.First()
+    while not i.IsDone():
+        print i.CurrentItem()
+        i.Next()
+    print 'end'
+
+
+#########################################################################
+
+
+#!/usr/bin/env python
+
+class AnyIter(object):
+	def __init__(self,data,safe=False):
+		self.safe = safe
+		self.iter = iter(data)
+	def __iter__(self):
+		return self
+	def next(self,howmany=1):
+		retval = []
+		for eachItem in range(howmany):
+			try:
+				retaval.append(self.iter.next())
+			except StopIteration:
+				if self.safe:
+					break
+				else:
+					raise
+		return retval
+if __name__ =="__main__":
+	a = AnyIter(range(10)
+	i = iter(a)
+	for j in range(1,5):
+		print j,":",i.next(j)
+################################################################################

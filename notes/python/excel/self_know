@@ -1,0 +1,23 @@
+from xlwt import *
+
+
+font = Font()
+font.name = "Arial"		#字体为Arial
+font.colour_index = 2	#红色
+font.bold = True		#加粗
+font.height = 200		#默认200 对应是 10 的字体大小
+font.italic = True		#斜体
+font.struct_out = True	#删除线
+font.underline = True	#下划线
+font.shadow	= True		#阴影
+
+
+borders = Borders()
+borders.left = 6
+borders.right = 6
+borders.top = 6
+borders.buttom = 6
+
+style = XFSyle()
+style.font = font
+style.borders = borders

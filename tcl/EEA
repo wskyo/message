@@ -1,0 +1,11 @@
+
+
+1.	adb shell pm list package -f | grep -i webview
+
+		package:/system/app/WebViewStub/WebViewStub.apk=com.google.android.webview
+
+2.	adb shell pm list features
+
+		feature:com.google.android.feature.EEA_DEVICE
+		feature:com.google.android.paid.chrome
+		feature:com.google.android.paid.search
