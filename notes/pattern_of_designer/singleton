@@ -1,0 +1,85 @@
+singleton
+
+单例模式（singleton）,保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+
+
+
+
+class Singleton
+{
+	private static Singleton instance;
+	private static readonly object syncRoot = new object();
+	private Singleton
+	{}
+	public Singleton GetInstance
+	{
+		if (instance == null)
+		{
+			lock(syncRoot)
+			{
+				if (instance == null)
+				{
+					instance = new Singleton();
+				}
+
+			}
+
+		}
+		return instance;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Singleton(object):
+    def __new__(cls, *args, **kwargs):
+        if not hasattr(cls,"_instance"):
+            cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+
+s1 = Singleton()
+s2 = Singleton()
+
+print s1 is s2
+
+
+
+
+class Singleton(type):
+    def __new__(cls, name,bases,attrs):
+        print "__new__"
+        attrs["_instance"] = None
+        return  super(Singleton,cls).__new__(cls,name,bases,attrs)
+
+    def __call__(self, *args, **kwargs):
+        print "__call__"
+        if self._instance is None:
+            self._instance = super(Singleton,self).__call__(*args, **kwargs)
+        return self._instance
+
+class Foo(object):
+    __metaclass__ = Singleton
+
+foo1 = Foo()
+foo2 = Foo()
+print Foo.__dict__
+print foo1 is foo2  # True
+
+# 输出
+# __new__
+# __call__
+# __call__
+# {'__module__': '__main__', '__metaclass__': <class '__main__.Singleton'>, '_instance': <__main__.Foo object at 0x103e07ed0>, '__dict__': <attribute '__dict__' of 'Foo' objects>, '__weakref__': <attribute '__weakref__' of 'Foo' objects>, '__doc__': None}
+# True
