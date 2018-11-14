@@ -1,0 +1,170 @@
+GTS
+
+	run gts -m GtsPackageManagerHostTestCases -t com.google.android.pm.gts.PackageManagerHostTest#testMediaProjection
+
+	11-06 09:27:54 I/ModuleListener: [1/1] com.google.android.pm.gts.PackageManagerHostTest#testMediaProjection fail:
+junit.framework.AssertionFailedError: Instant App should be able to access Media Projection APIs.
+Please apply patch r.android.com/732269
+	at junit.framework.Assert.fail(Assert.java:57)
+	at junit.framework.Assert.assertTrue(Assert.java:22)
+	at junit.framework.TestCase.assertTrue(TestCase.java:192)
+	at com.google.android.pm.gts.PackageManagerHostTest.testMediaProjection(PackageManagerHostTest.java:286)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at junit.framework.TestCase.runTest(TestCase.java:176)
+	at junit.framework.TestCase.runBare(TestCase.java:141)
+
+
+	r.android.com/732269
+
+	diff --git a/packages/SystemUI/AndroidManifest.xml b/packages/SystemUI/AndroidManifest.xml
+index 070634b..1a9dee3 100644
+--- a/packages/SystemUI/AndroidManifest.xml
++++ b/packages/SystemUI/AndroidManifest.xml
+@@ -400,7 +400,8 @@
+             android:theme="@style/Theme.AlertDialogHost"
+             android:finishOnCloseSystemDialogs="true"
+             android:launchMode="singleTop"
+-            android:excludeFromRecents="true" />
++            android:excludeFromRecents="true"
++            android:visibleToInstantApps="true"/>
+ 
+         <!-- started from PipUI -->
+         <activity
+
+    1. frameworks/base/packages/SystemUI/AndroidManifest.xml
+    2. vendor/mediatek/proprietary/packages/apps/SystemUI/AndroidManifest.xml
+
+
+
+ run gts -m GtsPackageManagerHostTestCases -t com.google.android.pm.gts.PackageManagerHostTest#testAvoidAccessingKeyguardManager
+
+ 11-06 08:56:47 I/ModuleListener: [1/1] com.google.android.pm.gts.PackageManagerHostTest#testAvoidAccessingKeyguardManager fail:
+junit.framework.AssertionFailedError: KeyguardManager should not be accessed when handling system keys for Instant App.
+Please apply patches BOTH r.android.com/729735 AND r.android.com/729736
+	at junit.framework.Assert.fail(Assert.java:57)
+	at junit.framework.Assert.assertTrue(Assert.java:22)
+	at junit.framework.TestCase.assertTrue(TestCase.java:192)
+	at com.google.android.pm.gts.PackageManagerHostTest.testAvoidAccessingKeyguardManager(PackageManagerHostTest.java:268)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at junit.framework.TestCase.runTest(TestCase.java:176)
+	at junit.framework.TestCase.runBare(TestCase.java:141)
+
+r.android.com/729735 
+
+diff --git a/core/java/com/android/internal/policy/PhoneWindow.java b/core/java/com/android/internal/policy/PhoneWindow.java
+index b13560c..389df17 100644
+--- a/core/java/com/android/internal/policy/PhoneWindow.java
++++ b/core/java/com/android/internal/policy/PhoneWindow.java
+@@ -2037,7 +2037,7 @@
+                  * Do this in onKeyUp since the Search key is also used for
+                  * chording quick launch shortcuts.
+                  */
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode()) {
++                if (isNotInstantAppAndKeyguardRestricted()) {
+                     break;
+                 }
+                 if (event.isTracking() && !event.isCanceled()) {
+@@ -2057,6 +2057,11 @@
+         return false;
+     }
+ 
++    private boolean isNotInstantAppAndKeyguardRestricted() {
++        return !getContext().getPackageManager().isInstantApp()
++            && getKeyguardManager().inKeyguardRestrictedInputMode();
++    }
++
+     @Override
+     protected void onActive() {
+     }
+
+r.android.com/729736
+
+diff --git a/core/java/com/android/internal/policy/PhoneFallbackEventHandler.java b/core/java/com/android/internal/policy/PhoneFallbackEventHandler.java
+index ebc2c71..04c4b13 100644
+--- a/core/java/com/android/internal/policy/PhoneFallbackEventHandler.java
++++ b/core/java/com/android/internal/policy/PhoneFallbackEventHandler.java
+@@ -112,7 +112,7 @@
+             }
+ 
+             case KeyEvent.KEYCODE_CALL: {
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode() || dispatcher == null) {
++                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                     break;
+                 }
+                 if (event.getRepeatCount() == 0) {
+@@ -139,7 +139,7 @@
+             }
+ 
+             case KeyEvent.KEYCODE_CAMERA: {
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode() || dispatcher == null) {
++                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                     break;
+                 }
+                 if (event.getRepeatCount() == 0) {
+@@ -164,7 +164,7 @@
+             }
+ 
+             case KeyEvent.KEYCODE_SEARCH: {
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode() || dispatcher == null) {
++                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                     break;
+                 }
+                 if (event.getRepeatCount() == 0) {
+@@ -202,6 +202,11 @@
+         return false;
+     }
+ 
++    private boolean isNotInstantAppAndKeyguardRestricted(KeyEvent.DispatcherState dispatcher) {
++        return !mContext.getPackageManager().isInstantApp()
++                && (getKeyguardManager().inKeyguardRestrictedInputMode() || dispatcher == null);
++    }
++
+     boolean onKeyUp(int keyCode, KeyEvent event) {
+         if (DEBUG) {
+             Log.d(TAG, "up " + keyCode);
+@@ -239,7 +244,7 @@
+             }
+ 
+             case KeyEvent.KEYCODE_CAMERA: {
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode()) {
++                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                     break;
+                 }
+                 if (event.isTracking() && !event.isCanceled()) {
+@@ -249,7 +254,7 @@
+             }
+ 
+             case KeyEvent.KEYCODE_CALL: {
+-                if (getKeyguardManager().inKeyguardRestrictedInputMode()) {
++                if (isNotInstantAppAndKeyguardRestricted(dispatcher)) {
+                     break;
+                 }
+                 if (event.isTracking() && !event.isCanceled()) {
+
+
+   frameworks/base/core/java/com/android/internal/policy/PhoneFallbackEventHandler.java
+   frameworks/base/core/java/com/android/internal/policy/PhoneWindow.java
+
+ run gts -m GtsRlzTestCases -t com.google.android.rlz.gts.RlzTest#testApIntegration
+
+java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.String.toUpperCase()' on a null object reference 
+以后的项目只要预置了Gboard并将其列为默认输入法,则必须加入以下两个系统属性值,否则会影响收益:
+ 
+ro.com.google.rlzbrandcode ==> TCTB 
+ro.com.google.rlz_ap_whitelist ==> YG
+
+
+至于其导致的GTS测试fail,原因是项目没有向google注册, 要注册的话需要提供以下信息给接口人: 
+1.项目的Marketing name 
+2.fingerprint  
+此条case平时内部测试的时候可以忽略,但正式送测之前请确保已向google注册了该项目
+
+如下两项均为空
+adb shell pm list packages | grep Gboard
+adb shell getprop | grep rlz

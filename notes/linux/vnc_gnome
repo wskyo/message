@@ -1,0 +1,37 @@
+先安装gnome相关组件
+sudo apt-get install gnome-core gnome-panel gnome-session gnome-settings-daemon gnome-terminal metacity nautilus
+关闭已经开启的vnc会话 
+vncserver -kill :1
+再修改vnc的配置启动文件
+sudo gedit ~/.vnc/xstartup 
+整体文件内容如下：
+
+
+
+#!/bin/sh
+
+# Uncomment the following two lines for normal desktop:
+unset SESSION_MANAGER
+#exec /etc/X11/xinit/xinitrc
+export XKL_XMODMAP_DISABLE=1
+unset DBUS_SESSION_BUS_ADDRESS
+export LC_ALL=C
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+xsetroot -solid grey
+vncconfig -iconic &
+#x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+gnome-session &
+gnome-panel &
+gnome-settings-daemon &
+gnome-terminal &
+metacity &
+nautilus &
+#export STARTUP="/usr/bin/gnome-session --session=ubuntu-2d"
+#$STARTUP
+
+如果觉得远程连接的桌面太小，可以在开启vncserver的时候指定分辨率 
+vncserver -geometry 1200x900
+至此，vncserver可以比较正常地使用

@@ -1,0 +1,99 @@
+bridge
+
+桥接模式
+
+	将抽象部分与它的实现部分分离，使他们都可以独立地变化。（不是分离抽象类与实现类。而将抽象类按某种分类方法进行分拆。比如手机按品牌分，也可以按软件分）
+	由于实现方式有很多，桥接模式的核心意图把这些实现独立出来，让它们各自变化。这就使得每种实现的变化不会影响其他实现，从而达到应当变化的目的。
+
+abstract class Implementor
+{
+	public abstract void Operation();
+}
+class ConcreteImplementorA : Implementor
+{
+	public override void Operation()
+	{
+		Console.WriteLine("具体实现A的方法执行");
+	}
+}
+class ConcreteImplementorB : Implementor
+{
+	public override void Operation()
+	{
+		Console.WriteLine("具体实现B的方法执行");
+	}
+}
+class Abstration
+{
+	protected Implementor implementor;
+	public void SetImplementor(Implementor implementor)
+	{
+		this.implementor = implementor
+	}
+	public virtual Operation()
+	{
+		implementor.Operation()
+	}
+}
+class RefinedAbstration : Abstation
+{
+	public void Operation()
+	{
+		implementor.Operation()
+	}
+}
+static void main()
+{
+	Abstaction ab = new RefinedAbstaton();
+	ab.SetImplementor(new ConcreteImplementorA());
+	ab.Operation();
+	ab.SetImplementor(new ConcreteImplementorB());
+	ab.Operation();
+	Console.Read();
+}
+
+############################################################################################
+#!/usr/bin/python
+#
+#
+#
+class Implementor:
+	def Operation(self):
+		pass
+
+class ConcretImplementorA(Implementor):
+	def Operation(self):
+		print "in ConcretImplementorA"
+
+class ConcretImplementorB(Implementor):
+	def Operation(self):
+		print "in ConcretImplementorB"
+
+class Abstaction:
+	def __init__(self):
+		self.implementor = ''
+	def Operation(self):
+		pass
+	def SetImplementor(self,implementor):
+		self.implementor = implementor
+class RefinedAbstaction(Abstaction):
+	
+	def Operation(self):
+		self.implementor.Operation()
+
+if __name__ == '__main__' :
+	
+	print 'start'
+
+	ab = RefinedAbstaction()
+	
+	ab.SetImplementor(ConcretImplementorA())
+	
+	ab.Operation()
+
+	ab.SetImplementor(ConcretImplementorB())
+	
+	ab.Operation()
+
+	print 'end'
+###########################################################################

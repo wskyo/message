@@ -1,0 +1,21 @@
+sudo mount -t smbfs -ousername="xiaodan.cheng",password="cxd@6235",gid="1000",uid="1000" //10.92.32.12/RDhzKM/SWD-Share/INT/MTKPatch /local/release/mtkpatch
+
+
+sudo mount -t cifs -ousername="xiaodan.cheng",password="cxd@6235",gid="1000",uid="1000" //10.92.32.12/RDhzKM/SWD-Share/INT/MTKPatch /local/release/mtkpatch
+
+sudo mount -t cifs -ousername="xiaodan.cheng",password="cxd@6235",gid="1000",uid="1000" //10.92.32.12/RDhzKM/5-SWD/I-Patch/MTKPatch /local/release/mtkpatch
+
+
+/etc/rc.local
+
+
+
+sudo sshfs -o allow_other user@10.92.35.22:/local/mtk_patch_import/TODO /local/mtk_patch_import/TODO
+
+/etc/fstab
+user@10.92.35.22:/local/mtk_patch_import/TODO /local/mtk_patch_import/TODO fuse.ssh rw,nosuid,nodev,allow_other 0 0
+
+
+
+挂载ftp服务器，但是只能
+sudo curlftpfs -o rw,allow_other  ftp://10.92.60.101 /home/swd3/ftp -ouser="runhe:runhe@123456"

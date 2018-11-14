@@ -1,0 +1,57 @@
+
+
+class KeyguardTransitionTests extends ActivityManagerTestBase
+
+class ActivityManagerTestBase extends DeviceTestCase
+
+ActivityAndWindowManagersState extends Assert
+
+//KeyguardTransitionTests
+    public void testUnlock() throws Exception {
+        if (!isHandheld()) {
+            return;
+        }
+        launchActivity("TestActivity");
+        gotoKeyguard();
+        unlockDevice();
+        mAmWmState.computeState(mDevice, new String[] { "TestActivity"} );
+        assertEquals("Picked wrong transition", TRANSIT_KEYGUARD_GOING_AWAY,
+                mAmWmState.getWmState().getLastTransition());
+    }
+
+
+//ActivityAndWindowManagersState
+    public WindowManagerState getWmState() {
+        return mWmState;
+    }
+
+computeState		-- >	ActivityManagerState.java
+
+mAmWmState                   -->	ActivityManagerTestBase
+				|
+				|
+				ActivityAndWindowManagersState
+				|
+				|
+				private WindowManagerState mWmState = new WindowManagerState();	-->	WindowManagerState
+
+
+
+				"mLastUsedAppTransition"	-- >	services/core/java/com/android/server/wm/AppTransition.java
+
+
+
+				AppTransition  -->    core/java/android/view/WindowManagerInternal.java
+						        services/core/java/com/android/server/policy/PhoneWindowManager.java
+						        services/core/java/com/android/server/wm/AccessibilityController.java
+						        services/core/java/com/android/server/wm/AppWindowContainerController.java
+						        services/core/java/com/android/server/wm/AppWindowToken.java
+						        services/core/java/com/android/server/wm/BoundsAnimationController.java
+						        services/core/java/com/android/server/wm/DockedStackDividerController.java
+						        services/core/java/com/android/server/wm/WindowManagerService.java
+						        services/core/java/com/android/server/wm/WindowSurfacePlacer.java
+						        services/tests/servicestests/src/com/android/server/wm/AppTransitionTests.java
+						        services/tests/servicestests/src/com/android/server/wm/BoundsAnimationControllerTests.java
+						        services/tests/servicestests/src/com/android/server/wm/TaskSnapshotControllerTest.java
+						        services/tests/servicestests/src/com/android/server/wm/UnknownAppVisibilityControllerTest.java
+						        
